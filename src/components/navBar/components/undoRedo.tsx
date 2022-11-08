@@ -48,19 +48,22 @@ export const UndoRedo: React.FC<UndoRedoProps> = () => {
                     onClick={() => {
                         undoFunction(lastActionType, undoActions, setundoActions, dispatch);
                     }}
+                    className="flex justify-between"
                 >
 
                     <div className="-m-3 flex items-center rounded-lg p-2 hover:bg-gray-50">
                         <FontAwesomeIcon icon={faUndo} className="text-gray-900 mr-5"/>
                         <span className="text-base font-medium text-gray-900">Undo Last Action</span>
                     </div>
+                    <p className="text-base font-medium text-gray-300">Ctrl + Z</p>
                 </div>
             ) : (
-                <div>
+                <div className="flex justify-between">
                     <div className="-m-3 flex items-center rounded-lg p-2 hover:bg-gray-50">
                         <FontAwesomeIcon icon={faUndo} className="text-gray-300 mr-5"/>
                         <span>Undo Last Action</span>
                     </div>
+                    <p className="text-base font-medium text-gray-300">Ctrl + Z</p>
                 </div>
             )}
 
@@ -69,19 +72,22 @@ export const UndoRedo: React.FC<UndoRedoProps> = () => {
                     onClick={() => {
                         redoFunction(undoActions, setundoActions, dispatch);
                     }}
+                    className="flex justify-between"
                 >
 
                         <div className="-m-3 flex items-center rounded-lg p-2 hover:bg-gray-50">
                             <FontAwesomeIcon icon={faRedo} className="text-gray-900 mr-5"/>
                             <span className="text-base font-medium text-gray-900">Redo Last Action</span>
                         </div>
+                        <p className="text-base font-medium text-gray-300">Ctrl + X</p>
                 </div>
             ) : (
-                <div>
+                <div className="flex justify-between">
                     <div className="-m-3 flex items-center rounded-lg p-2 hover:bg-gray-50">
                         <FontAwesomeIcon icon={faRedo} className="text-gray-300 mr-5"/>
                         <span className="text-base font-medium text-gray-300">Redo Last Action</span>
                     </div>
+                    <p className="text-base font-medium text-gray-300">Ctrl + X</p>
                 </div>
             )}
         </>
