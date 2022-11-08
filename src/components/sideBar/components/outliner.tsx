@@ -18,13 +18,10 @@ export const Outliner: React.FC<OutlinerProps> = ({canvasState}) => {
 
     return (
         <>
-            <div id="outliner" className="Outliner" tabIndex={0}>
-                <div className={(optionActive === "Scene") ? "option active" : "option"} draggable={false}
-                     onClick={() => {
-                         setOptionActive("Scene")
-                     }}>
-                    <span className="type Scene"/>
-                    Scene
+            <div className="h-[200px] max-h-[200px] border-2 border-amber-400 rounded p-2 overflow-scroll bg-gradient-to-r from-white to-slate-200">
+                <div className="border-2 border-transparent text-black w-1/2 text-left pl-2">
+                    <span className="text-black"/>
+                    CANVAS
                 </div>
                 {canvasState.components.map(component => {
                     return (

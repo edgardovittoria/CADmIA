@@ -34,7 +34,7 @@ export const MyCanvas: React.FC<MyCanvasProps> = () => {
   const keySelectedComponent = useSelector(keySelectedComponenteSelector);
 
   return (
-    <div className="h-[92vh]">
+    <div className="h-[93vh]">
       <ReactReduxContext.Consumer>
         {({ store }) => (
           // <MeshesAndCollisionsContext.Consumer>

@@ -92,7 +92,9 @@ function App() {
 
                 </div>
                 <Statusbar.Statusbar
-                    placement="block"
+                    placement="bottom"
+                    className="z-50"
+                    theme="light"
                     right={
                         <Statusbar.Dropdown
                             options={[

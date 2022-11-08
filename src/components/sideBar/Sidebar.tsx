@@ -8,9 +8,10 @@ import {
     Material,
     removeComponent, removeComponentMaterial,
     selectedComponentSelector,
-    setComponentMaterial
+    setComponentMaterial, usersStateSelector
 } from "cad-library";
 import {useDispatch, useSelector} from "react-redux";
+import {Outliner} from "./components/outliner";
 
 interface SidebarProps {
     sideBarVisibility: boolean,
@@ -24,6 +25,7 @@ export const Sidebar: React.FC<SidebarProps> = (
 ) => {
 
     const canvasState = useSelector(canvasStateSelector);
+    const user = useSelector(usersStateSelector)
     let selectedComponent = useSelector(selectedComponentSelector)
     const dispatch = useDispatch()
     const setMaterial = (material: Material) => dispatch(setComponentMaterial({
@@ -35,25 +37,30 @@ export const Sidebar: React.FC<SidebarProps> = (
     return (
         <>
             {sideBarVisibility ?
-                <div className={`absolute top-[-2px] right-0 w-[25vw] bg-white p-[20px] text-white fixed h-full text-center
+                <div className={`absolute top-[-2px] right-0 w-[23vw] bg-white p-[20px] text-white fixed h-full text-center
                 ${sideBarVisibility ? "translate-x-0 transition " : "translate-x-full transition"}
             `}>
                     <div className="flex items-center">
                         <XMarkIcon className="text-black w-4 h-4 hover:cursor-pointer"
                                    onClick={() => setSideBarVisibility(false)}
                         />
-                        <h2 className="my-[10px] text-2xl font-semibold text-black mx-auto">Object Details</h2>
+                        <h2 className="mb-[10px] text-xl text-black mx-auto">Object Details</h2>
                     </div>
-                    <div>
-                        {/* <Outliner canvasState={canvasState}/>*/}
+                    <div className="h-full max-h-[800px] overflow-scroll">
+                         <Outliner canvasState={canvasState}/>
                         {(canvasState.components.filter(component => component.keyComponent === canvasState.selectedComponentKey).length > 0) &&
                             <div className="text-left">
-                                <h6 className="text-black">Transformation Params</h6>
+                                <h6 className="text-black mb-2 mt-2">Transformation Params</h6>
                                 <hr className="text-black"/>
                                 <Transformations transformationParams={selectedComponent.transformationParams}/>
                                 <h6 className="text-black mt-[20px]">Geometry Params</h6>
-                                <hr className="text-black"/>
+                                <hr className="text-black mb-2 mt-2"/>
                                 <GeometryParams entity={selectedComponent}/>
+                                {/*{user.userName &&
+                                    <MaterialSelection defaultMaterial={selectedComponent.material}
+                                                       setMaterial={setMaterial}
+                                                       unsetMaterial={unsetMaterial}/>
+                                }*/}
                                 <MaterialSelection defaultMaterial={selectedComponent.material}
                                                    setMaterial={setMaterial}
                                                    unsetMaterial={unsetMaterial}/>
