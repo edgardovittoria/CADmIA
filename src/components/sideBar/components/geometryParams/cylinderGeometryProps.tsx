@@ -1,6 +1,5 @@
 import { CylinderGeometryAttributes } from "cad-library";
 import { FC } from "react";
-import { Col } from "react-bootstrap";
 import { GeometryParamsGeneralProps } from "./geometryParams";
 
 

@@ -21,7 +21,7 @@ function classNames(...classes: string[]) {
 }
 
 
-export const ComponentsItem: React.FC<ComponentsItemProps> = ({}) => {
+export const ComponentsItem: React.FC<ComponentsItemProps> = () => {
 
     const dispatch = useDispatch()
     const numberOfGeneratedKey = useSelector(numberOfGeneratedKeySelector)

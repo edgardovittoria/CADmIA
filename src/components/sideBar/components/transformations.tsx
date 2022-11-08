@@ -1,6 +1,5 @@
 import {TransformationParams, updateTransformationParams} from "cad-library";
 import {FC} from "react";
-import {Col, Row} from "react-bootstrap";
 import {useDispatch} from "react-redux";
 
 export const Transformations: FC<{ transformationParams: TransformationParams }> = ({transformationParams}) => {

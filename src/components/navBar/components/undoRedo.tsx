@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Nav} from "react-bootstrap";
 import {ActionCreators} from "redux-undo";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faRedo, faUndo} from "@fortawesome/free-solid-svg-icons";

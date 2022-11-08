@@ -15,7 +15,7 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export const EditItem: React.FC<EditItemProps> = ({}) => {
+export const EditItem: React.FC<EditItemProps> = () => {
 
     const dispatch = useDispatch()
 

@@ -4,12 +4,11 @@ import {Transformations} from "./components/transformations";
 import {GeometryParams} from "./components/geometryParams/geometryParams";
 import {MaterialSelection} from "./components/materialSelection";
 import {
-    canvasStateSelector,
+    componentseSelector,
     Material,
     removeComponent, removeComponentMaterial,
     selectedComponentSelector,
-    setComponentMaterial, usersStateSelector
-} from "cad-library";
+    setComponentMaterial} from "cad-library";
 import {useDispatch, useSelector} from "react-redux";
 import {Outliner} from "./components/outliner";
 
@@ -23,10 +22,8 @@ export const Sidebar: React.FC<SidebarProps> = (
         sideBarVisibility, setSideBarVisibility
     }
 ) => {
-
-    const canvasState = useSelector(canvasStateSelector);
-    const user = useSelector(usersStateSelector)
-    let selectedComponent = useSelector(selectedComponentSelector)
+    const canvasComponents = useSelector(componentseSelector)
+    const selectedComponent = useSelector(selectedComponentSelector)
     const dispatch = useDispatch()
     const setMaterial = (material: Material) => dispatch(setComponentMaterial({
         key: selectedComponent.keyComponent,
@@ -47,8 +44,8 @@ export const Sidebar: React.FC<SidebarProps> = (
                         <h2 className="mb-[10px] text-xl text-black mx-auto">Object Details</h2>
                     </div>
                     <div className="h-full max-h-[800px] overflow-scroll">
-                         <Outliner canvasState={canvasState}/>
-                        {(canvasState.components.filter(component => component.keyComponent === canvasState.selectedComponentKey).length > 0) &&
+                         <Outliner components={canvasComponents} selectedComponent={selectedComponent}/>
+                        {selectedComponent &&
                             <div className="text-left">
                                 <h6 className="text-black mb-2 mt-2">Transformation Params</h6>
                                 <hr className="text-black"/>

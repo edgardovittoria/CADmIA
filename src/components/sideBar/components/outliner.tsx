@@ -1,21 +1,13 @@
-import { CanvasState } from 'cad-library';
-import React, {useEffect, useState} from 'react';
+import { ComponentEntity } from 'cad-library';
+import React, {} from 'react';
 import { OutlinerItem } from './outlinerItem';
 
 interface OutlinerProps {
-    canvasState: CanvasState,
+    components: ComponentEntity[],
+    selectedComponent: ComponentEntity
 }
 
-export const Outliner: React.FC<OutlinerProps> = ({canvasState}) => {
-
-    const [optionActive, setOptionActive] = useState("");
-    useEffect(() => {
-        let selectedComponent = canvasState.components.filter(component => component.keyComponent === canvasState.selectedComponentKey)[0]
-        if (selectedComponent !== undefined) {
-            setOptionActive(selectedComponent.keyComponent.toString())
-        }
-    }, [canvasState.components, canvasState.selectedComponentKey]);
-
+export const Outliner: React.FC<OutlinerProps> = ({components, selectedComponent}) => {
     return (
         <>
             <div className="h-[200px] max-h-[200px] border-2 border-amber-400 rounded p-2 overflow-scroll bg-gradient-to-r from-white to-slate-200">
@@ -23,9 +15,9 @@ export const Outliner: React.FC<OutlinerProps> = ({canvasState}) => {
                     <span className="text-black"/>
                     CANVAS
                 </div>
-                {canvasState.components.map(component => {
+                {components.map(component => {
                     return (
-                        <OutlinerItem key={component.keyComponent + component.name} keyComponent={component.keyComponent} nameComponent={component.name} isSelelctedComponent={component.keyComponent === canvasState.selectedComponentKey} />
+                        <OutlinerItem key={component.keyComponent + component.name} keyComponent={component.keyComponent} nameComponent={component.name} isSelelctedComponent={component.keyComponent === selectedComponent.keyComponent} />
                     )
                 })}
             </div>

@@ -1,6 +1,5 @@
 import {CubeGeometryAttributes} from "cad-library";
 import {FC} from "react";
-import {Col} from "react-bootstrap";
 import {GeometryParamsGeneralProps} from "./geometryParams";
 
 export const CubeGeometryParams: FC<GeometryParamsGeneralProps> = ({entity, updateParams}) => {
