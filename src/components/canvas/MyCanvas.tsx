@@ -27,9 +27,15 @@ import {
 import { Component } from "./components/Component";
 import { ModalityManagerContext } from "../contexts/modalityManagerProvider";
 
-interface MyCanvasProps {}
+interface MyCanvasProps {
+  borderVisible: boolean,
+}
 
-export const MyCanvas: React.FC<MyCanvasProps> = () => {
+export const MyCanvas: React.FC<MyCanvasProps> = (
+    {
+        borderVisible
+    }
+) => {
   const components = useSelector(componentseSelector);
   const keySelectedComponent = useSelector(keySelectedComponenteSelector);
 
@@ -78,6 +84,7 @@ export const MyCanvas: React.FC<MyCanvasProps> = () => {
                                   transformationParams={
                                     component.transformationParams
                                   }
+                                  borderVisible={borderVisible}
                                 >
                                   <FactoryShapes entity={component} />
                                 </Component>

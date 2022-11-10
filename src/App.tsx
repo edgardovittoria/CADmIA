@@ -27,6 +27,7 @@ function App() {
     const [unit, setUnit] = useState("cm");
     const [modalSave, setModalSave] = useState(false);
     const [modalLoad, setModalLoad] = useState(false);
+    const [borderVisible, setBorderVisible] = useState(false);
 
     const showViewElementVisibility = (element: string, visibility: boolean) => {
         switch (element) {
@@ -66,7 +67,7 @@ function App() {
                     setSideBarChecked={setSideBar}
                 />
                 <div className="w-full p-0 relative">
-                    <MyCanvas/>
+                    <MyCanvas borderVisible={borderVisible}/>
                     <ToolBar/>
                     <BinaryOpsToolbar/>
                     <MiscToolbar/>
@@ -88,7 +89,8 @@ function App() {
                         />
                     )}
 
-                    <Sidebar sideBarVisibility={sideBar} setSideBarVisibility={setSideBar}/>
+                    <Sidebar sideBarVisibility={sideBar} setSideBarVisibility={setSideBar}
+                             borderVisible={borderVisible} setBorderVisible={setBorderVisible}/>
 
                 </div>
                 <Statusbar.Statusbar

@@ -11,16 +11,19 @@ import {
   TransformationParams,
 } from "cad-library";
 import { useCanvasFunctionsBasedOnModality } from "../../contexts/useCanvasFunctionsBasedOnModality";
+import {Edges} from "@react-three/drei";
 
 export interface ComponentProps {
   transformationParams: TransformationParams;
   keyComponent: number;
+  borderVisible: boolean,
 }
 
 export const Component: React.FC<ComponentProps> = ({
   children,
   transformationParams,
   keyComponent,
+  borderVisible,
 }) => {
   const dispatch = useDispatch();
   const activeTransformation = useSelector(activeTransformationSelector);
@@ -60,6 +63,7 @@ export const Component: React.FC<ComponentProps> = ({
         }}
       >
         {children}
+        {(borderVisible && keyComponent === selectedComponentKey) && <Edges/>}
       </mesh>
     </>
   );

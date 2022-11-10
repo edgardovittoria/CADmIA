@@ -11,15 +11,18 @@ import {
     setComponentMaterial} from "cad-library";
 import {useDispatch, useSelector} from "react-redux";
 import {Outliner} from "./components/outliner";
+import {Visualization} from "./components/Visualization";
 
 interface SidebarProps {
     sideBarVisibility: boolean,
-    setSideBarVisibility: (visibility: boolean) => void
+    setSideBarVisibility: (visibility: boolean) => void,
+    borderVisible: boolean,
+    setBorderVisible: (v:boolean) => void
 }
 
 export const Sidebar: React.FC<SidebarProps> = (
     {
-        sideBarVisibility, setSideBarVisibility
+        sideBarVisibility, setSideBarVisibility, borderVisible, setBorderVisible
     }
 ) => {
     const canvasComponents = useSelector(componentseSelector)
@@ -53,17 +56,15 @@ export const Sidebar: React.FC<SidebarProps> = (
                                 <h6 className="text-black mt-[20px]">Geometry Params</h6>
                                 <hr className="text-black mb-2 mt-2"/>
                                 <GeometryParams entity={selectedComponent}/>
-                                {/*{user.userName &&
-                                    <MaterialSelection defaultMaterial={selectedComponent.material}
-                                                       setMaterial={setMaterial}
-                                                       unsetMaterial={unsetMaterial}/>
-                                }*/}
                                 <MaterialSelection defaultMaterial={selectedComponent.material}
                                                    setMaterial={setMaterial}
                                                    unsetMaterial={unsetMaterial}/>
+                                <h6 className="text-black mt-[20px]">Visualization</h6>
+                                <hr className="text-black mb-2 mt-2"/>
+                                <Visualization borderVisible={borderVisible} setBorderVisible={setBorderVisible}/>
                                 <button
                                     type="button"
-                                    className="rounded bg-red-500 shadow p-2 mt-[20px]"
+                                    className="rounded bg-red-500 shadow p-2 mt-[20px] w-full"
                                     onClick={() => {
                                         if (window.confirm(`Sei sicuro di voler eliminare il componente ${selectedComponent.name} ?`)) {
                                             dispatch(removeComponent(selectedComponent.keyComponent));
