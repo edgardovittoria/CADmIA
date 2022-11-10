@@ -3,7 +3,7 @@ import {Switch} from "@headlessui/react";
 
 interface VisualizationProps {
     borderVisible: boolean,
-    setBorderVisible: (v: boolean) => void
+    setBorderVisible: (border: boolean) => void
 }
 
 export const Visualization: React.FC<VisualizationProps> = (
@@ -17,7 +17,7 @@ export const Visualization: React.FC<VisualizationProps> = (
                 <span className="text-black">Border</span>
                 <div>
                     <Switch
-                        checked={borderVisible}
+                        checked={(borderVisible !== undefined) ? borderVisible : false}
                         onChange={setBorderVisible}
                         className={`${borderVisible ? 'bg-teal-900' : 'bg-teal-700'} relative inline-flex mt-1 h-[18px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
                     >

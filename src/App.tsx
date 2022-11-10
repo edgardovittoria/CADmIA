@@ -21,13 +21,22 @@ import {Navbar} from "./components/navBar/NavBar";
 import {Sidebar} from "./components/sideBar/Sidebar";
 
 export let token = "";
+export type borderFlagComponent = {
+    componentKey: number,
+    borders: boolean
+}
 
 function App() {
     const [sideBar, setSideBar] = useState(false);
     const [unit, setUnit] = useState("cm");
     const [modalSave, setModalSave] = useState(false);
     const [modalLoad, setModalLoad] = useState(false);
-    const [borderVisible, setBorderVisible] = useState(false);
+    const [borders, setBorders] = useState<borderFlagComponent[]>([])
+    const setBorderForComponent = (componentKey: number, bordersVisible: boolean) => {
+        let newBorders = borders.filter(borderFlag => borderFlag.componentKey !== componentKey)
+        newBorders.push({componentKey: componentKey, borders: bordersVisible})
+        setBorders(newBorders)
+    }
 
     const showViewElementVisibility = (element: string, visibility: boolean) => {
         switch (element) {
@@ -67,7 +76,7 @@ function App() {
                     setSideBarChecked={setSideBar}
                 />
                 <div className="w-full p-0 relative">
-                    <MyCanvas borderVisible={borderVisible}/>
+                    <MyCanvas bordersVisible={borders}/>
                     <ToolBar/>
                     <BinaryOpsToolbar/>
                     <MiscToolbar/>
@@ -90,7 +99,7 @@ function App() {
                     )}
 
                     <Sidebar sideBarVisibility={sideBar} setSideBarVisibility={setSideBar}
-                             borderVisible={borderVisible} setBorderVisible={setBorderVisible}/>
+                             bordersVisible={borders} setBorderForComponent={setBorderForComponent}/>
 
                 </div>
                 <Statusbar.Statusbar

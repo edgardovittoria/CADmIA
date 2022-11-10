@@ -63,7 +63,7 @@ export const Component: React.FC<ComponentProps> = ({
         }}
       >
         {children}
-        {(borderVisible && keyComponent === selectedComponentKey) && <Edges/>}
+        {(borderVisible) && <Edges/>}
       </mesh>
     </>
   );
