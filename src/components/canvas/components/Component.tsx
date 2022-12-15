@@ -34,14 +34,10 @@ export const Component: React.FC<ComponentProps> = ({
   const { onClickActionForMeshBasedOnModality } =
     useCanvasFunctionsBasedOnModality();
   const mesh = useRef(null)
-
-  const setMeshSelected = () => {
-    setMeshRef(mesh.current)
-  }
   
   useEffect(() => {
     (keyComponent === selectedComponentKey) && setMeshRef((mesh.current as unknown) as THREE.Mesh)
-  },[])
+  },[selectedComponentKey])
   
   return (
     <>
@@ -55,8 +51,7 @@ export const Component: React.FC<ComponentProps> = ({
           e.stopPropagation();
           onClickActionForMeshBasedOnModality({
             selectedComponentKey,
-            keyComponent,
-            setMeshSelected
+            keyComponent
           });
         }}
         onContextMenu={(e) => {

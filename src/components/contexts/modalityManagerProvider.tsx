@@ -23,10 +23,6 @@ export const ModalityManagerProvider: FC<{}> = ({ children }) => {
   const dispatch = useDispatch();
   const onClickActionForMeshBasedOnModality = (f: any) => {
     if (modality === CadmiaModality.NormalSelection) {
-      if(f.selectedComponentKey !== f.keyComponent){
-        dispatch(selectComponent(f.keyComponent));
-        f.setMeshSelected()
-      }
       f.selectedComponentKey !== f.keyComponent &&
         dispatch(selectComponent(f.keyComponent));
     } else if (modality === CadmiaModality.BinaryOperation) {
