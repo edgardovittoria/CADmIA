@@ -1,32 +1,20 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   Provider,
   ReactReduxContext,
-  useDispatch,
   useSelector,
 } from "react-redux";
-import { Canvas, Object3DNode, useThree } from "@react-three/fiber";
-import {
-  GizmoHelper,
-  GizmoViewport,
-  OrbitControls,
-  TransformControls,
-} from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
-import {
-  ToolbarTransformationState,
-  toolbarTransformationStateSelector,
-} from "../../store/toolbarTransformationSlice";
 import {
   componentseSelector,
   FactoryShapes,
   keySelectedComponenteSelector,
-  TransformationParams,
-  updateTransformationParams,
 } from "cad-library";
 import { Component } from "./components/Component";
 import { ModalityManagerContext } from "../contexts/modalityManagerProvider";
 import { borderFlagComponent } from "../../App";
+import { Controls } from "./components/controls";
 
 interface MyCanvasProps {
   // borderVisible: boolean,
@@ -131,85 +119,3 @@ export const MyCanvas: React.FC<MyCanvasProps> = ({ bordersVisible }) => {
 //   }, [scene, components, setMeshes]);
 //   return <></>;
 // };
-
-const Controls: FC<{
-  keySelectedComponent: number;
-  mesh: THREE.Mesh | undefined;
-}> = ({ keySelectedComponent, mesh }) => {
-  const { camera } = useThree();
-  const transformation = useRef(null);
-  const toolbarTransformationState = useSelector(
-    toolbarTransformationStateSelector
-  );
-  const dispatch = useDispatch();
-
-  function getActiveTransformationType(
-    toolbarTranformationState: ToolbarTransformationState
-  ): string {
-    return toolbarTranformationState.transformation.filter(
-      (transformation) => transformation.active
-    )[0].type;
-  }
-
-  useEffect(() => {
-    if (transformation.current) {
-      const controls: Object3DNode<any, any> = transformation.current;
-      controls.addEventListener("dragging-changed", onChangeHandler);
-      return () =>
-        controls.removeEventListener("dragging-changed", onChangeHandler);
-    }
-  });
-
-  function onChangeHandler(event: THREE.Event) {
-    if (!event.value && transformation.current) {
-      const controls: Object3DNode<any, any> = transformation.current;
-      let transformationParmas: TransformationParams = {
-        position: [
-          controls.worldPosition.x,
-          controls.worldPosition.y,
-          controls.worldPosition.z,
-        ],
-        rotation: [
-          controls.object.rotation._x,
-          controls.object.rotation._y,
-          controls.object.rotation._z,
-        ],
-        scale: [
-          controls.worldScale.x,
-          controls.worldScale.y,
-          controls.worldScale.z,
-        ],
-      };
-      dispatch(updateTransformationParams(transformationParmas));
-    }
-  }
-  return (
-    <>
-      {(keySelectedComponent !== 0 && mesh !== undefined) && (
-        <TransformControls
-          camera={camera}
-          ref={transformation}
-          children={<></>}
-          object={mesh}
-          // showX={keySelectedComponent !== 0}
-          // showY={keySelectedComponent !== 0}
-          // showZ={keySelectedComponent !== 0}
-          mode={getActiveTransformationType(toolbarTransformationState)}
-        />
-      )}
-      <OrbitControls
-        addEventListener={undefined}
-        hasEventListener={undefined}
-        removeEventListener={undefined}
-        dispatchEvent={undefined}
-        makeDefault
-      />
-      <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
-        <GizmoViewport
-          axisColors={["red", "green", "blue"]}
-          labelColor="black"
-        />
-      </GizmoHelper>
-    </>
-  );
-};
