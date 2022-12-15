@@ -4,6 +4,9 @@ import {FC, Fragment, useState} from 'react'
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { Transition, Dialog } from '@headlessui/react'
+import {exportProjectFrom} from "../../../../auxiliaryFunctionsForImportAndExport/exportFunctions";
+import {uploadFileS3} from "../../../../aws/modelsAPIs";
+import AWS from "aws-sdk"
 
 export const SaveModelWithNameModal: FC<{ showModalSave: Function }> = ({ showModalSave }) => {
     const [name, setName] = useState("")
@@ -11,14 +14,38 @@ export const SaveModelWithNameModal: FC<{ showModalSave: Function }> = ({ showMo
     const canvas = useSelector(canvasStateSelector)
     const {execQuery} = useFaunaQuery()
 
+    AWS.config.update({
+        accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
+        secretAccessKey: process.env.REACT_APP_AWS_SECRET_KEY
+    })
+
+    const s3 = new AWS.S3()
+
     const saveModel = async () => {
-        let newModel = {
-            name: name,
-            components: canvas.components,
-            owner_id: user?.sub,
-            owner: user?.name
-        } as FaunaCadModel
-        await execQuery(saveNewModel,newModel)
+        let model = exportProjectFrom(canvas)
+        let blobFile = new Blob([JSON.stringify(model)])
+        let modelFile = new File([blobFile], `${name}.json`, {type: 'application/json'})
+
+        uploadFileS3(modelFile).then(res => {
+            // if(res){
+            //     const params = {
+            //         Bucket: "models-bucket-49718971291",
+            //         Key: res.key
+            //     }
+            //     s3.getObject(params, (err, data) => {
+            //         console.log(JSON.parse(data.Body?.toString() as string))
+            //     })
+            // }
+            if(res){
+                let newModel = {
+                    name: name,
+                    components: res.key,
+                    owner_id: user?.sub,
+                    owner: user?.name
+                } as FaunaCadModel
+                execQuery(saveNewModel,newModel)
+            }
+        })
     }
 
     return (
