@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import {
   Provider,
   ReactReduxContext,
@@ -36,7 +36,9 @@ interface MyCanvasProps {
 export const MyCanvas: React.FC<MyCanvasProps> = ({ bordersVisible }) => {
   const components = useSelector(componentseSelector);
   const keySelectedComponent = useSelector(keySelectedComponenteSelector);
-
+  const [meshSelected, setMeshSelected] = useState<THREE.Mesh|undefined>(
+    undefined
+  );
   return (
     <div className="h-[93vh]">
       <ReactReduxContext.Consumer>
@@ -74,6 +76,7 @@ export const MyCanvas: React.FC<MyCanvasProps> = ({ bordersVisible }) => {
                       {components.map((component) => {
                         return (
                           <Component
+                            setMeshRef={setMeshSelected}
                             key={component.keyComponent}
                             keyComponent={component.keyComponent}
                             transformationParams={
@@ -97,7 +100,10 @@ export const MyCanvas: React.FC<MyCanvasProps> = ({ bordersVisible }) => {
                       {/* {keySelectedComponent !== 0 &&
                                                 <DetectCollision entity={findComponentByKey(components, keySelectedComponent)} />
                                             } */}
-                      <Controls keySelectedComponent={keySelectedComponent} />
+                      <Controls
+                        keySelectedComponent={keySelectedComponent}
+                        mesh={meshSelected}
+                      />
                       <gridHelper
                         args={[40, 20, "#434141", "#434141"]}
                         scale={[1, 1, 1]}
@@ -126,10 +132,11 @@ export const MyCanvas: React.FC<MyCanvasProps> = ({ bordersVisible }) => {
 //   return <></>;
 // };
 
-const Controls: FC<{ keySelectedComponent: number }> = ({
-  keySelectedComponent,
-}) => {
-  const { scene, camera } = useThree();
+const Controls: FC<{
+  keySelectedComponent: number;
+  mesh: THREE.Mesh | undefined;
+}> = ({ keySelectedComponent, mesh }) => {
+  const { camera } = useThree();
   const transformation = useRef(null);
   const toolbarTransformationState = useSelector(
     toolbarTransformationStateSelector
@@ -176,21 +183,20 @@ const Controls: FC<{ keySelectedComponent: number }> = ({
       dispatch(updateTransformationParams(transformationParmas));
     }
   }
-
-  let mesh = scene.getObjectByName(keySelectedComponent.toString());
-
   return (
     <>
-      <TransformControls
-        camera={camera}
-        ref={transformation}
-        children={<></>}
-        object={mesh}
-        showX={keySelectedComponent !== 0}
-        showY={keySelectedComponent !== 0}
-        showZ={keySelectedComponent !== 0}
-        mode={getActiveTransformationType(toolbarTransformationState)}
-      />
+      {(keySelectedComponent !== 0 && mesh !== undefined) && (
+        <TransformControls
+          camera={camera}
+          ref={transformation}
+          children={<></>}
+          object={mesh}
+          // showX={keySelectedComponent !== 0}
+          // showY={keySelectedComponent !== 0}
+          // showZ={keySelectedComponent !== 0}
+          mode={getActiveTransformationType(toolbarTransformationState)}
+        />
+      )}
       <OrbitControls
         addEventListener={undefined}
         hasEventListener={undefined}

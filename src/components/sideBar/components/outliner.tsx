@@ -17,7 +17,7 @@ export const Outliner: React.FC<OutlinerProps> = ({components, selectedComponent
                 </div>
                 {components.map(component => {
                     return (
-                        <OutlinerItem key={component.keyComponent + component.name} keyComponent={component.keyComponent} nameComponent={component.name} isSelelctedComponent={component.keyComponent === selectedComponent.keyComponent} />
+                        <OutlinerItem key={component.keyComponent + component.name} keyComponent={component.keyComponent} nameComponent={component.name} isSelelctedComponent={(selectedComponent !== undefined) ? component.keyComponent === selectedComponent.keyComponent : false} />
                     )
                 })}
             </div>

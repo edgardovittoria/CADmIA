@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   activeTransformationSelector,
@@ -17,6 +17,7 @@ export interface ComponentProps {
   transformationParams: TransformationParams;
   keyComponent: number;
   borderVisible: boolean,
+  setMeshRef: Function
 }
 
 export const Component: React.FC<ComponentProps> = ({
@@ -24,6 +25,7 @@ export const Component: React.FC<ComponentProps> = ({
   transformationParams,
   keyComponent,
   borderVisible,
+  setMeshRef
 }) => {
   const dispatch = useDispatch();
   const activeTransformation = useSelector(activeTransformationSelector);
@@ -31,10 +33,20 @@ export const Component: React.FC<ComponentProps> = ({
   const selectedComponentKey = useSelector(keySelectedComponenteSelector);
   const { onClickActionForMeshBasedOnModality } =
     useCanvasFunctionsBasedOnModality();
+  const mesh = useRef(null)
 
+  const setMeshSelected = () => {
+    setMeshRef(mesh.current)
+  }
+  
+  useEffect(() => {
+    (keyComponent === selectedComponentKey) && setMeshRef((mesh.current as unknown) as THREE.Mesh)
+  },[])
+  
   return (
     <>
       <mesh
+        ref={mesh}
         name={keyComponent.toString()}
         position={transformationParams.position}
         rotation={transformationParams.rotation}
@@ -44,6 +56,7 @@ export const Component: React.FC<ComponentProps> = ({
           onClickActionForMeshBasedOnModality({
             selectedComponentKey,
             keyComponent,
+            setMeshSelected
           });
         }}
         onContextMenu={(e) => {
