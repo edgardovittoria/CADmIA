@@ -6,20 +6,12 @@ import { useSelector } from 'react-redux'
 import { Transition, Dialog } from '@headlessui/react'
 import {exportProjectFrom} from "../../../../auxiliaryFunctionsForImportAndExport/exportFunctions";
 import {uploadFileS3} from "../../../../aws/modelsAPIs";
-import AWS from "aws-sdk"
 
 export const SaveModelWithNameModal: FC<{ showModalSave: Function }> = ({ showModalSave }) => {
     const [name, setName] = useState("")
     const { user } = useAuth0()
     const canvas = useSelector(canvasStateSelector)
     const {execQuery} = useFaunaQuery()
-
-    AWS.config.update({
-        accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
-        secretAccessKey: process.env.REACT_APP_AWS_SECRET_KEY
-    })
-
-    const s3 = new AWS.S3()
 
     const saveModel = async () => {
         let model = exportProjectFrom(canvas)

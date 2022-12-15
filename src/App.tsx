@@ -19,6 +19,7 @@ import {BinaryOpsToolbar} from "./components/binaryOperationsToolbar/binaryOpsTo
 import {MiscToolbar} from "./components/miscToolbar/miscToolbar";
 import {Navbar} from "./components/navBar/NavBar";
 import {Sidebar} from "./components/sideBar/Sidebar";
+import { s3 } from "./aws/s3Config";
 
 export let token = "";
 export type borderFlagComponent = {
@@ -83,6 +84,8 @@ function App() {
                     {modalSave && <SaveModelWithNameModal showModalSave={setModalSave}/>}
                     {modalLoad && (
                         <ImportModelFromDBModal
+                            s3Config={s3}
+                            bucket={process.env.REACT_APP_AWS_BUCKET_NAME as string}
                             showModalLoad={setModalLoad}
                             importAction={importStateCanvas}
                             importActionParams={
