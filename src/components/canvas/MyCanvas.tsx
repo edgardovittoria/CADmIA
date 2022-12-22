@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  Provider,
-  ReactReduxContext,
-  useSelector,
-} from "react-redux";
+import { Provider, ReactReduxContext, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 import {
@@ -24,7 +20,10 @@ interface MyCanvasProps {
 export const MyCanvas: React.FC<MyCanvasProps> = ({ bordersVisible }) => {
   const components = useSelector(componentseSelector);
   const keySelectedComponent = useSelector(keySelectedComponenteSelector);
-  const [meshSelected, setMeshSelected] = useState<THREE.Mesh|undefined>(
+  const [orbitTarget, setOrbitTarget] = useState<THREE.Mesh | undefined>(
+    undefined
+  );
+  const [meshSelected, setMeshSelected] = useState<THREE.Mesh | undefined>(
     undefined
   );
   return (
@@ -64,6 +63,7 @@ export const MyCanvas: React.FC<MyCanvasProps> = ({ bordersVisible }) => {
                       {components.map((component) => {
                         return (
                           <Component
+                            setOrbitTarget={setOrbitTarget}
                             setMeshRef={setMeshSelected}
                             key={component.keyComponent}
                             keyComponent={component.keyComponent}

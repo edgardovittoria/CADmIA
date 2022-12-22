@@ -3,7 +3,9 @@ import { Object3DNode, useThree } from "@react-three/fiber";
 import { TransformationParams, updateTransformationParams } from "cad-library";
 import { FC, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import * as THREE from "three"
 import { ToolbarTransformationState, toolbarTransformationStateSelector } from "../../../store/toolbarTransformationSlice";
+import { useOrbitData } from "../../contexts/useOrbitData";
 
 export const Controls: FC<{
     keySelectedComponent: number;
@@ -15,6 +17,7 @@ export const Controls: FC<{
       toolbarTransformationStateSelector
     );
     const dispatch = useDispatch();
+    const {orbitTarget, setOrbitTarget} = useOrbitData()
   
     function getActiveTransformationType(
       toolbarTranformationState: ToolbarTransformationState
@@ -53,6 +56,13 @@ export const Controls: FC<{
             controls.worldScale.z,
           ],
         };
+        if(mesh?.id === orbitTarget?.id){
+          let ot = new THREE.Vector3()
+          ot.setX(transformationParmas.position[0])
+          ot.setY(transformationParmas.position[1])
+          ot.setZ(transformationParmas.position[2])
+          setOrbitTarget({id: orbitTarget?.id, position: ot})
+        }
         dispatch(updateTransformationParams(transformationParmas));
       }
     }
@@ -73,6 +83,7 @@ export const Controls: FC<{
           removeEventListener={undefined}
           dispatchEvent={undefined}
           makeDefault
+          target={orbitTarget?.position}
         />
         <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
           <GizmoViewport
