@@ -1,16 +1,15 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {redoFunction, undoFunction} from "../../components/navBar/components/undoRedo";
+import {redoFunction, undoFunction} from "./navBar/components/editItem/undoRedo";
 import { canvasStateSelector, componentseSelector, exportToSTL, keySelectedComponenteSelector, lastActionTypeSelector, lengthFutureStateSelector, lengthPastStateSelector, removeComponent, resetState } from 'cad-library';
-import {exportJSONProject} from "../../components/navBar/components/FileItem";
+import {exportJSONProject} from "./navBar/components/fileItem/FileItem";
 
 interface KeyboardEventMapperProps {
     sideBarChecked: boolean,
-    setSideBarChecked: Function,
-    setViewElementVisibility: Function
+    setSideBarChecked: Function
 }
 
-export const KeyboardEventMapper: React.FC<KeyboardEventMapperProps> = ({setSideBarChecked, sideBarChecked, setViewElementVisibility}) => {
+export const KeyboardEventMapper: React.FC<KeyboardEventMapperProps> = ({setSideBarChecked, sideBarChecked}) => {
 
     const dispatch = useDispatch();
     const pastStateLength = useSelector(lengthPastStateSelector)
@@ -48,7 +47,6 @@ export const KeyboardEventMapper: React.FC<KeyboardEventMapperProps> = ({setSide
         if(e.ctrlKey && e.key === 'd'){
             e.preventDefault()
             setSideBarChecked(!sideBarChecked)
-            setViewElementVisibility('SIDEBAR', !sideBarChecked)
         }
         //export JSON project
         if(e.ctrlKey && !e.altKey && e.key === 's'){

@@ -23,7 +23,7 @@ export type ModalityManagerContextType = {
 
 export const ModalityManagerContext = createContext<ModalityManagerContextType>(
   {
-    modality: CadmiaModality.NormalSelection,
+    modality: 'NormalSelection',
     setModality: (f: any) => f,
     onClickActionForMeshBasedOnModality: (f: any) => f,
     orbitTarget: undefined,
@@ -33,14 +33,14 @@ export const ModalityManagerContext = createContext<ModalityManagerContextType>(
 );
 
 export const ModalityManagerProvider: FC<{}> = ({ children }) => {
-  const [modality, setModality] = useState(CadmiaModality.NormalSelection);
+  const [modality, setModality] = useState<CadmiaModality>('NormalSelection');
   const [orbitTarget, setOrbitTarget] = useState<OrbitTarget>(undefined);
   const dispatch = useDispatch();
   const onClickActionForMeshBasedOnModality = (f: any) => {
-    if (modality === CadmiaModality.NormalSelection) {
+    if (modality === 'NormalSelection') {
       f.selectedComponentKey !== f.keyComponent &&
         dispatch(selectComponent(f.keyComponent));
-    } else if (modality === CadmiaModality.BinaryOperation) {
+    } else if (modality === 'BinaryOperation') {
       dispatch(toggleEntitySelectionForBinaryOp(f.keyComponent));
     }
   };

@@ -1,20 +1,16 @@
 import React, {Fragment} from 'react';
 import {Popover, Switch, Transition} from "@headlessui/react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
+import { classNames } from '../NavBar';
 
 interface ViewItemProps {
     sideBarChecked: boolean
     setSideBarChecked: (v: boolean) => void
-    setViewElementVisibility: (s: string, v: boolean) => void
-}
-
-function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(' ')
 }
 
 export const ViewItem: React.FC<ViewItemProps> = (
     {
-        sideBarChecked, setSideBarChecked, setViewElementVisibility
+        sideBarChecked, setSideBarChecked
     }
 ) => {
     return (
@@ -53,7 +49,6 @@ export const ViewItem: React.FC<ViewItemProps> = (
                                 <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                                                     <span onClick={() => {
                                                         setSideBarChecked(!sideBarChecked)
-                                                        setViewElementVisibility("SIDEBAR", !sideBarChecked)
                                                     }}>
                                                         <div id="viewDropdown">
                                                             <div className="flex justify-between">
@@ -62,7 +57,7 @@ export const ViewItem: React.FC<ViewItemProps> = (
                                                                 <div>
                                                                     <Switch
                                                                         checked={sideBarChecked}
-                                                                        onChange={setSideBarChecked as (checked: boolean) => void}
+                                                                        onChange={setSideBarChecked}
                                                                         className={`${sideBarChecked ? 'bg-teal-900' : 'bg-teal-700'} relative inline-flex h-[18px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
                                                                     >
                                                                         <span

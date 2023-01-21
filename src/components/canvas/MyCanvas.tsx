@@ -13,16 +13,12 @@ import { borderFlagComponent } from "../../App";
 import { Controls } from "./components/controls";
 
 interface MyCanvasProps {
-  // borderVisible: boolean,
   bordersVisible: borderFlagComponent[];
 }
 
 export const MyCanvas: React.FC<MyCanvasProps> = ({ bordersVisible }) => {
   const components = useSelector(componentseSelector);
   const keySelectedComponent = useSelector(keySelectedComponenteSelector);
-  const [orbitTarget, setOrbitTarget] = useState<THREE.Mesh | undefined>(
-    undefined
-  );
   const [meshSelected, setMeshSelected] = useState<THREE.Mesh | undefined>(
     undefined
   );
@@ -30,8 +26,6 @@ export const MyCanvas: React.FC<MyCanvasProps> = ({ bordersVisible }) => {
     <div className="h-[93vh]">
       <ReactReduxContext.Consumer>
         {({ store }) => (
-          // <MeshesAndCollisionsContext.Consumer>
-          //   {(MeshesContextType) => (
           <ModalityManagerContext.Consumer>
             {(ModalityManagerContextType) => (
               <>
@@ -46,9 +40,6 @@ export const MyCanvas: React.FC<MyCanvasProps> = ({ bordersVisible }) => {
                   }}
                 >
                   <Provider store={store}>
-                    {/* <MeshesAndCollisionsContext.Provider
-                          value={MeshesContextType}
-                        > */}
                     <ModalityManagerContext.Provider
                       value={ModalityManagerContextType}
                     >
@@ -59,11 +50,9 @@ export const MyCanvas: React.FC<MyCanvasProps> = ({ bordersVisible }) => {
                         position={[-7, 25, 13]}
                         intensity={0.85}
                       />
-                      {/* <SetMeshes components={components} /> */}
                       {components.map((component) => {
                         return (
                           <Component
-                            setOrbitTarget={setOrbitTarget}
                             setMeshRef={setMeshSelected}
                             key={component.keyComponent}
                             keyComponent={component.keyComponent}
@@ -85,9 +74,6 @@ export const MyCanvas: React.FC<MyCanvasProps> = ({ bordersVisible }) => {
                           </Component>
                         );
                       })}
-                      {/* {keySelectedComponent !== 0 &&
-                                                <DetectCollision entity={findComponentByKey(components, keySelectedComponent)} />
-                                            } */}
                       <Controls
                         keySelectedComponent={keySelectedComponent}
                         mesh={meshSelected}
@@ -97,25 +83,13 @@ export const MyCanvas: React.FC<MyCanvasProps> = ({ bordersVisible }) => {
                         scale={[1, 1, 1]}
                       />
                     </ModalityManagerContext.Provider>
-                    {/* </MeshesAndCollisionsContext.Provider> */}
                   </Provider>
                 </Canvas>
               </>
             )}
           </ModalityManagerContext.Consumer>
-          //   )}
-          // </MeshesAndCollisionsContext.Consumer>
         )}
       </ReactReduxContext.Consumer>
     </div>
   );
 };
-
-// const SetMeshes: FC<{ components: ComponentEntity[] }> = ({ components }) => {
-//   const { scene } = useThree();
-//   const { setMeshes } = useMeshes();
-//   useEffect(() => {
-//     setMeshes(getObjectsFromSceneByType(scene, "Mesh"));
-//   }, [scene, components, setMeshes]);
-//   return <></>;
-// };

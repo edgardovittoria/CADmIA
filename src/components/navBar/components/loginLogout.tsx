@@ -1,24 +1,18 @@
-import React, {Fragment} from 'react';
-import {Popover, Transition} from "@headlessui/react";
-import {ArrowRightOnRectangleIcon, ChevronDownIcon} from "@heroicons/react/20/solid";
-import {LogoutOptions, User} from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Popover, Transition } from "@headlessui/react"
+import { ArrowRightOnRectangleIcon, ChevronDownIcon } from "@heroicons/react/20/solid"
+import { FC, Fragment } from "react"
+import { classNames } from "../NavBar";
 
-interface LoggedInItemProps {
-    user: User | undefined
-    logout: (options?: (LogoutOptions | undefined)) => void
-}
+interface LoginLogoutProps {}
 
-function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(' ')
-}
-
-export const LoggedInItem: React.FC<LoggedInItemProps> = (
-    {
-        user, logout
-    }
-) => {
-    return(
-        <div className="flex">
+export const LoginLogout: FC<LoginLogoutProps> = () => {
+    const {loginWithRedirect, isAuthenticated, logout, user} = useAuth0();
+    return (
+        <>
+        {isAuthenticated
+                            ? 
+                            <div className="flex">
             <Popover className="relative">
                 {({open}) => (
                     <>
@@ -67,6 +61,14 @@ export const LoggedInItem: React.FC<LoggedInItemProps> = (
                 )}
             </Popover>
         </div>
+                            : <div
+                            className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-gray-500 px-3 py-1 text-base font-medium text-white shadow-sm hover:bg-gray-400 hover:cursor-pointer"
+                            onClick={() => loginWithRedirect()}
+                        >
+                            Sign in
+                        </div>
+                        }
+        </>
     )
 
 }

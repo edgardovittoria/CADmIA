@@ -1,6 +1,6 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {setTransformationActive, toolbarTransformationStateSelector} from "../../store/toolbarTransformationSlice";
+import {setTransformationActive, toolbarTransformationStateSelector} from "../store/toolbarTransformationSlice";
 
 interface ToolBarProps {
 }

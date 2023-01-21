@@ -4,7 +4,6 @@ import {FC, Fragment, useState} from 'react'
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { Transition, Dialog } from '@headlessui/react'
-import {exportComponentsFrom} from "../../../../auxiliaryFunctionsForImportAndExport/exportFunctions";
 import {uploadFileS3} from "../../../../aws/modelsAPIs";
 
 export const SaveModelWithNameModal: FC<{ showModalSave: Function }> = ({ showModalSave }) => {
@@ -14,7 +13,7 @@ export const SaveModelWithNameModal: FC<{ showModalSave: Function }> = ({ showMo
     const {execQuery} = useFaunaQuery()
 
     const saveModel = async () => {
-        let model = exportComponentsFrom(canvas)
+        let model = JSON.stringify(canvas)
         let blobFile = new Blob([model])
         let modelFile = new File([blobFile], `${name}.json`, {type: 'application/json'})
 

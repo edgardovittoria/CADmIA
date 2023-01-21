@@ -1,4 +1,1 @@
-export const enum CadmiaModality {
-    NormalSelection,
-    BinaryOperation
-}
+export type CadmiaModality = 'NormalSelection' | 'BinaryOperation'

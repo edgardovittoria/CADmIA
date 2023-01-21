@@ -19,7 +19,6 @@ export interface ComponentProps {
   keyComponent: number;
   borderVisible: boolean;
   setMeshRef: Function;
-  setOrbitTarget: Function
 }
 
 export const Component: React.FC<ComponentProps> = ({
@@ -27,8 +26,7 @@ export const Component: React.FC<ComponentProps> = ({
   transformationParams,
   keyComponent,
   borderVisible,
-  setMeshRef,
-  setOrbitTarget
+  setMeshRef
 }) => {
   const dispatch = useDispatch();
   const activeTransformation = useSelector(activeTransformationSelector);
@@ -42,22 +40,6 @@ export const Component: React.FC<ComponentProps> = ({
     keyComponent === selectedComponentKey &&
       setMeshRef(mesh.current as unknown as THREE.Mesh);
   }, [selectedComponentKey]);
-
-  // useEffect(() => {
-  //   let center = new THREE.Vector3();
-  //   (mesh as unknown as THREE.Mesh).geometry?.computeBoundingBox();
-  //   if ((mesh as unknown as THREE.Mesh).geometry !== undefined) {
-  //     (mesh as unknown as THREE.Mesh).geometry.boundingBox?.getCenter(center);
-  //     (mesh as unknown as THREE.Mesh).geometry.center();
-  //     (mesh as unknown as THREE.Mesh).position.copy(center);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log(transformationParams.position);
-  //   console.log((mesh.current as unknown as THREE.Mesh).geometry);
-  //   console.log((mesh.current as unknown as THREE.Mesh).position);
-  // }, [transformationParams]);
 
   return (
     <>
