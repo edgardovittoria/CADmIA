@@ -15,8 +15,8 @@ import {
   setComponentMaterial,
 } from "cad-library";
 import { useDispatch, useSelector } from "react-redux";
-import { Outliner } from "./components/outliner";
-import { Visualization } from "./components/Visualization";
+import { Outliner } from "./components/outliner/outliner";
+import { BordersMeshOption } from "./components/bordersMeshOption";
 import { borderFlagComponent } from "../../App";
 
 interface SidebarProps {
@@ -93,7 +93,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 />
                 <h6 className="text-black mt-[20px]">Visualization</h6>
                 <hr className="text-black mb-2 mt-2" />
-                <Visualization
+                <BordersMeshOption
                   borderVisible={
                     bordersVisible.filter(
                       (b) => b.componentKey === selectedComponent.keyComponent

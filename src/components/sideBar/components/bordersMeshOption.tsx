@@ -1,12 +1,12 @@
 import React from 'react';
 import {Switch} from "@headlessui/react";
 
-interface VisualizationProps {
+interface BordersMeshOptionProps {
     borderVisible: boolean,
     setBorderVisible: (border: boolean) => void
 }
 
-export const Visualization: React.FC<VisualizationProps> = (
+export const BordersMeshOption: React.FC<BordersMeshOptionProps> = (
     {
         borderVisible, setBorderVisible
     }
