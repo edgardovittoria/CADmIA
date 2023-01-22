@@ -11,11 +11,6 @@ import { Navbar } from "./components/navBar/NavBar";
 import { Sidebar } from "./components/sideBar/Sidebar";
 import { StatusBar } from "./components/statusBar";
 
-export type borderFlagComponent = {
-	componentKey: number;
-	borders: boolean;
-};
-
 function App() {
 	return (
 		<>
