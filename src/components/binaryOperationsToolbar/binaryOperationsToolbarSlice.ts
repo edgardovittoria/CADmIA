@@ -8,7 +8,7 @@ export type BinaryOperationsToolbarState = {
 }
 
 export const BinaryOperationsToolbarSlice = createSlice({
-    name: 'toolbarBinaryOperations',
+    name: 'binaryOperationsToolbar',
     initialState: {
         binaryOp: undefined,
         entities: []
@@ -38,5 +38,5 @@ export const {
     setBinaryOp, unsetBinaryOp, toggleEntitySelectionForBinaryOp
 } = BinaryOperationsToolbarSlice.actions
 
-export const binaryOpSelector = (state: {toolbarBinaryOperations: BinaryOperationsToolbarState}) => state.toolbarBinaryOperations.binaryOp
-export const binaryOpEntitiesKeysSelector = (state: {toolbarBinaryOperations: BinaryOperationsToolbarState}) => state.toolbarBinaryOperations.entities
+export const binaryOpSelector = (state: {binaryOperationsToolbar: BinaryOperationsToolbarState}) => state.binaryOperationsToolbar.binaryOp
+export const binaryOpEntitiesKeysSelector = (state: {binaryOperationsToolbar: BinaryOperationsToolbarState}) => state.binaryOperationsToolbar.entities

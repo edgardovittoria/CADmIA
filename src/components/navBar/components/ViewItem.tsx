@@ -2,6 +2,8 @@ import React, {Fragment} from 'react';
 import {Popover, Switch, Transition} from "@headlessui/react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import { classNames } from '../NavBar';
+import { useDispatch } from 'react-redux';
+import { setOrbitTarget } from '../../../cadmiaModalityManagement/cadmiaModalitySlice';
 
 interface ViewItemProps {
     sideBarChecked: boolean
@@ -13,6 +15,7 @@ export const ViewItem: React.FC<ViewItemProps> = (
         sideBarChecked, setSideBarChecked
     }
 ) => {
+    const dispatch = useDispatch()
     return (
         <Popover className="relative">
             {({open}) => (
@@ -66,6 +69,18 @@ export const ViewItem: React.FC<ViewItemProps> = (
                                                                         />
                                                                     </Switch>
                                                                 </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                </div>
+                                <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                                                    <span onClick={() => {
+                                                        dispatch(setOrbitTarget(undefined))
+                                                    }}>
+                                                        <div id="viewDropdown">
+                                                            <div className="flex justify-between">
+                                                                <span className="text-gray-900 text-base font-medium">Reset Orbit To Origin</span>
 
                                                             </div>
                                                         </div>

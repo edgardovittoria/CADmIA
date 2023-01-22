@@ -5,11 +5,10 @@ import { canvasStateSelector, componentseSelector, exportToSTL, keySelectedCompo
 import {exportJSONProject} from "./navBar/components/fileItem/FileItem";
 
 interface KeyboardEventMapperProps {
-    sideBarChecked: boolean,
-    setSideBarChecked: Function
+    toggleSidebar: Function
 }
 
-export const KeyboardEventMapper: React.FC<KeyboardEventMapperProps> = ({setSideBarChecked, sideBarChecked}) => {
+export const KeyboardEventMapper: React.FC<KeyboardEventMapperProps> = ({toggleSidebar}) => {
 
     const dispatch = useDispatch();
     const pastStateLength = useSelector(lengthPastStateSelector)
@@ -46,7 +45,7 @@ export const KeyboardEventMapper: React.FC<KeyboardEventMapperProps> = ({setSide
         //set sidebar visibility
         if(e.ctrlKey && e.key === 'd'){
             e.preventDefault()
-            setSideBarChecked(!sideBarChecked)
+            toggleSidebar()
         }
         //export JSON project
         if(e.ctrlKey && !e.altKey && e.key === 's'){

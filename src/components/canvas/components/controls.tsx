@@ -4,8 +4,8 @@ import { TransformationParams, updateTransformationParams } from "cad-library";
 import { FC, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as THREE from "three"
-import { ToolbarTransformationState, toolbarTransformationStateSelector } from "../../../store/toolbarTransformationSlice";
-import { useOrbitData } from "../../contexts/useOrbitData";
+import { orbitTargetSelector } from "../../../cadmiaModalityManagement/cadmiaModalitySlice";
+import { activeTransformationSelector } from "../../transformationsToolbar/toolbarTransformationSlice";
 
 export const Controls: FC<{
     keySelectedComponent: number;
@@ -13,19 +13,9 @@ export const Controls: FC<{
   }> = ({ keySelectedComponent, mesh }) => {
     const { camera } = useThree();
     const transformation = useRef(null);
-    const toolbarTransformationState = useSelector(
-      toolbarTransformationStateSelector
-    );
     const dispatch = useDispatch();
-    const {orbitTarget, setOrbitTarget} = useOrbitData()
-  
-    function getActiveTransformationType(
-      toolbarTranformationState: ToolbarTransformationState
-    ): string {
-      return toolbarTranformationState.transformation.filter(
-        (transformation) => transformation.active
-      )[0].type;
-    }
+    const activeTransformation = useSelector(activeTransformationSelector)
+    const orbitTarget = useSelector(orbitTargetSelector)
   
     useEffect(() => {
       if (transformation.current) {
@@ -56,13 +46,6 @@ export const Controls: FC<{
             controls.worldScale.z,
           ],
         };
-        if(mesh?.id === orbitTarget?.id){
-          let ot = new THREE.Vector3()
-          ot.setX(transformationParmas.position[0])
-          ot.setY(transformationParmas.position[1])
-          ot.setZ(transformationParmas.position[2])
-          setOrbitTarget({id: orbitTarget?.id, position: ot})
-        }
         dispatch(updateTransformationParams(transformationParmas));
       }
     }
@@ -74,7 +57,7 @@ export const Controls: FC<{
             ref={transformation}
             children={<></>}
             object={mesh}
-            mode={getActiveTransformationType(toolbarTransformationState)}
+            mode={activeTransformation.type}
           />
         )}
         <OrbitControls
@@ -83,7 +66,7 @@ export const Controls: FC<{
           removeEventListener={undefined}
           dispatchEvent={undefined}
           makeDefault
-          target={orbitTarget?.position}
+          target={(orbitTarget) ? new THREE.Vector3(orbitTarget?.position[0], orbitTarget?.position[1], orbitTarget?.position[2]): new THREE.Vector3(0,0,0)}
         />
         <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
           <GizmoViewport

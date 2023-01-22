@@ -4,13 +4,14 @@ import {
     configureStore,
     ThunkAction
 } from '@reduxjs/toolkit';
-import {ToolbarTransformationSlice} from "./toolbarTransformationSlice";
+import {TransformationsToolbarSlice} from "./components/transformationsToolbar/toolbarTransformationSlice";
 import undoable, {excludeAction} from 'redux-undo';
 import { persistReducer } from 'redux-persist'
 import persistStore from "redux-persist/es/persistStore";
 import localforage from 'localforage';
 import { CanvasSlice, UsersSlice } from 'cad-library';
-import { BinaryOperationsToolbarSlice } from '../components/binaryOperationsToolbar/binaryOperationsToolbarSlice';
+import { BinaryOperationsToolbarSlice } from './components/binaryOperationsToolbar/binaryOperationsToolbarSlice';
+import { CadmiaModalitySlice } from './cadmiaModalityManagement/cadmiaModalitySlice';
 
 
 const persistConfig = {
@@ -23,8 +24,9 @@ const rootReducer = combineReducers({
         limit: 20,
         filter: excludeAction(CanvasSlice.actions.incrementNumberOfGeneratedKey.type),
     }),
-    toolbarTransformation: ToolbarTransformationSlice.reducer,
-    toolbarBinaryOperations: BinaryOperationsToolbarSlice.reducer,
+    transformationsToolbar: TransformationsToolbarSlice.reducer,
+    binaryOperationsToolbar: BinaryOperationsToolbarSlice.reducer,
+    cadmiaModality: CadmiaModalitySlice.reducer,
     user: UsersSlice.reducer,
 });
 

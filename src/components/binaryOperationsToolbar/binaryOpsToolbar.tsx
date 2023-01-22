@@ -6,7 +6,7 @@ import {
     setBinaryOp,
     unsetBinaryOp,
 } from "./binaryOperationsToolbarSlice";
-import {CadmiaModality} from "../../models/cadmiaModality";
+import {CadmiaModality} from "../../cadmiaModalityManagement/cadmiaModalityType";
 import unionIcon from "./style/unionIcon.png";
 import intersectionIcon from "./style/intersectionIcon.png";
 import subtractionIcon from "./style/subtractionIcon.png";
@@ -24,15 +24,15 @@ import {
     setComponentsOpacity,
 } from "cad-library";
 import {Dispatch} from "@reduxjs/toolkit";
-import {useCadmiaModality} from "../contexts/useCadmiaModality";
 import {CheckIcon, XCircleIcon} from "@heroicons/react/20/solid";
+import { cadmiaModalitySelector, setModality } from "../../cadmiaModalityManagement/cadmiaModalitySlice";
 
 interface BinaryOpsToolbarProps {
 }
 
 export const BinaryOpsToolbar: React.FC<BinaryOpsToolbarProps> = () => {
     const dispatch = useDispatch();
-    const {modality, setModality} = useCadmiaModality();
+    const modality = useSelector(cadmiaModalitySelector)
     const binaryOp = useSelector(binaryOpSelector);
     const entityKeysForBinaryOperations = useSelector(
         binaryOpEntitiesKeysSelector
@@ -138,7 +138,7 @@ export const BinaryOpsToolbar: React.FC<BinaryOpsToolbarProps> = () => {
              ${binaryOp === "UNION" ? 'bg-gray-400' : 'bg-white'}
             `}
                      onClick={() => {
-                         setModality('BinaryOperation' as CadmiaModality);
+                         dispatch(setModality('BinaryOperation' as CadmiaModality));
                          dispatch(setBinaryOp("UNION"));
                      }}
                 >
@@ -151,7 +151,7 @@ export const BinaryOpsToolbar: React.FC<BinaryOpsToolbarProps> = () => {
              ${binaryOp === "INTERSECTION" ? 'bg-gray-300' : 'bg-white'}
             `}
                      onClick={() => {
-                         setModality('BinaryOperation' as CadmiaModality);
+                         dispatch(setModality('BinaryOperation' as CadmiaModality));
                          dispatch(setBinaryOp("INTERSECTION"));
                      }}
                 >
@@ -164,7 +164,7 @@ export const BinaryOpsToolbar: React.FC<BinaryOpsToolbarProps> = () => {
              ${binaryOp === "SUBTRACTION" ? 'bg-gray-300' : 'bg-white'}
             `}
                      onClick={() => {
-                         setModality('BinaryOperation' as CadmiaModality);
+                         dispatch(setModality('BinaryOperation' as CadmiaModality));
                          dispatch(setBinaryOp("SUBTRACTION"));
                      }}
                 >
@@ -180,7 +180,7 @@ export const BinaryOpsToolbar: React.FC<BinaryOpsToolbarProps> = () => {
                     ) : (
                         <XCircleIcon className="text-red-600 w-8 h-8"
                                      onClick={() => {
-                                         setModality('NormalSelection' as CadmiaModality);
+                                         dispatch(setModality('NormalSelection' as CadmiaModality));
                                          dispatch(unsetBinaryOp());
                                      }}
                         />
@@ -201,7 +201,7 @@ export const BinaryOpsToolbar: React.FC<BinaryOpsToolbarProps> = () => {
                                            canvasState,
                                            dispatch
                                        );
-                                       setModality('NormalSelection' as CadmiaModality);
+                                       dispatch(setModality('NormalSelection' as CadmiaModality));
                                        dispatch(unsetBinaryOp());
                                    }}
                         />

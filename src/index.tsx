@@ -3,13 +3,11 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import { persistor, store } from "./store/store";
+import { persistor, store } from "./store";
 import { PersistGate } from "redux-persist/integration/react";
-// import { MeshesAndCollisionsProvider } from "./components/contexts/meshesAndCollisionsProvider";
 import { Auth0Provider } from "@auth0/auth0-react";
 import React from "react";
 import { Toaster } from "react-hot-toast";
-import { ModalityManagerProvider } from "./components/contexts/modalityManagerProvider";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,16 +18,12 @@ ReactDOM.render(
       audience={process.env.REACT_APP_AUTH0_AUDIENCE as string}
     >
       <Provider store={store}>
-        {/* <MeshesAndCollisionsProvider> */}
-          <ModalityManagerProvider>
             <PersistGate persistor={persistor}>
               <div>
                 <Toaster position="top-center" />
               </div>
               <App />
             </PersistGate>
-          </ModalityManagerProvider>
-        {/* </MeshesAndCollisionsProvider> */}
       </Provider>
     </Auth0Provider>
   </React.StrictMode>,
