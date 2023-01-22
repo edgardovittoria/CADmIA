@@ -2,20 +2,16 @@ import React, {Fragment} from 'react';
 import {Popover, Switch, Transition} from "@headlessui/react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import { classNames } from '../NavBar';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setOrbitTarget } from '../../../cadmiaModalityManagement/cadmiaModalitySlice';
+import { closeSidebar, openSidebar, sidebarVisibilitySelector, toggleSidebar } from '../../sideBar/sidebarSlice';
 
 interface ViewItemProps {
-    sideBarChecked: boolean
-    setSideBarChecked: (v: boolean) => void
 }
 
-export const ViewItem: React.FC<ViewItemProps> = (
-    {
-        sideBarChecked, setSideBarChecked
-    }
-) => {
+export const ViewItem: React.FC<ViewItemProps> = () => {
     const dispatch = useDispatch()
+    const sideBarChecked = useSelector(sidebarVisibilitySelector)
     return (
         <Popover className="relative">
             {({open}) => (
@@ -51,7 +47,7 @@ export const ViewItem: React.FC<ViewItemProps> = (
                                 className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                                 <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                                                     <span onClick={() => {
-                                                        setSideBarChecked(!sideBarChecked)
+                                                        dispatch(toggleSidebar())
                                                     }}>
                                                         <div id="viewDropdown">
                                                             <div className="flex justify-between">
@@ -60,7 +56,7 @@ export const ViewItem: React.FC<ViewItemProps> = (
                                                                 <div>
                                                                     <Switch
                                                                         checked={sideBarChecked}
-                                                                        onChange={setSideBarChecked}
+                                                                        onChange={(checked: boolean) => (checked) ? dispatch(openSidebar()) : dispatch(closeSidebar())}
                                                                         className={`${sideBarChecked ? 'bg-teal-900' : 'bg-teal-700'} relative inline-flex h-[18px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
                                                                     >
                                                                         <span

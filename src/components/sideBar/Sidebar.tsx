@@ -17,23 +17,15 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Outliner } from "./components/outliner/outliner";
 import { BordersMeshOption } from "./components/bordersMeshOption";
-import { borderFlagComponent } from "../../App";
+import { closeSidebar, openSidebar, sidebarVisibilitySelector } from "./sidebarSlice";
 
 interface SidebarProps {
-  sideBarVisibility: boolean;
-  setSideBarVisibility: (visibility: boolean) => void;
-  bordersVisible: borderFlagComponent[];
-  setBorderForComponent: (comp: number, border: boolean) => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({
-  sideBarVisibility,
-  setSideBarVisibility,
-  bordersVisible,
-  setBorderForComponent,
-}) => {
+export const Sidebar: React.FC<SidebarProps> = () => {
   const canvasComponents = useSelector(componentseSelector);
   const selectedComponent = useSelector(selectedComponentSelector);
+  const sideBarVisibility = useSelector(sidebarVisibilitySelector)
   const dispatch = useDispatch();
   const setMaterial = (material: Material) =>
     dispatch(
@@ -46,9 +38,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
     dispatch(
       removeComponentMaterial({ keyComponent: selectedComponent.keyComponent })
     );
-  const setBorderForSelectedComponent = (border: boolean) => {
-    setBorderForComponent(selectedComponent.keyComponent, border);
-  };
 
   return (
     <>
@@ -65,7 +54,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div className="flex items-center">
             <XMarkIcon
               className="text-black w-4 h-4 hover:cursor-pointer"
-              onClick={() => setSideBarVisibility(false)}
+              onClick={() => dispatch(closeSidebar())}
             />
             <h2 className="mb-[10px] text-xl text-black mx-auto">
               Object Details
@@ -93,19 +82,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 />
                 <h6 className="text-black mt-[20px]">Visualization</h6>
                 <hr className="text-black mb-2 mt-2" />
-                <BordersMeshOption
-                  borderVisible={
-                    bordersVisible.filter(
-                      (b) => b.componentKey === selectedComponent.keyComponent
-                    ).length > 0
-                      ? bordersVisible.filter(
-                          (b) =>
-                            b.componentKey === selectedComponent.keyComponent
-                        )[0].borders
-                      : false
-                  }
-                  setBorderVisible={setBorderForSelectedComponent}
-                />
+                <BordersMeshOption />
                 <button
                   type="button"
                   className="rounded bg-red-500 shadow p-2 mt-[20px] w-full"
@@ -129,7 +106,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="absolute top-[10px] right-[10px] w-[3vw] bg-white p-[10px] text-white fixed text-center shadow">
           <div
             className="flex flex-col items-center py-1  border-2 border-gray-300 rounded hover:border-black hover:cursor-pointer"
-            onClick={() => setSideBarVisibility(true)}
+            onClick={() => dispatch(openSidebar())}
           >
             <AdjustmentsHorizontalIcon className="text-black w-5 h-5" />
           </div>

@@ -7,8 +7,6 @@ import {ComponentsItem} from "./components/ComponentsItem";
 import { LoginLogout } from './components/loginLogout';
 
 interface NavbarProps {
-    sideBarChecked: boolean,
-    setSideBarChecked: (v: boolean) => void,
 }
 
 export function classNames(...classes: string[]) {
@@ -16,11 +14,7 @@ export function classNames(...classes: string[]) {
 }
 
 
-export const Navbar: React.FC<NavbarProps> = (
-    {
-        setSideBarChecked, sideBarChecked
-    }
-) => {
+export const Navbar: React.FC<NavbarProps> = () => {
 
     return (
         <Popover className="relative bg-white max-h-[100px]">
@@ -33,7 +27,7 @@ export const Navbar: React.FC<NavbarProps> = (
                     </div>
                     <Popover.Group as="nav" className="hidden space-x-10 md:flex">
                         <FileItem/>
-                        <ViewItem sideBarChecked={sideBarChecked} setSideBarChecked={setSideBarChecked}/>
+                        <ViewItem/>
                         <EditItem/>
                         <ComponentsItem/>
                     </Popover.Group>

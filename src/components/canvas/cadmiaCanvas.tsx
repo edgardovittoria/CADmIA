@@ -8,14 +8,14 @@ import {
   keySelectedComponenteSelector,
 } from "cad-library";
 import { Component } from "./components/component";
-import { borderFlagComponent } from "../../App";
 import { Controls } from "./components/controls";
+import { meshesWithBordersVisibleSelector } from "../sideBar/sidebarSlice";
 
 interface CadmiaCanvasProps {
-  bordersVisible: borderFlagComponent[];
 }
 
-export const CadmiaCanvas: React.FC<CadmiaCanvasProps> = ({ bordersVisible }) => {
+export const CadmiaCanvas: React.FC<CadmiaCanvasProps> = () => {
+  const bordersVisible = useSelector(meshesWithBordersVisibleSelector)
   const components = useSelector(componentseSelector);
   const keySelectedComponent = useSelector(keySelectedComponenteSelector);
   const [meshSelected, setMeshSelected] = useState<THREE.Mesh | undefined>(
@@ -54,16 +54,7 @@ export const CadmiaCanvas: React.FC<CadmiaCanvasProps> = ({ bordersVisible }) =>
                             transformationParams={
                               component.transformationParams
                             }
-                            borderVisible={
-                              bordersVisible.filter(
-                                (b) => b.componentKey === component.keyComponent
-                              ).length > 0
-                                ? bordersVisible.filter(
-                                    (b) =>
-                                      b.componentKey === component.keyComponent
-                                  )[0].borders
-                                : false
-                            }
+                            borderVisible={bordersVisible.filter(mb => mb === component.keyComponent).length > 0}
                           >
                             <FactoryShapes entity={component} />
                           </Component>

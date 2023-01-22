@@ -12,6 +12,7 @@ import localforage from 'localforage';
 import { CanvasSlice, UsersSlice } from 'cad-library';
 import { BinaryOperationsToolbarSlice } from './components/binaryOperationsToolbar/binaryOperationsToolbarSlice';
 import { CadmiaModalitySlice } from './cadmiaModalityManagement/cadmiaModalitySlice';
+import { SidebarSlice } from './components/sideBar/sidebarSlice';
 
 
 const persistConfig = {
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
     transformationsToolbar: TransformationsToolbarSlice.reducer,
     binaryOperationsToolbar: BinaryOperationsToolbarSlice.reducer,
     cadmiaModality: CadmiaModalitySlice.reducer,
+    sidebar: SidebarSlice.reducer,
     user: UsersSlice.reducer,
 });
 

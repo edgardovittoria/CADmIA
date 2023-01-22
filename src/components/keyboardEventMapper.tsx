@@ -3,12 +3,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {redoFunction, undoFunction} from "./navBar/components/editItem/undoRedo";
 import { canvasStateSelector, componentseSelector, exportToSTL, keySelectedComponenteSelector, lastActionTypeSelector, lengthFutureStateSelector, lengthPastStateSelector, removeComponent, resetState } from 'cad-library';
 import {exportJSONProject} from "./navBar/components/fileItem/FileItem";
+import { toggleSidebar } from './sideBar/sidebarSlice';
 
 interface KeyboardEventMapperProps {
-    toggleSidebar: Function
 }
 
-export const KeyboardEventMapper: React.FC<KeyboardEventMapperProps> = ({toggleSidebar}) => {
+export const KeyboardEventMapper: React.FC<KeyboardEventMapperProps> = () => {
 
     const dispatch = useDispatch();
     const pastStateLength = useSelector(lengthPastStateSelector)
@@ -45,7 +45,7 @@ export const KeyboardEventMapper: React.FC<KeyboardEventMapperProps> = ({toggleS
         //set sidebar visibility
         if(e.ctrlKey && e.key === 'd'){
             e.preventDefault()
-            toggleSidebar()
+            dispatch(toggleSidebar())
         }
         //export JSON project
         if(e.ctrlKey && !e.altKey && e.key === 's'){
