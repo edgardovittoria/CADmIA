@@ -4,7 +4,7 @@ import {FC, Fragment, useState} from 'react'
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { Transition, Dialog } from '@headlessui/react'
-import {uploadFileS3} from "../../../../aws/modelsAPIs";
+import {uploadFileS3} from "./modelsAPIs";
 
 export const SaveModelWithNameModal: FC<{ showModalSave: Function }> = ({ showModalSave }) => {
     const [name, setName] = useState("")

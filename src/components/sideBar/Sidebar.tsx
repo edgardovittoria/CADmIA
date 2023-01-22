@@ -5,7 +5,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { Transformations } from "./components/transformations";
 import { GeometryParams } from "./components/geometryParams/geometryParams";
-import { MaterialSelection } from "./components/materialSelection";
+import { MaterialSelection } from "./components/materialSelection/materialSelection";
 import {
   componentseSelector,
   Material,

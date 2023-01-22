@@ -21,10 +21,10 @@ import {
 	numberOfGeneratedKeySelector,
 } from "cad-library";
 import { useDispatch, useSelector } from "react-redux";
-import { SaveModelWithNameModal } from "./saveModelWithNameModal";
-import { s3 } from "../../../../aws/s3Config";
+import { SaveModelWithNameModal } from "./components/saveModelWithNameModal";
 import { useAuth0 } from "@auth0/auth0-react";
 import { classNames } from "../../NavBar";
+import { s3 } from "./components/s3Config";
 
 interface FileItemProps {
 }
