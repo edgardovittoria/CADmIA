@@ -13,7 +13,7 @@ export const SaveModelWithNameModal: FC<{ showModalSave: Function }> = ({ showMo
     const {execQuery} = useFaunaQuery()
 
     const saveModel = async () => {
-        let model = JSON.stringify(canvas)
+        let model = JSON.stringify(canvas.components)
         let blobFile = new Blob([model])
         let modelFile = new File([blobFile], `${name}.json`, {type: 'application/json'})
 
