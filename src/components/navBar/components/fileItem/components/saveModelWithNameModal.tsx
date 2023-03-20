@@ -5,15 +5,17 @@ import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { Transition, Dialog } from '@headlessui/react'
 import {uploadFileS3} from "./modelsAPIs";
+import {unitSelector} from "../../../../statusBar/statusBarSlice";
 
 export const SaveModelWithNameModal: FC<{ showModalSave: Function }> = ({ showModalSave }) => {
     const [name, setName] = useState("")
     const { user } = useAuth0()
     const canvas = useSelector(canvasStateSelector)
+    const unit = useSelector(unitSelector)
     const {execQuery} = useFaunaQuery()
 
     const saveModel = async () => {
-        let model = JSON.stringify(canvas.components)
+        let model = JSON.stringify({components: canvas.components, unit: unit})
         let blobFile = new Blob([model])
         let modelFile = new File([blobFile], `${name}.json`, {type: 'application/json'})
 

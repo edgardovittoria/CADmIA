@@ -9,7 +9,7 @@ import { BinaryOpsToolbar } from "./components/binaryOperationsToolbar/binaryOps
 import { MiscToolbar } from "./components/miscToolbar";
 import { Navbar } from "./components/navBar/NavBar";
 import { Sidebar } from "./components/sideBar/Sidebar";
-import { StatusBar } from "./components/statusBar";
+import { StatusBar } from "./components/statusBar/statusBar";
 
 function App() {
 	return (

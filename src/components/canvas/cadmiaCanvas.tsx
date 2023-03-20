@@ -3,8 +3,9 @@ import { Provider, ReactReduxContext, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 import {
+  BufferGeometryAttributes, ComponentEntity,
   componentseSelector,
-  FactoryShapes,
+  FactoryShapes, GeometryAttributes,
   keySelectedComponenteSelector,
 } from "cad-library";
 import { Component } from "./components/component";

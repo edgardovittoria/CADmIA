@@ -13,6 +13,7 @@ import { CanvasSlice, UsersSlice } from 'cad-library';
 import { BinaryOperationsToolbarSlice } from './components/binaryOperationsToolbar/binaryOperationsToolbarSlice';
 import { CadmiaModalitySlice } from './cadmiaModalityManagement/cadmiaModalitySlice';
 import { SidebarSlice } from './components/sideBar/sidebarSlice';
+import {StatusBarSlice} from "./components/statusBar/statusBarSlice";
 
 
 const persistConfig = {
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
     cadmiaModality: CadmiaModalitySlice.reducer,
     sidebar: SidebarSlice.reducer,
     user: UsersSlice.reducer,
+    statusBarSlice: StatusBarSlice.reducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
