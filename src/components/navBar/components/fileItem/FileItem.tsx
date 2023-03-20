@@ -25,6 +25,7 @@ import { SaveModelWithNameModal } from "./components/saveModelWithNameModal";
 import { useAuth0 } from "@auth0/auth0-react";
 import { classNames } from "../../NavBar";
 import { s3 } from "./components/s3Config";
+import { setUnit } from "../../../statusBar/statusBarSlice";
 
 interface FileItemProps {
 }
@@ -242,7 +243,10 @@ export const FileItem: React.FC<FileItemProps> = () => {
                             s3Config={s3}
                             bucket={process.env.REACT_APP_AWS_BUCKET_NAME as string}
                             showModalLoad={setModalLoad}
-                            importAction={importStateCanvas}
+                            importAction={(importActionParams: ImportActionParamsObject) => {
+								dispatch(importStateCanvas(importActionParams))
+								dispatch(setUnit(importActionParams.unit))
+							}}
                             importActionParams={
                                 {
                                     canvas: {
@@ -251,6 +255,7 @@ export const FileItem: React.FC<FileItemProps> = () => {
                                         lastActionType: "",
                                         selectedComponentKey: 0,
                                     } as CanvasState,
+									unit: 'mm'
                                 } as ImportActionParamsObject
                             }
                         />

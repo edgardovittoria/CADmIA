@@ -3360,10 +3360,10 @@
   "resolved" "https://registry.npmjs.org/bytes/-/bytes-3.1.2.tgz"
   "version" "3.1.2"
 
-"cad-library@^0.2.9":
-  "integrity" "sha512-QaQWIv8dxtBRFOpdbK5vc6FU1OkT4Os+6PPBHv5BT3WZAstqjm6NT6B6sh39BWOxqnpcJgqaQgUfdCa2Ad+YNw=="
-  "resolved" "https://registry.npmjs.org/cad-library/-/cad-library-0.2.9.tgz"
-  "version" "0.2.9"
+"cad-library@^0.2.11":
+  "integrity" "sha512-JPKcgC5NFQM1z3Yf6nmbiO3OCsnqnbun3oZ3qzfXNJ7tusn3+4C2SmqQI+9hPnUoELE2LcAMGAr/QpHWh5CoDQ=="
+  "resolved" "https://registry.npmjs.org/cad-library/-/cad-library-0.2.11.tgz"
+  "version" "0.2.11"
 
 "call-bind@^1.0.0", "call-bind@^1.0.2":
   "integrity" "sha512-7O+FbCihrB5WGbFYesctwmTKae6rOiIzmz1icreWJ+0aA7LJfuqhEso2T9ncpcFtzMQtzXf2QGGueWJGTYsqrA=="
