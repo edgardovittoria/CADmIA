@@ -3,9 +3,8 @@ import { Provider, ReactReduxContext, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 import {
-  BufferGeometryAttributes, ComponentEntity,
   componentseSelector,
-  FactoryShapes, GeometryAttributes,
+  FactoryShapes,
   keySelectedComponenteSelector,
 } from "cad-library";
 import { Component } from "./components/component";
@@ -22,56 +21,58 @@ export const CadmiaCanvas: React.FC<CadmiaCanvasProps> = () => {
   const [meshSelected, setMeshSelected] = useState<THREE.Mesh | undefined>(
     undefined
   );
+
   return (
     <div className="h-[93vh]">
       <ReactReduxContext.Consumer>
         {({ store }) => (
-          
-              <>
-                <Canvas
-                  className="w-full h-full"
-                  style={{ backgroundColor: "whitesmoke" }}
-                  camera={{
-                    position: [0, 50, 0],
-                    fov: 20,
-                    far: 1000,
-                    near: 0.1,
-                  }}
-                >
-                  <Provider store={store}>
-                      <pointLight position={[100, 100, 100]} intensity={0.8} />
-                      <hemisphereLight
-                        color="#ffffff"
-                        groundColor={new THREE.Color("#b9b9b9")}
-                        position={[-7, 25, 13]}
-                        intensity={0.85}
-                      />
-                      {components.map((component) => {
-                        return (
-                          <Component
-                            setMeshRef={setMeshSelected}
-                            key={component.keyComponent}
-                            keyComponent={component.keyComponent}
-                            transformationParams={
-                              component.transformationParams
-                            }
-                            borderVisible={bordersVisible.filter(mb => mb === component.keyComponent).length > 0}
-                          >
-                            <FactoryShapes entity={component} />
-                          </Component>
-                        );
-                      })}
-                      <Controls
-                        keySelectedComponent={keySelectedComponent}
-                        mesh={meshSelected}
-                      />
-                      <gridHelper
-                        args={[100, 50, new THREE.Color('red'), new THREE.Color('#1a1818')]}
-                        scale={[1, 1, 1]}
-                      />
-                  </Provider>
-                </Canvas>
-              </>
+
+          <>
+            <Canvas
+              className="w-full h-full"
+              style={{ backgroundColor: "whitesmoke" }}
+              camera={{
+                position: [0, 50, 0],
+                fov: 20,
+                far: 1000,
+                near: 0.1,
+              }}
+            >
+              <Provider store={store}>
+                <pointLight position={[100, 100, 100]} intensity={0.8} />
+                <hemisphereLight
+                  color="#ffffff"
+                  groundColor={new THREE.Color("#b9b9b9")}
+                  position={[-7, 25, 13]}
+                  intensity={0.85}
+                />
+                {components.map((component) => {
+                  return (
+                    <Component
+                      setMeshRef={setMeshSelected}
+                      key={component.keyComponent}
+                      keyComponent={component.keyComponent}
+                      transformationParams={
+                        component.transformationParams
+                      }
+                      borderVisible={bordersVisible.filter(mb => mb === component.keyComponent).length > 0}
+                    >
+                      <FactoryShapes entity={component} />
+                    </Component>
+                  );
+                })}
+                {/* <PointerIntersectionOnMeshSurface /> */}
+                <Controls
+                  keySelectedComponent={keySelectedComponent}
+                  mesh={meshSelected}
+                />
+                <gridHelper
+                  args={[100, 50, new THREE.Color('red'), new THREE.Color('#1a1818')]}
+                  scale={[1, 1, 1]}
+                />
+              </Provider>
+            </Canvas>
+          </>
         )}
       </ReactReduxContext.Consumer>
     </div>

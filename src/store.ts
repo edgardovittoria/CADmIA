@@ -15,7 +15,6 @@ import { CadmiaModalitySlice } from './cadmiaModalityManagement/cadmiaModalitySl
 import { SidebarSlice } from './components/sideBar/sidebarSlice';
 import {StatusBarSlice} from "./components/statusBar/statusBarSlice";
 
-
 const persistConfig = {
     key: 'root',
     storage: localforage

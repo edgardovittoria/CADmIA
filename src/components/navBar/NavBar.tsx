@@ -3,7 +3,7 @@ import {Popover} from "@headlessui/react";
 import {FileItem} from "./components/fileItem/FileItem";
 import {ViewItem} from "./components/ViewItem";
 import {EditItem} from "./components/editItem/EditItem";
-import {ComponentsItem} from "./components/ComponentsItem";
+import {ComponentsItem} from "./components/componentsItems/ComponentsItem";
 import { LoginLogout } from './components/loginLogout';
 
 interface NavbarProps {

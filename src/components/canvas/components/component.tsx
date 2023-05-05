@@ -36,6 +36,7 @@ export const Component: React.FC<ComponentProps> = ({
     keyComponent === selectedComponentKey &&
       setMeshRef(mesh.current as unknown as THREE.Mesh);
   }, [selectedComponentKey]);
+  
 
   return (
     <>
