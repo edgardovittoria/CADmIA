@@ -1,7 +1,7 @@
 import { FC, Fragment } from 'react';
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { useAddToTheSceneANewShape } from './addToTheSceneANewShape';
+import { useAddToTheSceneANewShape } from './useAddToTheSceneANewShape';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')

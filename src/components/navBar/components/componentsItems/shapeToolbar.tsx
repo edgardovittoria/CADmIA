@@ -1,5 +1,5 @@
 import React, { } from "react";
-import { useAddToTheSceneANewShape } from "./addToTheSceneANewShape";
+import { useAddToTheSceneANewShape } from "./useAddToTheSceneANewShape";
 
 export const ShapesToolbar: React.FC = () => {
   const {addToTheSceneANew, iconForA} = useAddToTheSceneANewShape()
