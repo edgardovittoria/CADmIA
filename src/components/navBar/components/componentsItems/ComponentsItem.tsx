@@ -1,18 +1,14 @@
 import { FC, Fragment } from 'react';
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faCircle, faCube, faRing } from "@fortawesome/free-solid-svg-icons";
 import { useAddToTheSceneANewShape } from './addToTheSceneANewShape';
-
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-
 export const ComponentsItem: FC = () => {
-    const addToTheSceneANew = useAddToTheSceneANewShape()
+    const { addToTheSceneANew, iconForA } = useAddToTheSceneANewShape()
     return (
         <Popover className="relative">
             {({ open }) => (
@@ -49,34 +45,34 @@ export const ComponentsItem: FC = () => {
                                 <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                                     <div onClick={() => { addToTheSceneANew("Cube") }}>
                                         <div className="-m-3 flex items-center rounded-lg p-2 hover:bg-gray-50">
-                                            <FontAwesomeIcon icon={faCube} className="text-gray-900 mr-5" />
+                                            <img src={iconForA("Cube")} alt="Add spehre" className="mr-5 w-[15px]" />
                                             <span className="text-gray-900 text-base font-medium">Cube</span>
                                         </div>
 
                                     </div>
                                     <div onClick={() => { addToTheSceneANew("Sphere") }}>
                                         <div className="-m-3 flex items-center rounded-lg p-2 hover:bg-gray-50">
-                                            <FontAwesomeIcon icon={faCircle} className="text-gray-900 mr-5" />
+                                            <img src={iconForA("Sphere")} alt="Add spehre" className="mr-5 w-[15px]" />
                                             <span className="text-gray-900 text-base font-medium">Sphere</span>
                                         </div>
                                     </div>
                                     <div onClick={() => { addToTheSceneANew("Cylinder") }}>
                                         <div className="-m-3 flex items-center rounded-lg p-2 hover:bg-gray-50">
-                                            <FontAwesomeIcon icon={faCircle} className="text-gray-900 mr-5" />
+                                            <img src={iconForA("Cylinder")} alt="Add spehre" className="mr-5 w-[15px]" />
                                             <span className="text-gray-900 text-base font-medium">Cylinder</span>
                                         </div>
 
                                     </div>
                                     <div onClick={() => { addToTheSceneANew("Torus") }}>
                                         <div className="-m-3 flex items-center rounded-lg p-2 hover:bg-gray-50">
-                                            <FontAwesomeIcon icon={faRing} className="text-gray-900 mr-5" />
+                                            <img src={iconForA("Torus")} alt="Add spehre" className="mr-5 w-[15px]" />
                                             <span className="text-gray-900 text-base font-medium">Torus</span>
                                         </div>
 
                                     </div>
                                     <div onClick={() => { addToTheSceneANew("Cone") }}>
                                         <div className="-m-3 flex items-center rounded-lg p-2 hover:bg-gray-50">
-                                            <FontAwesomeIcon icon={faCaretDown} size="lg" className="text-gray-900 mr-5" />
+                                            <img src={iconForA("Cone")} alt="Add spehre" className="mr-5 w-[15px]" />
                                             <span className="text-gray-900 text-base font-medium">Cone</span>
                                         </div>
 

@@ -1,5 +1,10 @@
 import { addComponent, getDefaultCone, getDefaultCube, getDefaultCylinder, getDefaultSphere, getDefaultTorus, numberOfGeneratedKeySelector } from "cad-library";
 import { useDispatch, useSelector } from "react-redux";
+import cubeIcon from "./style/cube.png"
+import torusIcon from "./style/torus.png"
+import cylinderIcon from "./style/cylinder.png"
+import sphereIcon from "./style/sphere.png"
+import coneIcon from "./style/cone.png"
 
 export const useAddToTheSceneANewShape = () => {
     const dispatch = useDispatch()
@@ -25,7 +30,19 @@ export const useAddToTheSceneANewShape = () => {
                 break;
         }
     }
-    return addToTheSceneANew
+
+    const iconForA = (shape: BaseShape) => {
+        switch (shape) {
+            case "Cube": return cubeIcon
+            case "Cylinder": return cylinderIcon
+            case "Cone": return coneIcon
+            case "Sphere": return sphereIcon
+            case "Torus": return torusIcon
+            default:
+                break;
+        }
+    }
+    return {addToTheSceneANew, iconForA}
 }
 
 export type BaseShape = "Cube" | "Sphere" | "Torus" | "Cone" | "Cylinder"

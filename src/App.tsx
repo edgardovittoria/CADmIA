@@ -10,7 +10,7 @@ import { MiscToolbar } from "./components/miscToolbar";
 import { Navbar } from "./components/navBar/NavBar";
 import { Sidebar } from "./components/sideBar/Sidebar";
 import { StatusBar } from "./components/statusBar/statusBar";
-import { ShapesToolbar } from "./components/navBar/components/componentsItems/shapesToolbar/shapeToolbar";
+import { ShapesToolbar } from "./components/navBar/components/componentsItems/shapeToolbar";
 
 function App() {
 	return (
