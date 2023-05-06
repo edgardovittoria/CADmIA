@@ -9,7 +9,7 @@ import coneIcon from "./style/cone.png"
 export const useAddToTheSceneANewShape = () => {
     const dispatch = useDispatch()
     const numberOfGeneratedKey = useSelector(numberOfGeneratedKeySelector);
-    const addToTheSceneANew = (shape: BaseShape) => {
+    const addToTheSceneANew = (shape: string) => {
         switch (shape) {
             case "Cube":
                 dispatch(addComponent(getDefaultCube(numberOfGeneratedKey, dispatch)))
@@ -31,7 +31,7 @@ export const useAddToTheSceneANewShape = () => {
         }
     }
 
-    const iconForA = (shape: BaseShape) => {
+    const iconForA = (shape: string) => {
         switch (shape) {
             case "Cube": return cubeIcon
             case "Cylinder": return cylinderIcon
@@ -45,4 +45,4 @@ export const useAddToTheSceneANewShape = () => {
     return {addToTheSceneANew, iconForA}
 }
 
-export type BaseShape = "Cube" | "Sphere" | "Torus" | "Cone" | "Cylinder"
+export const baseShapes : string[] = ["Cube", "Sphere", "Cylinder", "Torus", "Cone"]
