@@ -1,31 +1,18 @@
 import React, { } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  addComponent,
-  getDefaultCone,
-  getDefaultCube,
-  getDefaultCylinder,
-  getDefaultSphere,
-  getDefaultTorus,
-  numberOfGeneratedKeySelector,
-} from "cad-library";
 import cubeIcon from "./style/cube.png"
 import torusIcon from "./style/torus.png"
 import cylinderIcon from "./style/cylinder.png"
 import sphereIcon from "./style/sphere.png"
 import coneIcon from "./style/cone.png"
+import { useAddToTheSceneANewShape } from "../addToTheSceneANewShape";
 
 export const ShapesToolbar: React.FC = () => {
-  const dispatch = useDispatch();
-  const numberOfGeneratedKey = useSelector(numberOfGeneratedKeySelector);
+  const addToTheSceneANew = useAddToTheSceneANewShape()
   return (
     <>
       <div className="absolute left-[15px] top-[550px] w-[50px] text-center shadow">
         <div className="relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group bg-white hover:bg-gray-300"
-          onClick={() => {
-            let cube = getDefaultCube(numberOfGeneratedKey, dispatch);
-            dispatch(addComponent(cube))
-          }}
+          onClick={() => {addToTheSceneANew("Cube")}}
         >
           <img src={cubeIcon} alt="Add cube" />
           <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
@@ -33,10 +20,7 @@ export const ShapesToolbar: React.FC = () => {
           </div>
         </div>
         <div className="relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group bg-white hover:bg-gray-300"
-          onClick={() => {
-            let sphere = getDefaultSphere(numberOfGeneratedKey, dispatch);
-            dispatch(addComponent(sphere))
-          }}
+          onClick={() => {addToTheSceneANew("Sphere")}}
         >
           <img src={sphereIcon} alt="Add spehre" />
           <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
@@ -44,10 +28,7 @@ export const ShapesToolbar: React.FC = () => {
           </div>
         </div>
         <div className="relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group bg-white hover:bg-gray-300"
-          onClick={() => {
-            let cylinder = getDefaultCylinder(numberOfGeneratedKey, dispatch);
-            dispatch(addComponent(cylinder))
-          }}
+          onClick={() => {addToTheSceneANew("Cylinder")}}
         >
           <img src={cylinderIcon} alt="Add cylinder" />
           <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
@@ -55,10 +36,7 @@ export const ShapesToolbar: React.FC = () => {
           </div>
         </div>
         <div className="relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group bg-white hover:bg-gray-300"
-          onClick={() => {
-            let torus = getDefaultTorus(numberOfGeneratedKey, dispatch);
-            dispatch(addComponent(torus))
-          }}
+          onClick={() => {addToTheSceneANew("Torus")}}
         >
           <img src={torusIcon} alt="Add torus" />
           <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
@@ -66,10 +44,7 @@ export const ShapesToolbar: React.FC = () => {
           </div>
         </div>
         <div className="relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group bg-white hover:bg-gray-300"
-          onClick={() => {
-            let cone = getDefaultCone(numberOfGeneratedKey, dispatch);
-            dispatch(addComponent(cone))
-          }}
+          onClick={() => {addToTheSceneANew("Cone")}}
         >
           <img src={coneIcon} alt="Add cone" />
           <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">

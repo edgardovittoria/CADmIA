@@ -1,34 +1,21 @@
-import React, {Fragment} from 'react';
-import {Popover, Transition} from "@headlessui/react";
-import {ChevronDownIcon} from "@heroicons/react/20/solid";
-import {
-    addComponent,
-    getDefaultCone,
-    getDefaultCube,
-    getDefaultCylinder,
-    getDefaultSphere,
-    getDefaultTorus, numberOfGeneratedKeySelector
-} from "cad-library";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCaretDown, faCircle, faCube, faRing} from "@fortawesome/free-solid-svg-icons";
-import {useDispatch, useSelector} from "react-redux";
+import { FC, Fragment } from 'react';
+import { Popover, Transition } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown, faCircle, faCube, faRing } from "@fortawesome/free-solid-svg-icons";
+import { useAddToTheSceneANewShape } from './addToTheSceneANewShape';
 
-interface ComponentsItemProps {
-}
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
 
-export const ComponentsItem: React.FC<ComponentsItemProps> = () => {
-
-    const dispatch = useDispatch()
-    const numberOfGeneratedKey = useSelector(numberOfGeneratedKeySelector)
-
-    return(
+export const ComponentsItem: FC = () => {
+    const addToTheSceneANew = useAddToTheSceneANewShape()
+    return (
         <Popover className="relative">
-            {({open}) => (
+            {({ open }) => (
                 <>
                     <Popover.Button
                         className={classNames(
@@ -60,56 +47,36 @@ export const ComponentsItem: React.FC<ComponentsItemProps> = () => {
                             <div
                                 className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                                 <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                                    <div onClick={() => {
-                                        let cube = getDefaultCube(numberOfGeneratedKey, dispatch);
-                                        dispatch(addComponent(cube))
-
-                                    }}>
+                                    <div onClick={() => { addToTheSceneANew("Cube") }}>
                                         <div className="-m-3 flex items-center rounded-lg p-2 hover:bg-gray-50">
-                                            <FontAwesomeIcon icon={faCube} className="text-gray-900 mr-5"/>
+                                            <FontAwesomeIcon icon={faCube} className="text-gray-900 mr-5" />
                                             <span className="text-gray-900 text-base font-medium">Cube</span>
                                         </div>
 
                                     </div>
-                                    <div onClick={() => {
-                                        let sphere = getDefaultSphere(numberOfGeneratedKey, dispatch);
-                                        dispatch(addComponent(sphere))
-
-                                    }}>
+                                    <div onClick={() => { addToTheSceneANew("Sphere") }}>
                                         <div className="-m-3 flex items-center rounded-lg p-2 hover:bg-gray-50">
-                                            <FontAwesomeIcon icon={faCircle} className="text-gray-900 mr-5"/>
+                                            <FontAwesomeIcon icon={faCircle} className="text-gray-900 mr-5" />
                                             <span className="text-gray-900 text-base font-medium">Sphere</span>
                                         </div>
                                     </div>
-                                    <div onClick={() => {
-                                        let cylinder = getDefaultCylinder(numberOfGeneratedKey, dispatch);
-                                        dispatch(addComponent(cylinder))
-
-                                    }}>
+                                    <div onClick={() => { addToTheSceneANew("Cylinder") }}>
                                         <div className="-m-3 flex items-center rounded-lg p-2 hover:bg-gray-50">
-                                            <FontAwesomeIcon icon={faCircle} className="text-gray-900 mr-5"/>
+                                            <FontAwesomeIcon icon={faCircle} className="text-gray-900 mr-5" />
                                             <span className="text-gray-900 text-base font-medium">Cylinder</span>
                                         </div>
 
                                     </div>
-                                    <div onClick={() => {
-                                        let torus = getDefaultTorus(numberOfGeneratedKey, dispatch);
-                                        dispatch(addComponent(torus))
-
-                                    }}>
+                                    <div onClick={() => { addToTheSceneANew("Torus") }}>
                                         <div className="-m-3 flex items-center rounded-lg p-2 hover:bg-gray-50">
-                                            <FontAwesomeIcon icon={faRing} className="text-gray-900 mr-5"/>
+                                            <FontAwesomeIcon icon={faRing} className="text-gray-900 mr-5" />
                                             <span className="text-gray-900 text-base font-medium">Torus</span>
                                         </div>
 
                                     </div>
-                                    <div onClick={() => {
-                                        let cone = getDefaultCone(numberOfGeneratedKey, dispatch);
-                                        dispatch(addComponent(cone))
-
-                                    }}>
+                                    <div onClick={() => { addToTheSceneANew("Cone") }}>
                                         <div className="-m-3 flex items-center rounded-lg p-2 hover:bg-gray-50">
-                                            <FontAwesomeIcon icon={faCaretDown} size="lg" className="text-gray-900 mr-5"/>
+                                            <FontAwesomeIcon icon={faCaretDown} size="lg" className="text-gray-900 mr-5" />
                                             <span className="text-gray-900 text-base font-medium">Cone</span>
                                         </div>
 
