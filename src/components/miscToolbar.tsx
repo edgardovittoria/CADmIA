@@ -29,7 +29,7 @@ export const MiscToolbar: React.FC<MiscToolbarProps> = () => {
                   dispatch(addComponent(clonedEntity));
               }}/>
               <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
-                  <span className="relative z-10 p-2 text-xl leading-none text-white whitespace-no-wrap bg-gray-600 shadow-lg rounded-md">CLONE</span>
+                  <span className="relative z-10 p-2 leading-none text-white whitespace-no-wrap bg-gray-600 shadow-lg rounded-md">CLONE</span>
               </div>
           </div>
       </div>
