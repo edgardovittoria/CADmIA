@@ -27,7 +27,7 @@ export const TransformationsToolBar: React.FC<TransformationsToolBarProps> = () 
     const dispatch = useDispatch();
     return(
         <>
-            <div className="absolute left-[15px] top-[40px] w-[50px] text-center shadow">
+            <div className="absolute left-[15px] top-[10px] w-[150px] text-center shadow grid grid-cols-3">
                 {transformations.map((transformation, index) => {
                     return(
                         <div key={index} className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group hover:bg-gray-300 hover:cursor-pointer

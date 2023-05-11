@@ -5,6 +5,10 @@ import { classNames } from '../NavBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOrbitTarget } from '../../../cadmiaModalityManagement/cadmiaModalitySlice';
 import { closeSidebar, openSidebar, sidebarVisibilitySelector, toggleSidebar } from '../../sideBar/sidebarSlice';
+import { binaryOpToolbarVisibilitySelector, closeBinaryOperationsToolbar, openBinaryOperationsToolbar, toggleBinaryOperationsToolbar } from '../../binaryOperationsToolbar/binaryOperationsToolbarSlice';
+import { closeTransformationsToolbar, openTransformationsToolbar, toggleTransformationsToolbar, transformationsToolbarVisibilitySelector } from '../../transformationsToolbar/toolbarTransformationSlice';
+import { closeMiscToolbar, miscToolbarVisibilitySelector, openMiscToolbar, toggleMiscToolbar } from '../../miscToolbar/miscToolbarSlice';
+import { closeShapesToolbar, openShapesToolbar, shapesToolbarVisibilitySelector, toggleShapesToolbar } from './componentsItems/shapesToolbarSlice';
 
 interface ViewItemProps {
 }
@@ -12,6 +16,10 @@ interface ViewItemProps {
 export const ViewItem: React.FC<ViewItemProps> = () => {
     const dispatch = useDispatch()
     const sideBarChecked = useSelector(sidebarVisibilitySelector)
+    const binaryOperationsToolbarChecked = useSelector(binaryOpToolbarVisibilitySelector)
+    const transformationsToolbarChecked = useSelector(transformationsToolbarVisibilitySelector)
+	const miscToolbarChecked = useSelector(miscToolbarVisibilitySelector)
+	const shapesToolbarChecked = useSelector(shapesToolbarVisibilitySelector)
     return (
         <Popover className="relative">
             {({open}) => (
@@ -62,6 +70,106 @@ export const ViewItem: React.FC<ViewItemProps> = () => {
                                                                         <span
                                                                             aria-hidden="true"
                                                                             className={`${sideBarChecked ? 'translate-x-5' : 'translate-x-0'} pointer-events-none inline-block h-[15px] w-[15px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+                                                                        />
+                                                                    </Switch>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                </div>
+                                <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                                                    <span onClick={() => {
+                                                        dispatch(toggleBinaryOperationsToolbar())
+                                                    }}>
+                                                        <div id="viewDropdown">
+                                                            <div className="flex justify-between">
+                                                                <span className="text-gray-900 text-base font-medium">Binary operations toolbar</span>
+                                                                {/* <p className="text-base font-medium text-gray-300">Ctrl + D</p> */}
+                                                                <div>
+                                                                    <Switch
+                                                                        checked={binaryOperationsToolbarChecked}
+                                                                        onChange={(checked: boolean) => (checked) ? dispatch(openBinaryOperationsToolbar()) : dispatch(closeBinaryOperationsToolbar())}
+                                                                        className={`${binaryOperationsToolbarChecked ? 'bg-teal-900' : 'bg-teal-700'} relative inline-flex h-[18px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+                                                                    >
+                                                                        <span
+                                                                            aria-hidden="true"
+                                                                            className={`${binaryOperationsToolbarChecked ? 'translate-x-5' : 'translate-x-0'} pointer-events-none inline-block h-[15px] w-[15px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+                                                                        />
+                                                                    </Switch>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                </div>
+                                <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                                                    <span onClick={() => {
+                                                        dispatch(toggleMiscToolbar())
+                                                    }}>
+                                                        <div id="viewDropdown">
+                                                            <div className="flex justify-between">
+                                                                <span className="text-gray-900 text-base font-medium">Misc toolbar</span>
+                                                                {/* <p className="text-base font-medium text-gray-300">Ctrl + D</p> */}
+                                                                <div>
+                                                                    <Switch
+                                                                        checked={miscToolbarChecked}
+                                                                        onChange={(checked: boolean) => (checked) ? dispatch(openMiscToolbar()) : dispatch(closeMiscToolbar())}
+                                                                        className={`${miscToolbarChecked ? 'bg-teal-900' : 'bg-teal-700'} relative inline-flex h-[18px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+                                                                    >
+                                                                        <span
+                                                                            aria-hidden="true"
+                                                                            className={`${miscToolbarChecked ? 'translate-x-5' : 'translate-x-0'} pointer-events-none inline-block h-[15px] w-[15px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+                                                                        />
+                                                                    </Switch>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                </div>
+                                <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                                                    <span onClick={() => {
+                                                        dispatch(toggleTransformationsToolbar())
+                                                    }}>
+                                                        <div id="viewDropdown">
+                                                            <div className="flex justify-between">
+                                                                <span className="text-gray-900 text-base font-medium">Transformations toolbar</span>
+                                                                {/* <p className="text-base font-medium text-gray-300">Ctrl + D</p> */}
+                                                                <div>
+                                                                    <Switch
+                                                                        checked={transformationsToolbarChecked}
+                                                                        onChange={(checked: boolean) => (checked) ? dispatch(openTransformationsToolbar()) : dispatch(closeTransformationsToolbar())}
+                                                                        className={`${transformationsToolbarChecked ? 'bg-teal-900' : 'bg-teal-700'} relative inline-flex h-[18px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+                                                                    >
+                                                                        <span
+                                                                            aria-hidden="true"
+                                                                            className={`${transformationsToolbarChecked ? 'translate-x-5' : 'translate-x-0'} pointer-events-none inline-block h-[15px] w-[15px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+                                                                        />
+                                                                    </Switch>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                </div>
+                                <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                                                    <span onClick={() => {
+                                                        dispatch(toggleShapesToolbar())
+                                                    }}>
+                                                        <div id="viewDropdown">
+                                                            <div className="flex justify-between">
+                                                                <span className="text-gray-900 text-base font-medium">Shapes toolbar</span>
+                                                                {/* <p className="text-base font-medium text-gray-300">Ctrl + D</p> */}
+                                                                <div>
+                                                                    <Switch
+                                                                        checked={shapesToolbarChecked}
+                                                                        onChange={(checked: boolean) => (checked) ? dispatch(openShapesToolbar()) : dispatch(closeShapesToolbar())}
+                                                                        className={`${shapesToolbarChecked ? 'bg-teal-900' : 'bg-teal-700'} relative inline-flex h-[18px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+                                                                    >
+                                                                        <span
+                                                                            aria-hidden="true"
+                                                                            className={`${shapesToolbarChecked ? 'translate-x-5' : 'translate-x-0'} pointer-events-none inline-block h-[15px] w-[15px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
                                                                         />
                                                                     </Switch>
                                                                 </div>

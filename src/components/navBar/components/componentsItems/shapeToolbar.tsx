@@ -4,10 +4,10 @@ import {baseShapes, useAddToTheSceneANewShape} from "./useAddToTheSceneANewShape
 export const ShapesToolbar: React.FC = () => {
     const {addToTheSceneANew, iconForA} = useAddToTheSceneANewShape()
     return (
-        <div className="absolute left-[75px] top-[40px] w-[280px] text-center shadow grid grid-cols-5">
+        <div className="absolute left-[15px] top-[200px] w-[50px] text-center shadow">
             {baseShapes.map(shape =>
                     <div
-                        className="relative p-3 group bg-white hover:bg-gray-300"
+                        className="relative p-3 group bg-white hover:bg-gray-300 h-[50px]"
                         onClick={() => {
                             addToTheSceneANew(shape)
                         }}

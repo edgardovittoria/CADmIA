@@ -14,6 +14,8 @@ import { BinaryOperationsToolbarSlice } from './components/binaryOperationsToolb
 import { CadmiaModalitySlice } from './cadmiaModalityManagement/cadmiaModalitySlice';
 import { SidebarSlice } from './components/sideBar/sidebarSlice';
 import {StatusBarSlice} from "./components/statusBar/statusBarSlice";
+import { MiscToolbarSlice } from './components/miscToolbar/miscToolbarSlice';
+import { ShapesToolbarSlice } from './components/navBar/components/componentsItems/shapesToolbarSlice';
 
 const persistConfig = {
     key: 'root',
@@ -30,7 +32,9 @@ const rootReducer = combineReducers({
     cadmiaModality: CadmiaModalitySlice.reducer,
     sidebar: SidebarSlice.reducer,
     user: UsersSlice.reducer,
-    statusBarSlice: StatusBarSlice.reducer
+    statusBarSlice: StatusBarSlice.reducer, 
+    miscToolbar: MiscToolbarSlice.reducer,
+    shapesToolbar: ShapesToolbarSlice.reducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
