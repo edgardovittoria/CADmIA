@@ -40,6 +40,7 @@ export const CadmiaCanvas: React.FC<CadmiaCanvasProps> = () => {
             >
               <Provider store={store}>
                 <pointLight position={[100, 100, 100]} intensity={0.8} />
+                <pointLight position={[-100, -100, 100]} intensity={0.8} />
                 <hemisphereLight
                   color="#ffffff"
                   groundColor={new THREE.Color("#b9b9b9")}
@@ -57,7 +58,7 @@ export const CadmiaCanvas: React.FC<CadmiaCanvasProps> = () => {
                       }
                       borderVisible={bordersVisible.filter(mb => mb === component.keyComponent).length > 0}
                     >
-                      <FactoryShapes entity={component} />
+                      <FactoryShapes entity={component} color={component.material ? component.material.color : "#63cbf7"}/>
                     </Component>
                   );
                 })}
