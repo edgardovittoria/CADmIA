@@ -1,4 +1,4 @@
-import { addComponent, getDefaultCone, getDefaultCube, getDefaultCylinder, getDefaultSphere, getDefaultTorus, numberOfGeneratedKeySelector } from "cad-library";
+import { ComponentEntity, addComponent, getDefaultCone, getDefaultCube, getDefaultCylinder, getDefaultSphere, getDefaultTorus, numberOfGeneratedKeySelector } from "cad-library";
 import { useDispatch, useSelector } from "react-redux";
 import cubeIcon from "./style/cube.png"
 import torusIcon from "./style/torus.png"
@@ -12,23 +12,28 @@ export const useAddToTheSceneANewShape = () => {
     const addToTheSceneANew = (shape: string) => {
         switch (shape) {
             case "Cube":
-                dispatch(addComponent(getDefaultCube(numberOfGeneratedKey, dispatch)))
+                dispatch(addComponent(defaultNamedNew(getDefaultCube(numberOfGeneratedKey, dispatch))))
                 break;
             case "Cylinder":
-                dispatch(addComponent(getDefaultCylinder(numberOfGeneratedKey, dispatch)))
+                dispatch(addComponent(defaultNamedNew(getDefaultCylinder(numberOfGeneratedKey, dispatch))))
                 break;
             case "Cone":
-                dispatch(addComponent(getDefaultCone(numberOfGeneratedKey, dispatch)))
+                dispatch(addComponent(defaultNamedNew(getDefaultCone(numberOfGeneratedKey, dispatch))))
                 break;
             case "Sphere":
-                dispatch(addComponent(getDefaultSphere(numberOfGeneratedKey, dispatch)))
+                dispatch(addComponent(defaultNamedNew(getDefaultSphere(numberOfGeneratedKey, dispatch))))
                 break;
             case "Torus":
-                dispatch(addComponent(getDefaultTorus(numberOfGeneratedKey, dispatch)))
+                dispatch(addComponent(defaultNamedNew(getDefaultTorus(numberOfGeneratedKey, dispatch))))
                 break;
             default:
                 break;
         }
+    }
+
+    const defaultNamedNew = (entity: ComponentEntity) => {
+        entity.name = entity.name + "_" + entity.keyComponent.toString()
+        return entity
     }
 
     const iconForA = (shape: string) => {
