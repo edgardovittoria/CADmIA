@@ -54,9 +54,7 @@ export const ViewItem: React.FC<ViewItemProps> = () => {
                             <div
                                 className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                                 <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                                                    <span onClick={() => {
-                                                        dispatch(toggleSidebar())
-                                                    }}>
+                                                    <span>
                                                         <div id="viewDropdown">
                                                             <div className="flex justify-between">
                                                                 <span className="text-gray-900 text-base font-medium">Object Details</span>
@@ -79,9 +77,7 @@ export const ViewItem: React.FC<ViewItemProps> = () => {
                                                     </span>
                                 </div>
                                 <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                                                    <span onClick={() => {
-                                                        dispatch(toggleBinaryOperationsToolbar())
-                                                    }}>
+                                                    <span>
                                                         <div id="viewDropdown">
                                                             <div className="flex justify-between">
                                                                 <span className="text-gray-900 text-base font-medium">Binary operations toolbar</span>
@@ -104,9 +100,7 @@ export const ViewItem: React.FC<ViewItemProps> = () => {
                                                     </span>
                                 </div>
                                 <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                                                    <span onClick={() => {
-                                                        dispatch(toggleMiscToolbar())
-                                                    }}>
+                                                    <span>
                                                         <div id="viewDropdown">
                                                             <div className="flex justify-between">
                                                                 <span className="text-gray-900 text-base font-medium">Misc toolbar</span>
@@ -129,9 +123,7 @@ export const ViewItem: React.FC<ViewItemProps> = () => {
                                                     </span>
                                 </div>
                                 <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                                                    <span onClick={() => {
-                                                        dispatch(toggleTransformationsToolbar())
-                                                    }}>
+                                                    <span>
                                                         <div id="viewDropdown">
                                                             <div className="flex justify-between">
                                                                 <span className="text-gray-900 text-base font-medium">Transformations toolbar</span>
@@ -154,9 +146,7 @@ export const ViewItem: React.FC<ViewItemProps> = () => {
                                                     </span>
                                 </div>
                                 <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                                                    <span onClick={() => {
-                                                        dispatch(toggleShapesToolbar())
-                                                    }}>
+                                                    <span >
                                                         <div id="viewDropdown">
                                                             <div className="flex justify-between">
                                                                 <span className="text-gray-900 text-base font-medium">Shapes toolbar</span>
