@@ -10,6 +10,7 @@ import {
 import { Component } from "./components/component";
 import { Controls } from "./components/controls";
 import { meshesWithBordersVisibleSelector } from "../sideBar/sidebarSlice";
+import { Bounds } from "@react-three/drei";
 
 interface CadmiaCanvasProps {
 }
@@ -47,28 +48,30 @@ export const CadmiaCanvas: React.FC<CadmiaCanvasProps> = () => {
                   position={[-7, 25, 13]}
                   intensity={0.85}
                 />
-                {components.map((component) => {
-                  return (
-                    <Component
-                      setMeshRef={setMeshSelected}
-                      key={component.keyComponent}
-                      keyComponent={component.keyComponent}
-                      transformationParams={
-                        component.transformationParams
-                      }
-                      borderVisible={bordersVisible.filter(mb => mb === component.keyComponent).length > 0}
-                    >
-                      <FactoryShapes entity={component} color={component.material ? component.material.color : "#63cbf7"}/>
-                    </Component>
-                  );
-                })}
+                <Bounds fit clip observe margin={1.2}>
+                    {components.map((component) => {
+                      return (
+                        <Component
+                          setMeshRef={setMeshSelected}
+                          key={component.keyComponent}
+                          keyComponent={component.keyComponent}
+                          transformationParams={
+                            component.transformationParams
+                          }
+                          borderVisible={bordersVisible.filter(mb => mb === component.keyComponent).length > 0}
+                        >
+                          <FactoryShapes entity={component} color={component.material ? component.material.color : "#63cbf7"} />
+                        </Component>
+                      );
+                    })}
+                </Bounds>
                 {/* <PointerIntersectionOnMeshSurface /> */}
                 <Controls
                   keySelectedComponent={keySelectedComponent}
                   mesh={meshSelected}
                 />
                 <gridHelper
-                  args={[100, 50, new THREE.Color('red'), new THREE.Color('#1a1818')]}
+                  args={[500, 100, new THREE.Color('red'), new THREE.Color('#1a1818')]}
                   scale={[1, 1, 1]}
                 />
               </Provider>
