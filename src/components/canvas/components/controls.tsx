@@ -58,6 +58,7 @@ export const Controls: FC<{
             children={<></>}
             object={mesh}
             mode={activeTransformation.type}
+
           />
         )}
         <OrbitControls

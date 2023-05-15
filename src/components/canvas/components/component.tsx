@@ -37,39 +37,39 @@ export const Component: React.FC<ComponentProps> = ({
     keyComponent === selectedComponentKey &&
       setMeshRef(mesh.current as unknown as THREE.Mesh);
   }, [selectedComponentKey]);
-  
-useEffect(() => {
-  bounds.refresh(mesh.current as unknown as THREE.Mesh).fit().clip()
-}, [])
+
+  useEffect(() => {
+    bounds.refresh(mesh.current as unknown as THREE.Mesh).fit().clip()
+  }, [mesh])
 
   return (
-      <mesh
-        ref={mesh}
-        name={keyComponent.toString()}
-        position={transformationParams.position}
-        rotation={transformationParams.rotation}
-        scale={transformationParams.scale}
-        onClick={(e) => {
-          e.stopPropagation();
-          if (modality === 'NormalSelection') {
-            selectedComponentKey !== keyComponent &&
-              dispatch(selectComponent(keyComponent));
-          } else if (modality === 'BinaryOperation') {
-            dispatch(toggleEntitySelectionForBinaryOp(keyComponent));
-          }
-        }}
-        onDoubleClick={(e) => (e.stopPropagation(), bounds.refresh(e.object).fit())}
-        // onDoubleClick={(e) => {
-        //   e.stopPropagation();
-        //   dispatch(setOrbitTarget({position:[(mesh.current as unknown as THREE.Mesh).position.x, (mesh.current as unknown as THREE.Mesh).position.y, (mesh.current as unknown as THREE.Mesh).position.z], id: keyComponent.toString()} as OrbitTarget));
-        // }}
-        onContextMenu={(e) => {
-          e.stopPropagation();
-          dispatch(setNextTransformationActive())
-        }}
-      >
-        {children}
-        {borderVisible && <Edges />}
-      </mesh>
+    <mesh
+      ref={mesh}
+      name={keyComponent.toString()}
+      position={transformationParams.position}
+      rotation={transformationParams.rotation}
+      scale={transformationParams.scale}
+      onClick={(e) => {
+        e.stopPropagation();
+        if (modality === 'NormalSelection') {
+          selectedComponentKey !== keyComponent &&
+            dispatch(selectComponent(keyComponent));
+        } else if (modality === 'BinaryOperation') {
+          dispatch(toggleEntitySelectionForBinaryOp(keyComponent));
+        }
+      }}
+      onDoubleClick={(e) => (e.stopPropagation(), bounds.refresh(e.object).fit().clip())}
+      // onDoubleClick={(e) => {
+      //   e.stopPropagation();
+      //   dispatch(setOrbitTarget({position:[(mesh.current as unknown as THREE.Mesh).position.x, (mesh.current as unknown as THREE.Mesh).position.y, (mesh.current as unknown as THREE.Mesh).position.z], id: keyComponent.toString()} as OrbitTarget));
+      // }}
+      onContextMenu={(e) => {
+        e.stopPropagation();
+        dispatch(setNextTransformationActive())
+      }}
+    >
+      {children}
+      {borderVisible && <Edges />}
+    </mesh>
   );
 };

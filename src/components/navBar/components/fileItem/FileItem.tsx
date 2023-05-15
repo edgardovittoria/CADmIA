@@ -8,17 +8,20 @@ import {
 	CloudArrowUpIcon,
 } from "@heroicons/react/20/solid";
 import {
+	addComponent,
+	BufferGeometryAttributes,
 	CanvasState,
 	canvasStateSelector,
 	ComponentEntity,
 	componentseSelector,
 	exportToSTL,
+	getNewKeys,
 	ImportActionParamsObject,
 	ImportCadProjectButton,
-	importFromCadSTL,
 	ImportModelFromDBModal,
 	importStateCanvas,
 	numberOfGeneratedKeySelector,
+	TRANSF_PARAMS_DEFAULTS,
 } from "cad-library";
 import { useDispatch, useSelector } from "react-redux";
 import { SaveModelWithNameModal } from "./components/saveModelWithNameModal";
@@ -26,6 +29,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { classNames } from "../../NavBar";
 import { s3 } from "./components/s3Config";
 import { setUnit } from "../../../statusBar/statusBarSlice";
+import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
+import { Vector3 } from "three";
+import { Dispatch } from "@reduxjs/toolkit";
 
 interface FileItemProps {
 }
@@ -68,6 +74,35 @@ export const FileItem: React.FC<FileItemProps> = () => {
 			(input as HTMLInputElement).click();
 		}
 	};
+
+	const importFromCadSTL = (STLFile: File, numberOfGeneratedKey: number, dispatch: Dispatch) => {
+		let loader = new STLLoader();
+	
+		STLFile.arrayBuffer().then((value) => {
+			let res = loader.parse(value);
+			res.computeBoundingBox()
+			let center = new Vector3()
+			res.boundingBox?.getCenter(center)
+			res.center()
+			let entity: ComponentEntity = {
+				type: 'BUFFER',
+				name: 'BUFFER',
+				keyComponent: getNewKeys(numberOfGeneratedKey, dispatch)[0],
+				orbitEnabled: true,
+				transformationParams: {...TRANSF_PARAMS_DEFAULTS, position: [center.x, center.y, center.z]},
+				previousTransformationParams: TRANSF_PARAMS_DEFAULTS,
+				geometryAttributes: {
+					positionVertices: res.attributes.position.array,
+					normalVertices: res.attributes.normal.array,
+					uvVertices: undefined
+				} as BufferGeometryAttributes,
+				transparency: true,
+				opacity: 1
+			}
+			dispatch(addComponent(entity))
+		})
+	}
+	
 
 	return (
 		<>
