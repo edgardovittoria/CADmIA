@@ -63,14 +63,14 @@ export const MiscToolbar: React.FC<MiscToolbarProps> = () => {
         </div>
         <div className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group ${cadmiaModality === "NormalSelection" ? 'bg-gray-400' : 'bg-white'}`}
           onClick={() => dispatch(setModality('NormalSelection' as CadmiaModality))}>
-          <img src={single_select} alt="Single selection" />
+          <img src={single_select} alt="Single selection" className="w-8 h-8"/>
           <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
             <span className="relative z-10 p-2 leading-none text-white whitespace-no-wrap bg-gray-600 shadow-lg rounded-md">SINGLE SELECTION</span>
           </div>
         </div>
         <div className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group ${cadmiaModality === "MultipleSelection" ? 'bg-gray-400' : 'bg-white'}`}
           onClick={() => dispatch(setModality('MultipleSelection' as CadmiaModality))}>
-          <img src={multiple_select} alt="Multiple selection" />
+          <img src={multiple_select} alt="Multiple selection" className="w-8 h-8"/>
           <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
             <span className="relative z-10 p-2 leading-none text-white whitespace-no-wrap bg-gray-600 shadow-lg rounded-md">MULTIPLE SELECTION</span>
           </div>
