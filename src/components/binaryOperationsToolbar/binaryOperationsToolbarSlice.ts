@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BinaryOperationType } from "cad-library";
+import { setModality } from "../../cadmiaModalityManagement/cadmiaModalitySlice";
 
 
 export type BinaryOperationsToolbarState = {
@@ -41,7 +42,15 @@ export const BinaryOperationsToolbarSlice = createSlice({
         toggleBinaryOperationsToolbar(state: BinaryOperationsToolbarState){
             state.visible = !state.visible
         }
-    }
+    },
+    extraReducers(builder) {
+        builder.addCase(setModality, (state, action) => {
+            if(action.payload !== 'BinaryOperation'){
+                state.binaryOp = undefined
+                state.entities = []
+            }
+        })
+    },
 })
 
 export const {

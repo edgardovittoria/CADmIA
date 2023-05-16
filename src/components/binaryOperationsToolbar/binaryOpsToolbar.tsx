@@ -164,10 +164,7 @@ export const BinaryOpsToolbar: React.FC<BinaryOpsToolbarProps> = () => {
                         <XCircleIcon className="text-gray-300 w-8 h-8"/>
                     ) : (
                         <XCircleIcon className="text-red-600 w-8 h-8"
-                                     onClick={() => {
-                                         dispatch(setModality('NormalSelection' as CadmiaModality));
-                                         dispatch(unsetBinaryOp());
-                                     }}
+                                     onClick={() => dispatch(setModality('NormalSelection' as CadmiaModality))}
                         />
                     )}
                     <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
@@ -186,9 +183,7 @@ export const BinaryOpsToolbar: React.FC<BinaryOpsToolbarProps> = () => {
                                            canvasState,
                                            dispatch
                                        );
-                                       dispatch(setModality('NormalSelection' as CadmiaModality));
-                                       dispatch(unsetBinaryOp());
-                                   }}
+                                       dispatch(setModality('NormalSelection' as CadmiaModality))}}
                         />
                     ) : (
                         <CheckIcon className="text-gray-300 w-8 h-8"/>
