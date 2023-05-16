@@ -12,6 +12,7 @@ import { Edges, useBounds } from "@react-three/drei";
 import * as THREE from "three";
 import { toggleEntitySelectionForBinaryOp } from "../../binaryOperationsToolbar/binaryOperationsToolbarSlice";
 import { cadmiaModalitySelector } from "../../../cadmiaModalityManagement/cadmiaModalitySlice";
+import { toggleEntitySelectionForMultipleSelection } from "../../miscToolbar/miscToolbarSlice";
 
 export interface ComponentProps {
   transformationParams: TransformationParams;
@@ -64,6 +65,9 @@ export const Component: React.FC<ComponentProps> = ({
             dispatch(selectComponent(keyComponent));
         } else if (modality === 'BinaryOperation') {
           dispatch(toggleEntitySelectionForBinaryOp(keyComponent));
+        }
+        else if (modality === 'MultipleSelection'){
+          dispatch(toggleEntitySelectionForMultipleSelection(keyComponent))
         }
       }}
     >

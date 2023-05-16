@@ -25,14 +25,13 @@ import {
 } from "cad-library";
 import {Dispatch} from "@reduxjs/toolkit";
 import {CheckIcon, XCircleIcon} from "@heroicons/react/20/solid";
-import { cadmiaModalitySelector, setModality } from "../../cadmiaModalityManagement/cadmiaModalitySlice";
+import { setModality } from "../../cadmiaModalityManagement/cadmiaModalitySlice";
 
 interface BinaryOpsToolbarProps {
 }
 
 export const BinaryOpsToolbar: React.FC<BinaryOpsToolbarProps> = () => {
     const dispatch = useDispatch();
-    const modality = useSelector(cadmiaModalitySelector)
     const binaryOp = useSelector(binaryOpSelector);
     const entityKeysForBinaryOperations = useSelector(
         binaryOpEntitiesKeysSelector
@@ -116,20 +115,6 @@ export const BinaryOpsToolbar: React.FC<BinaryOpsToolbarProps> = () => {
         setTemporaryEntitiesForBinaryOp(entityKeysForBinaryOperations);
     }, [entityKeysForBinaryOperations]);
 
-    useEffect(() => {
-        let componentKeys = canvasState.components.reduce(
-            (keys: number[], component) => {
-                keys.push(component.keyComponent);
-                return keys;
-            },
-            []
-        );
-        if (modality === 'BinaryOperation') {
-            dispatch(setComponentsOpacity({keys: componentKeys, opacity: 0.3}));
-        } else if (modality === 'NormalSelection') {
-            dispatch(setComponentsOpacity({keys: componentKeys, opacity: 1}));
-        }
-    }, [modality]);
 
     return (
         <>
