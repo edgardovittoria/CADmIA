@@ -1,13 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { cadmiaModalitySelector } from "./cadmiaModalitySlice";
-import { Material, removeComponent, removeComponentMaterial, selectComponent, selectedComponentSelector, setComponentMaterial } from "cad-library";
+import { Material, componentseSelector, removeComponent, removeComponentMaterial, selectComponent, selectedComponentSelector, setComponentMaterial, setComponentsOpacity } from "cad-library";
 import { toggleEntitySelectionForBinaryOp } from "../components/binaryOperationsToolbar/binaryOperationsToolbarSlice";
 import { multipleSelectionEntitiesKeysSelector, toggleEntitySelectionForMultipleSelection } from "../components/miscToolbar/miscToolbarSlice";
+import { useEffect } from "react";
 
 export const useCadmiaModalityManager = () => {
     const modality = useSelector(cadmiaModalitySelector)
     const dispatch = useDispatch()
     const selectedComponent = useSelector(selectedComponentSelector)
+    const components = useSelector(componentseSelector)
     const multipleSelectionEntityKeys = useSelector(multipleSelectionEntitiesKeysSelector)
 
     const componentClick = (keyComponent: number) => {
@@ -60,8 +62,26 @@ export const useCadmiaModalityManager = () => {
         }
     }
 
+    const useBaseOpactityBasedOnModality = () => {
+        useEffect(() => {
+            let componentKeys = components.reduce(
+                (keys: number[], component) => {
+                    keys.push(component.keyComponent);
+                    return keys;
+                },
+                []
+            );
+            if (modality !== 'NormalSelection') {
+                dispatch(setComponentsOpacity({ keys: componentKeys, opacity: 0.3 }));
+            } else {
+                dispatch(setComponentsOpacity({ keys: componentKeys, opacity: 1 }));
+            }
+        }, [modality]);
+    }
+
     return {
         componentClick, singleSelectionIconStyle, multipleSelectionIconStyle,
-        setMaterial, unsetMaterial, deleteComponentsButtonMessages, deleteComponentsButtonOnClick, sideBarElementsVisibility
+        setMaterial, unsetMaterial, deleteComponentsButtonMessages, deleteComponentsButtonOnClick,
+        sideBarElementsVisibility, useBaseOpactityBasedOnModality
     }
 }
