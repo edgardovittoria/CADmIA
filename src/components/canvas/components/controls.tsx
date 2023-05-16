@@ -4,7 +4,6 @@ import { TransformationParams, updateTransformationParams } from "cad-library";
 import { FC, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as THREE from "three"
-import { orbitTargetSelector } from "../../../cadmiaModalityManagement/cadmiaModalitySlice";
 import { activeTransformationSelector } from "../../transformationsToolbar/toolbarTransformationSlice";
 
 export const Controls: FC<{
@@ -15,7 +14,7 @@ export const Controls: FC<{
     const transformation = useRef(null);
     const dispatch = useDispatch();
     const activeTransformation = useSelector(activeTransformationSelector)
-    const orbitTarget = useSelector(orbitTargetSelector)
+    // const orbitTarget = useSelector(orbitTargetSelector)
   
     useEffect(() => {
       if (transformation.current) {
@@ -67,7 +66,7 @@ export const Controls: FC<{
           removeEventListener={undefined}
           dispatchEvent={undefined}
           makeDefault
-          target={(orbitTarget) ? new THREE.Vector3(orbitTarget?.position[0], orbitTarget?.position[1], orbitTarget?.position[2]): new THREE.Vector3(0,0,0)}
+          // target={(orbitTarget) ? new THREE.Vector3(orbitTarget?.position[0], orbitTarget?.position[1], orbitTarget?.position[2]): new THREE.Vector3(0,0,0)}
         />
         <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
           <GizmoViewport

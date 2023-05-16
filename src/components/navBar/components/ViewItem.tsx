@@ -3,12 +3,11 @@ import {Popover, Switch, Transition} from "@headlessui/react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import { classNames } from '../NavBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { setOrbitTarget } from '../../../cadmiaModalityManagement/cadmiaModalitySlice';
-import { closeSidebar, openSidebar, sidebarVisibilitySelector, toggleSidebar } from '../../sideBar/sidebarSlice';
-import { binaryOpToolbarVisibilitySelector, closeBinaryOperationsToolbar, openBinaryOperationsToolbar, toggleBinaryOperationsToolbar } from '../../binaryOperationsToolbar/binaryOperationsToolbarSlice';
-import { closeTransformationsToolbar, openTransformationsToolbar, toggleTransformationsToolbar, transformationsToolbarVisibilitySelector } from '../../transformationsToolbar/toolbarTransformationSlice';
-import { closeMiscToolbar, miscToolbarVisibilitySelector, openMiscToolbar, toggleMiscToolbar } from '../../miscToolbar/miscToolbarSlice';
-import { closeShapesToolbar, openShapesToolbar, shapesToolbarVisibilitySelector, toggleShapesToolbar } from './componentsItems/shapesToolbarSlice';
+import { closeSidebar, openSidebar, sidebarVisibilitySelector } from '../../sideBar/sidebarSlice';
+import { binaryOpToolbarVisibilitySelector, closeBinaryOperationsToolbar, openBinaryOperationsToolbar } from '../../binaryOperationsToolbar/binaryOperationsToolbarSlice';
+import { closeTransformationsToolbar, openTransformationsToolbar, transformationsToolbarVisibilitySelector } from '../../transformationsToolbar/toolbarTransformationSlice';
+import { closeMiscToolbar, miscToolbarVisibilitySelector, openMiscToolbar } from '../../miscToolbar/miscToolbarSlice';
+import { closeShapesToolbar, openShapesToolbar, shapesToolbarVisibilitySelector } from './componentsItems/shapesToolbarSlice';
 
 interface ViewItemProps {
 }
@@ -163,18 +162,6 @@ export const ViewItem: React.FC<ViewItemProps> = () => {
                                                                         />
                                                                     </Switch>
                                                                 </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </span>
-                                </div>
-                                <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                                                    <span onClick={() => {
-                                                        dispatch(setOrbitTarget(undefined))
-                                                    }}>
-                                                        <div id="viewDropdown">
-                                                            <div className="flex justify-between">
-                                                                <span className="text-gray-900 text-base font-medium">Reset Orbit To Origin</span>
 
                                                             </div>
                                                         </div>

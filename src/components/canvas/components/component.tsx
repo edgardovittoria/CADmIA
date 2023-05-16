@@ -11,7 +11,7 @@ import {
 import { Edges, useBounds } from "@react-three/drei";
 import * as THREE from "three";
 import { toggleEntitySelectionForBinaryOp } from "../../binaryOperationsToolbar/binaryOperationsToolbarSlice";
-import { cadmiaModalitySelector, OrbitTarget, setOrbitTarget } from "../../../cadmiaModalityManagement/cadmiaModalitySlice";
+import { cadmiaModalitySelector } from "../../../cadmiaModalityManagement/cadmiaModalitySlice";
 
 export interface ComponentProps {
   transformationParams: TransformationParams;
@@ -29,9 +29,9 @@ export const Component: React.FC<ComponentProps> = ({
 }) => {
   const dispatch = useDispatch();
   const selectedComponentKey = useSelector(keySelectedComponenteSelector);
-  const modality = useSelector(cadmiaModalitySelector)
   const mesh = useRef(null);
   const bounds = useBounds()
+  const modality = useSelector(cadmiaModalitySelector)
 
   useEffect(() => {
     keyComponent === selectedComponentKey &&
@@ -42,6 +42,7 @@ export const Component: React.FC<ComponentProps> = ({
     bounds.refresh(mesh.current as unknown as THREE.Mesh).fit().clip()
   }, [mesh])
 
+
   return (
     <mesh
       ref={mesh}
@@ -49,6 +50,13 @@ export const Component: React.FC<ComponentProps> = ({
       position={transformationParams.position}
       rotation={transformationParams.rotation}
       scale={transformationParams.scale}
+      onDoubleClick={(e) => {
+        e.stopPropagation() 
+        bounds.refresh(e.object).fit().clip()}}
+      onContextMenu={(e) => {
+        e.stopPropagation();
+        dispatch(setNextTransformationActive())
+      }}
       onClick={(e) => {
         e.stopPropagation();
         if (modality === 'NormalSelection') {
@@ -57,15 +65,6 @@ export const Component: React.FC<ComponentProps> = ({
         } else if (modality === 'BinaryOperation') {
           dispatch(toggleEntitySelectionForBinaryOp(keyComponent));
         }
-      }}
-      onDoubleClick={(e) => (e.stopPropagation(), bounds.refresh(e.object).fit().clip())}
-      // onDoubleClick={(e) => {
-      //   e.stopPropagation();
-      //   dispatch(setOrbitTarget({position:[(mesh.current as unknown as THREE.Mesh).position.x, (mesh.current as unknown as THREE.Mesh).position.y, (mesh.current as unknown as THREE.Mesh).position.z], id: keyComponent.toString()} as OrbitTarget));
-      // }}
-      onContextMenu={(e) => {
-        e.stopPropagation();
-        dispatch(setNextTransformationActive())
       }}
     >
       {children}

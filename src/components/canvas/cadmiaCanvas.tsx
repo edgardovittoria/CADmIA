@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { Provider, ReactReduxContext, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
@@ -10,7 +10,7 @@ import {
 import { Component } from "./components/component";
 import { Controls } from "./components/controls";
 import { meshesWithBordersVisibleSelector } from "../sideBar/sidebarSlice";
-import { Bounds } from "@react-three/drei";
+import { Bounds, useBounds } from "@react-three/drei";
 
 interface CadmiaCanvasProps {
 }
@@ -49,6 +49,7 @@ export const CadmiaCanvas: React.FC<CadmiaCanvasProps> = () => {
                   intensity={0.85}
                 />
                 <Bounds fit clip observe margin={1.2}>
+                  <CommonObjectsActions>
                     {components.map((component) => {
                       return (
                         <Component
@@ -64,6 +65,7 @@ export const CadmiaCanvas: React.FC<CadmiaCanvasProps> = () => {
                         </Component>
                       );
                     })}
+                  </CommonObjectsActions>
                 </Bounds>
                 {/* <PointerIntersectionOnMeshSurface /> */}
                 <Controls
@@ -82,3 +84,14 @@ export const CadmiaCanvas: React.FC<CadmiaCanvasProps> = () => {
     </div>
   );
 };
+
+const CommonObjectsActions: FC = ({ children }) => {
+  const bounds = useBounds()
+  return (
+    <group 
+    onPointerMissed={(e) => e.button === 0 && bounds.refresh().fit()}
+    >
+      {children}
+    </group>
+  )
+}
