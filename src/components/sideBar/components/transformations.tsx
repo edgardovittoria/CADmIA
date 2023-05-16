@@ -7,22 +7,22 @@ export const Transformations: FC<{ transformationParams: TransformationParams }>
 
     return (
         <>
-            <div className="flex">
-                <div className="flex mb-[10px] ml-[70px] w-full">
-                    <div className="text-black text-center w-1/3">X</div>
-                    <div className="text-black text-center w-1/3">Y</div>
-                    <div className="text-black text-center w-1/3">Z</div>
+            <div className="flex mt-2">
+                <div className="flex justify-center mx-[10px] ml-[70px] w-full">
+                    <div className="text-black w-1/3 text-center font-bold mb-1 text-xs">X</div>
+                    <div className="text-black w-1/3 text-center font-bold mb-1 text-xs">Y</div>
+                    <div className="text-black w-1/3 text-center font-bold mb-1 text-xs">Z</div>
                 </div>
             </div>
             {Object.entries(transformationParams).map(([type, value]) =>
                 <div key={type} className="flex justify-between">
-                    <span className="text-black w-[15%]">{type}</span>
-                    <div className="flex mb-[10px] justify-between pr-[15px] w-[83%]">
+                    <span className="text-black w-[15%] text-xs">{type}</span>
+                    <div className="flex mb-[5px] justify-between pr-[15px] w-[83%]">
                         {value.map((paramValue, index) =>
                             <input key={index}
                                    type="number"
                                    step="0.1"
-                                   className="border border-black rounded shadow p-1 w-[30%] text-black text-center"
+                                   className="border border-black rounded shadow w-[30%] text-black text-xs px-1"
                                    autoComplete="off"
                                    value={paramValue}
                                    onChange={(e) => {

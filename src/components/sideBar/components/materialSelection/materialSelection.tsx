@@ -14,15 +14,15 @@ export const MaterialSelection: FC<MaterialSelectionProps> = ({defaultMaterial, 
     const {availableMaterials} = useMaterials()
     return (
         <div className="flex flex-col">
-            <h6 className="text-black mt-[20px]">Material</h6>
-            <hr className="text-black mb-2 mt-2"/>
+            <h6 className="text-black mt-[10px] text-sm font-bold">Material</h6>
+            <hr className="border-amber-500 mb-2 mt-1"/>
             <Listbox value={defaultMaterial} onChange={setMaterial}>
                 <div className="relative mt-1">
                     <Listbox.Button
-                        className="relative w-full border-2 border-black cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                        <span className="block truncate text-black">{(defaultMaterial) ? defaultMaterial.name : "UNDEFINED"}</span>
+                        className="relative w-full border-2 border-black cursor-default rounded-lg bg-white py-1 pl-3 x text-left shadow focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                        <span className="block truncate text-black text-xs">{(defaultMaterial) ? defaultMaterial.name : "UNDEFINED"}</span>
                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                            <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true"/>
+                            <ChevronUpDownIcon className="h-4 w-4 text-gray-400" aria-hidden="true"/>
                         </span>
                     </Listbox.Button>
                     <Transition

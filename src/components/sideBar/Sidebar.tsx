@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Outliner } from "./components/outliner/outliner";
 import { BordersMeshOption } from "./components/bordersMeshOption";
 import { closeSidebar, openSidebar, sidebarVisibilitySelector } from "./sidebarSlice";
+import {AiOutlineCloseCircle} from "react-icons/ai";
 
 interface SidebarProps {
 }
@@ -51,12 +52,12 @@ export const Sidebar: React.FC<SidebarProps> = () => {
                 }
             `}
         >
-          <div className="flex items-center">
-            <XMarkIcon
+          <div className="flex items-center mb-[10px]">
+            <AiOutlineCloseCircle
               className="text-black w-4 h-4 hover:cursor-pointer"
               onClick={() => dispatch(closeSidebar())}
             />
-            <h2 className="mb-[10px] text-xl text-black mx-auto">
+            <h2 className="text-xl text-black text-sm mx-auto font-bold">
               Object Details
             </h2>
           </div>
@@ -67,21 +68,21 @@ export const Sidebar: React.FC<SidebarProps> = () => {
             />
             {selectedComponent && (
               <div className="text-left">
-                <h6 className="text-black mb-2 mt-2">Transformation Params</h6>
-                <hr className="text-black" />
+                <h6 className="text-black mt-[10px] text-sm font-bold">Transformation Params</h6>
+                <hr className="border-amber-500 mt-1" />
                 <Transformations
                   transformationParams={selectedComponent.transformationParams}
                 />
-                <h6 className="text-black mt-[20px]">Geometry Params</h6>
-                <hr className="text-black mb-2 mt-2" />
+                <h6 className="text-black mt-[10px] text-sm font-bold">Geometry Params</h6>
+                <hr className="border-amber-500 mb-2 mt-1" />
                 <GeometryParams entity={selectedComponent} />
                 <MaterialSelection
                   defaultMaterial={selectedComponent.material}
                   setMaterial={setMaterial}
                   unsetMaterial={unsetMaterial}
                 />
-                <h6 className="text-black mt-[20px]">Visualization</h6>
-                <hr className="text-black mb-2 mt-2" />
+                <h6 className="text-black mt-[10px] text-sm font-bold">Visualization</h6>
+                <hr className="border-amber-500 mb-2 mt-1" />
                 <BordersMeshOption />
                 <button
                   type="button"

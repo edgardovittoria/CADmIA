@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { CubeIcon } from "@heroicons/react/24/outline";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenSquare } from "@fortawesome/free-solid-svg-icons";
-import { Col, Row } from "react-bootstrap";
+import {BiRename} from "react-icons/bi";
 
 interface OutlinerItemProps {
     keyComponent: number,
@@ -27,32 +27,34 @@ export const OutlinerItem: FC<OutlinerItemProps> = ({ keyComponent, nameComponen
             {!isSelelctedComponent ?
                 <div
                     key={keyComponent}
-                    className="border-2 border-transparent text-black text-left pl-4 flex w-1/2"
+                    className="border-2 border-transparent text-black text-[9px] font-bold text-left pl-4 flex w-1/2"
                     onClick={() => {
                         dispatch(selectComponent(keyComponent))
                     }}
                 >
-                    <CubeIcon className="w-[20px] mr-2" />
+                    <CubeIcon className="w-[10px] mr-2" />
                     {nameComponent}
                 </div>
                 : (
                     outlinerItemVisibility ?
-                        <Row>
-                            <Col
+                        <div className="flex items-center border-2 border-amber-400 rounded w-1/2 justify-between">
+                            <div
                                 key={keyComponent}
-                                className="border-2 border-amber-400 text-black rounded text-left pl-4 flex w-1/2"
+                                className="text-black text-[9px] font-bold text-left pl-4 flex items-center"
                                 onClick={() => { dispatch(selectComponent(keyComponent)) }}
                             >
-                                <CubeIcon className="w-[20px] mr-2" />
+                                <CubeIcon className="w-[10px] mr-2" />
                                 {nameComponent}
-                            </Col>
-                            <Col><FontAwesomeIcon className="text-black" icon={faPenSquare} onClick={() => { setOutlinerItemVisibility(false) }} /></Col>
-                        </Row>
+                            </div>
+                            <div className="tooltip" data-tip="Rename">
+                                <BiRename className="w-[17px] pr-1 text-black" onClick={() => { setOutlinerItemVisibility(false) }}/>
+                            </div>
+                        </div>
                         :
                         <div key={keyComponent + "_input"} className="text-left">
                             <input
                                 type="text"
-                                className="border-2 border-amber-400 text-black w-1/3 rounded text-left pl-4"
+                                className="border-2 border-amber-400 text-black text-[9px] font-bold w-1/3 rounded text-left pl-4"
                                 defaultValue={nameComponent}
                                 onBlur={(e) => {
                                     dispatch(updateName({ key: keyComponent, name: e.currentTarget.value }))
