@@ -4,7 +4,6 @@ import {
     binaryOpEntitiesKeysSelector,
     binaryOpSelector,
     setBinaryOp,
-    unsetBinaryOp,
 } from "./binaryOperationsToolbarSlice";
 import {CadmiaModality} from "../../cadmiaModalityManagement/cadmiaModalityType";
 import unionIcon from "./style/unionIcon.png";

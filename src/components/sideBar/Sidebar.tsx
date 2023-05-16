@@ -1,26 +1,20 @@
 import React from "react";
 import {
   AdjustmentsHorizontalIcon,
-  XMarkIcon,
 } from "@heroicons/react/20/solid";
 import { Transformations } from "./components/transformations";
 import { GeometryParams } from "./components/geometryParams/geometryParams";
 import { MaterialSelection } from "./components/materialSelection/materialSelection";
 import {
   componentseSelector,
-  Material,
-  removeComponent,
-  removeComponentMaterial,
   selectedComponentSelector,
-  setComponentMaterial,
 } from "cad-library";
 import { useDispatch, useSelector } from "react-redux";
 import { Outliner } from "./components/outliner/outliner";
 import { BordersMeshOption } from "./components/bordersMeshOption";
 import { closeSidebar, openSidebar, sidebarVisibilitySelector } from "./sidebarSlice";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { cadmiaModalitySelector } from "../../cadmiaModalityManagement/cadmiaModalitySlice";
-import { multipleSelectionEntitiesKeysSelector } from "../miscToolbar/miscToolbarSlice";
+import { useCadmiaModalityManager } from "../../cadmiaModalityManagement/useCadmiaModalityManager";
 
 interface SidebarProps {
 }
@@ -29,24 +23,8 @@ export const Sidebar: React.FC<SidebarProps> = () => {
   const canvasComponents = useSelector(componentseSelector);
   const selectedComponent = useSelector(selectedComponentSelector);
   const sideBarVisibility = useSelector(sidebarVisibilitySelector)
-  const cadmiaModality = useSelector(cadmiaModalitySelector)
-  const multipleSelectionEntityKeys = useSelector(multipleSelectionEntitiesKeysSelector)
   const dispatch = useDispatch();
-
-  const setMaterial = (material: Material) =>
-    (cadmiaModality !== 'MultipleSelection') ?
-      dispatch(
-        setComponentMaterial({
-          key: selectedComponent.keyComponent,
-          material: material,
-        })) :
-      multipleSelectionEntityKeys.forEach(key => dispatch(setComponentMaterial({ key: key, material: material })))
-
-  const unsetMaterial = () =>
-    (cadmiaModality !== 'MultipleSelection') ?
-      dispatch(removeComponentMaterial({ keyComponent: selectedComponent.keyComponent }))
-      :
-      multipleSelectionEntityKeys.forEach(key => dispatch(removeComponentMaterial({ keyComponent: key })))
+  const { setMaterial, unsetMaterial, deleteComponentsButtonMessages, deleteComponentsButtonOnClick, sideBarElementsVisibility } = useCadmiaModalityManager()
 
   return (
     <>
@@ -75,62 +53,45 @@ export const Sidebar: React.FC<SidebarProps> = () => {
             />
             {selectedComponent && (
               <div className="text-left">
-                {cadmiaModality !== 'MultipleSelection' &&
+                {sideBarElementsVisibility().transformations &&
                   <>
                     <h6 className="text-black mt-[10px] text-sm font-bold">Transformation Params</h6>
                     <hr className="border-amber-500 mt-1" />
                     <Transformations
                       transformationParams={selectedComponent.transformationParams}
                     />
+                  </>
+                }
+                {sideBarElementsVisibility().geometryParams &&
+                  <>
                     <h6 className="text-black mt-[10px] text-sm font-bold">Geometry Params</h6>
                     <hr className="border-amber-500 mb-2 mt-1" />
                     <GeometryParams entity={selectedComponent} />
-                  </>}
+                  </>
+                }
                 <MaterialSelection
                   defaultMaterial={selectedComponent.material}
                   setMaterial={setMaterial}
                   unsetMaterial={unsetMaterial}
                 />
-                {cadmiaModality !== 'MultipleSelection' &&
+                {sideBarElementsVisibility().borders &&
                   <>
                     <h6 className="text-black mt-[10px] text-sm font-bold">Visualization</h6>
                     <hr className="border-amber-500 mb-2 mt-1" />
                     <BordersMeshOption />
                   </>
                 }
-                {cadmiaModality !== 'MultipleSelection' ?
-                  <button
-                    type="button"
-                    className="rounded bg-red-500 shadow p-2 mt-[20px] w-full"
-                    onClick={() => {
-                      if (
-                        window.confirm(
-                          `Sei sicuro di voler eliminare il componente ${selectedComponent.name} ?`
-                        )
-                      ) {
-                        dispatch(removeComponent(selectedComponent.keyComponent));
-                      }
-                    }}
-                  >
-                    Delete {selectedComponent.name}
-                  </button>
-                  :
-                  <button
-                    type="button"
-                    className="rounded bg-red-500 shadow p-2 mt-[20px] w-full"
-                    onClick={() => {
-                      if (
-                        window.confirm(
-                          `Sei sicuro di voler eliminare i componenti selezionati?`
-                        )
-                      ) {
-                        multipleSelectionEntityKeys.forEach(key => dispatch(removeComponent(key)));
-                      }
-                    }}
-                  >
-                    Delete components
-                  </button>
-                }
+                <button
+                  type="button"
+                  className="rounded bg-red-500 shadow p-2 mt-[20px] w-full"
+                  onClick={() => {
+                    if (window.confirm(deleteComponentsButtonMessages().popup)) {
+                      deleteComponentsButtonOnClick()
+                    }
+                  }}
+                >
+                  {deleteComponentsButtonMessages().buttonLabel}
+                </button>
               </div>
             )}
           </div>

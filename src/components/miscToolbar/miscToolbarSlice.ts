@@ -37,10 +37,7 @@ export const MiscToolbarSlice = createSlice({
   },
   extraReducers(builder) {
       builder.addCase(setModality, (state, action) => {
-        if(action.payload === 'NormalSelection'){
-          state.multipleSelectionEntities = []
-        }
-        else if(action.payload === 'BinaryOperation'){
+        if(action.payload !== 'MultipleSelection'){
           state.multipleSelectionEntities = []
         }
       })

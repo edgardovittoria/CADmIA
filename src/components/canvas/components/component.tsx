@@ -5,14 +5,11 @@ import {
 } from "../../transformationsToolbar/toolbarTransformationSlice";
 import {
   keySelectedComponenteSelector,
-  selectComponent,
   TransformationParams,
 } from "cad-library";
 import { Edges, useBounds } from "@react-three/drei";
 import * as THREE from "three";
-import { toggleEntitySelectionForBinaryOp } from "../../binaryOperationsToolbar/binaryOperationsToolbarSlice";
-import { cadmiaModalitySelector } from "../../../cadmiaModalityManagement/cadmiaModalitySlice";
-import { toggleEntitySelectionForMultipleSelection } from "../../miscToolbar/miscToolbarSlice";
+import { useCadmiaModalityManager } from "../../../cadmiaModalityManagement/useCadmiaModalityManager";
 
 export interface ComponentProps {
   transformationParams: TransformationParams;
@@ -32,7 +29,7 @@ export const Component: React.FC<ComponentProps> = ({
   const selectedComponentKey = useSelector(keySelectedComponenteSelector);
   const mesh = useRef(null);
   const bounds = useBounds()
-  const modality = useSelector(cadmiaModalitySelector)
+  const {componentClick} = useCadmiaModalityManager()
 
   useEffect(() => {
     keyComponent === selectedComponentKey &&
@@ -60,15 +57,7 @@ export const Component: React.FC<ComponentProps> = ({
       }}
       onClick={(e) => {
         e.stopPropagation();
-        if (modality === 'NormalSelection') {
-          selectedComponentKey !== keyComponent &&
-            dispatch(selectComponent(keyComponent));
-        } else if (modality === 'BinaryOperation') {
-          dispatch(toggleEntitySelectionForBinaryOp(keyComponent));
-        }
-        else if (modality === 'MultipleSelection'){
-          dispatch(toggleEntitySelectionForMultipleSelection(keyComponent))
-        }
+        componentClick(keyComponent)
       }}
     >
       {children}
