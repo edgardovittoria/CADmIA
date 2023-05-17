@@ -21,7 +21,7 @@ interface MiscToolbarProps { }
 
 export const MiscToolbar: React.FC<MiscToolbarProps> = () => {
   const dispatch = useDispatch();
-  const { multipleSelectionIconStyle, singleSelectionIconStyle } = useCadmiaModalityManager()
+  const { miscToolbarOpsBasedOnModality } = useCadmiaModalityManager()
   const selectedComponent = useSelector(selectedComponentSelector);
   const numberOfGeneratedKey = useSelector(numberOfGeneratedKeySelector);
   const multipleSelectionEntityKeys = useSelector(multipleSelectionEntitiesKeysSelector)
@@ -62,14 +62,14 @@ export const MiscToolbar: React.FC<MiscToolbarProps> = () => {
             <span className="relative z-10 p-2 leading-none text-white whitespace-no-wrap bg-gray-600 shadow-lg rounded-md">CLONE</span>
           </div>
         </div>
-        <div className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group ${singleSelectionIconStyle()}`}
+        <div className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group ${miscToolbarOpsBasedOnModality.iconStyles.singleSelectionBackground}`}
           onClick={() => dispatch(setModality('NormalSelection' as CadmiaModality))}>
           <img src={single_select} alt="Single selection" className="w-8 h-8" />
           <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
             <span className="relative z-10 p-2 leading-none text-white whitespace-no-wrap bg-gray-600 shadow-lg rounded-md">SINGLE SELECTION</span>
           </div>
         </div>
-        <div className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group ${multipleSelectionIconStyle()}`}
+        <div className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group ${miscToolbarOpsBasedOnModality.iconStyles.multipleSelectionBackground}`}
           onClick={() => dispatch(setModality('MultipleSelection' as CadmiaModality))}>
           <img src={multiple_select} alt="Multiple selection" className="w-8 h-8" />
           <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">

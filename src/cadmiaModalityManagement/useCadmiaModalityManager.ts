@@ -9,60 +9,67 @@ export const useCadmiaModalityManager = () => {
     const modality = useSelector(cadmiaModalitySelector)
     const dispatch = useDispatch()
     const selectedComponent = useSelector(selectedComponentSelector)
-    const components = useSelector(componentseSelector)
     const multipleSelectionEntityKeys = useSelector(multipleSelectionEntitiesKeysSelector)
 
-    const componentClick = (keyComponent: number) => {
-        if (modality === 'NormalSelection') {
-            selectedComponent.keyComponent !== keyComponent &&
-                dispatch(selectComponent(keyComponent));
-        } else if (modality === 'BinaryOperation') {
-            dispatch(toggleEntitySelectionForBinaryOp(keyComponent));
-        }
-        else if (modality === 'MultipleSelection') {
-            dispatch(toggleEntitySelectionForMultipleSelection(keyComponent))
-        }
-    }
-
-    const singleSelectionIconStyle = () => modality === "NormalSelection" ? 'bg-gray-400' : 'bg-white'
-    const multipleSelectionIconStyle = () => modality === "MultipleSelection" ? 'bg-gray-400' : 'bg-white'
-
-    const setMaterial = (material: Material) =>
-        (modality !== 'MultipleSelection') ?
-            dispatch(
-                setComponentMaterial({
-                    key: selectedComponent.keyComponent,
-                    material: material,
-                })) :
-            multipleSelectionEntityKeys.forEach(key => dispatch(setComponentMaterial({ key: key, material: material })))
-
-    const unsetMaterial = () =>
-        (modality !== 'MultipleSelection') ?
-            dispatch(removeComponentMaterial({ keyComponent: selectedComponent.keyComponent }))
-            :
-            multipleSelectionEntityKeys.forEach(key => dispatch(removeComponentMaterial({ keyComponent: key })))
-
-    const deleteComponentsButtonOnClick = () => {
-        if (modality !== 'MultipleSelection') {
-            dispatch(removeComponent(selectedComponent.keyComponent))
-        } else {
-            multipleSelectionEntityKeys.forEach(key => dispatch(removeComponent(key)))
+    const componentOpsBasedOnModality = {
+        onClickAction: (keyComponent: number) => {
+            if (modality === 'NormalSelection') {
+                selectedComponent.keyComponent !== keyComponent &&
+                    dispatch(selectComponent(keyComponent));
+            } else if (modality === 'BinaryOperation') {
+                dispatch(toggleEntitySelectionForBinaryOp(keyComponent));
+            }
+            else if (modality === 'MultipleSelection') {
+                dispatch(toggleEntitySelectionForMultipleSelection(keyComponent))
+            }
         }
     }
 
-    const deleteComponentsButtonMessages = () => modality !== 'MultipleSelection'
-        ? { popup: `Sei sicuro di voler eliminare il componente ${selectedComponent.name} ?`, buttonLabel: `Delete ${selectedComponent.name}` }
-        : { popup: `Sei sicuro di voler eliminare i componenti selezionati?`, buttonLabel: 'Delete components' }
+    const miscToolbarOpsBasedOnModality = {
+        iconStyles: {
+            singleSelectionBackground: modality === "NormalSelection" ? 'bg-gray-400' : 'bg-white',
+            multipleSelectionBackground: modality === "MultipleSelection" ? 'bg-gray-400' : 'bg-white'
+        }
+    }
 
-    const sideBarElementsVisibility = () => {
-        return {
+    const sideBarOptsBasedOnModality = {
+        elementsVisibility: {
             transformations: modality !== 'MultipleSelection' ? true : false,
             geometryParams: modality !== 'MultipleSelection' ? true : false,
             borders: modality !== 'MultipleSelection' ? true : false
+        },
+        deleteButton: {
+            messages: modality !== 'MultipleSelection'
+                ? { popup: `Sei sicuro di voler eliminare il componente ${selectedComponent.name} ?`, buttonLabel: `Delete ${selectedComponent.name}` }
+                : { popup: `Sei sicuro di voler eliminare i componenti selezionati?`, buttonLabel: 'Delete components' },
+            onClickAction: () => {
+                if (modality !== 'MultipleSelection') {
+                    dispatch(removeComponent(selectedComponent.keyComponent))
+                } else {
+                    multipleSelectionEntityKeys.forEach(key => dispatch(removeComponent(key)))
+                }
+            }
+        },
+        material: {
+            setMaterial: (material: Material) =>
+                (modality !== 'MultipleSelection') ?
+                    dispatch(
+                        setComponentMaterial({
+                            key: selectedComponent.keyComponent,
+                            material: material,
+                        })) :
+                    multipleSelectionEntityKeys.forEach(key => dispatch(setComponentMaterial({ key: key, material: material }))),
+            unsetMaterial: () =>
+                (modality !== 'MultipleSelection') ?
+                    dispatch(removeComponentMaterial({ keyComponent: selectedComponent.keyComponent }))
+                    :
+                    multipleSelectionEntityKeys.forEach(key => dispatch(removeComponentMaterial({ keyComponent: key })))
         }
     }
-
+    
     const useBaseOpactityBasedOnModality = () => {
+        const modality = useSelector(cadmiaModalitySelector)
+        const components = useSelector(componentseSelector)
         useEffect(() => {
             let componentKeys = components.reduce(
                 (keys: number[], component) => {
@@ -80,8 +87,7 @@ export const useCadmiaModalityManager = () => {
     }
 
     return {
-        componentClick, singleSelectionIconStyle, multipleSelectionIconStyle,
-        setMaterial, unsetMaterial, deleteComponentsButtonMessages, deleteComponentsButtonOnClick,
-        sideBarElementsVisibility, useBaseOpactityBasedOnModality
+        componentOpsBasedOnModality, miscToolbarOpsBasedOnModality,
+        sideBarOptsBasedOnModality, useBaseOpactityBasedOnModality
     }
 }

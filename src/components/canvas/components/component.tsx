@@ -29,7 +29,7 @@ export const Component: React.FC<ComponentProps> = ({
   const selectedComponentKey = useSelector(keySelectedComponenteSelector);
   const mesh = useRef(null);
   const bounds = useBounds()
-  const {componentClick} = useCadmiaModalityManager()
+  const {componentOpsBasedOnModality} = useCadmiaModalityManager()
 
   useEffect(() => {
     keyComponent === selectedComponentKey &&
@@ -57,7 +57,7 @@ export const Component: React.FC<ComponentProps> = ({
       }}
       onClick={(e) => {
         e.stopPropagation();
-        componentClick(keyComponent)
+        componentOpsBasedOnModality.onClickAction(keyComponent)
       }}
     >
       {children}

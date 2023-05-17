@@ -24,7 +24,7 @@ export const Sidebar: React.FC<SidebarProps> = () => {
   const selectedComponent = useSelector(selectedComponentSelector);
   const sideBarVisibility = useSelector(sidebarVisibilitySelector)
   const dispatch = useDispatch();
-  const { setMaterial, unsetMaterial, deleteComponentsButtonMessages, deleteComponentsButtonOnClick, sideBarElementsVisibility } = useCadmiaModalityManager()
+  const { sideBarOptsBasedOnModality } = useCadmiaModalityManager()
 
   return (
     <>
@@ -53,7 +53,7 @@ export const Sidebar: React.FC<SidebarProps> = () => {
             />
             {selectedComponent && (
               <div className="text-left">
-                {sideBarElementsVisibility().transformations &&
+                {sideBarOptsBasedOnModality.elementsVisibility.transformations &&
                   <>
                     <h6 className="text-black mt-[10px] text-sm font-bold">Transformation Params</h6>
                     <hr className="border-amber-500 mt-1" />
@@ -62,7 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = () => {
                     />
                   </>
                 }
-                {sideBarElementsVisibility().geometryParams &&
+                {sideBarOptsBasedOnModality.elementsVisibility.geometryParams &&
                   <>
                     <h6 className="text-black mt-[10px] text-sm font-bold">Geometry Params</h6>
                     <hr className="border-amber-500 mb-2 mt-1" />
@@ -71,10 +71,10 @@ export const Sidebar: React.FC<SidebarProps> = () => {
                 }
                 <MaterialSelection
                   defaultMaterial={selectedComponent.material}
-                  setMaterial={setMaterial}
-                  unsetMaterial={unsetMaterial}
+                  setMaterial={sideBarOptsBasedOnModality.material.setMaterial}
+                  unsetMaterial={sideBarOptsBasedOnModality.material.unsetMaterial}
                 />
-                {sideBarElementsVisibility().borders &&
+                {sideBarOptsBasedOnModality.elementsVisibility.borders &&
                   <>
                     <h6 className="text-black mt-[10px] text-sm font-bold">Visualization</h6>
                     <hr className="border-amber-500 mb-2 mt-1" />
@@ -85,12 +85,12 @@ export const Sidebar: React.FC<SidebarProps> = () => {
                   type="button"
                   className="rounded bg-red-500 shadow p-2 mt-[20px] w-full"
                   onClick={() => {
-                    if (window.confirm(deleteComponentsButtonMessages().popup)) {
-                      deleteComponentsButtonOnClick()
+                    if (window.confirm(sideBarOptsBasedOnModality.deleteButton.messages.popup)) {
+                      sideBarOptsBasedOnModality.deleteButton.onClickAction()
                     }
                   }}
                 >
-                  {deleteComponentsButtonMessages().buttonLabel}
+                  {sideBarOptsBasedOnModality.deleteButton.messages.buttonLabel}
                 </button>
               </div>
             )}
