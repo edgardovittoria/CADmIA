@@ -6,7 +6,7 @@ import {setUnit, unitSelector} from "./statusBarSlice";
 interface StatusBarProps {}
 
 export const StatusBar: FC<StatusBarProps> = () => {
-	const units = ["dm", "cm", "mm"];
+	const units = ["m", "dm", "cm", "mm", "microm", "nanom"];
 	const unit = useSelector(unitSelector)
 	const dispatch = useDispatch()
 	return (
@@ -16,7 +16,7 @@ export const StatusBar: FC<StatusBarProps> = () => {
 			theme="light"
 			right={
 				<div className="row">
-					<span>unit: </span>
+					<span>Distance unit: </span>
 					<select value={unit} onChange={(e) => dispatch(setUnit(e.target.value))}>
 						{units.map((u, index) => <option key={index} value={u}>{u}</option>)}
 					</select>
