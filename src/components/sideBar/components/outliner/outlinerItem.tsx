@@ -1,21 +1,21 @@
-import { selectComponent, updateName } from "cad-library";
+import { updateName } from "cad-library";
 import { FC, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { CubeIcon } from "@heroicons/react/24/outline";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenSquare } from "@fortawesome/free-solid-svg-icons";
-import {BiRename} from "react-icons/bi";
+import { BiRename } from "react-icons/bi";
+import { useCadmiaModalityManager } from "../../../../cadmiaModalityManagement/useCadmiaModalityManager";
 
 interface OutlinerItemProps {
     keyComponent: number,
-    nameComponent: string,
-    isSelelctedComponent: boolean
+    nameComponent: string
 }
 
-export const OutlinerItem: FC<OutlinerItemProps> = ({ keyComponent, nameComponent, isSelelctedComponent }) => {
+export const OutlinerItem: FC<OutlinerItemProps> = ({ keyComponent, nameComponent }) => {
 
     const [outlinerItemVisibility, setOutlinerItemVisibility] = useState(true);
     const dispatch = useDispatch()
+    const { sideBarOptsBasedOnModality } = useCadmiaModalityManager()
+    const isSelelctedComponent = sideBarOptsBasedOnModality.outliner.isItemSelected(keyComponent)
 
     useEffect(() => {
         !isSelelctedComponent && setOutlinerItemVisibility(true)
@@ -28,9 +28,7 @@ export const OutlinerItem: FC<OutlinerItemProps> = ({ keyComponent, nameComponen
                 <div
                     key={keyComponent}
                     className="border-2 border-transparent text-black text-[9px] font-bold text-left pl-4 flex w-1/2"
-                    onClick={() => {
-                        dispatch(selectComponent(keyComponent))
-                    }}
+                    onClick={sideBarOptsBasedOnModality.outliner.onClickItemAction(keyComponent)}
                 >
                     <CubeIcon className="w-[10px] mr-2" />
                     {nameComponent}
@@ -41,14 +39,16 @@ export const OutlinerItem: FC<OutlinerItemProps> = ({ keyComponent, nameComponen
                             <div
                                 key={keyComponent}
                                 className="text-black text-[9px] font-bold text-left pl-4 flex items-center"
-                                onClick={() => { dispatch(selectComponent(keyComponent)) }}
+                                onClick={sideBarOptsBasedOnModality.outliner.onClickItemAction(keyComponent)}
                             >
                                 <CubeIcon className="w-[10px] mr-2" />
                                 {nameComponent}
                             </div>
-                            <div className="tooltip" data-tip="Rename">
-                                <BiRename className="w-[17px] pr-1 text-black" onClick={() => { setOutlinerItemVisibility(false) }}/>
-                            </div>
+                            {sideBarOptsBasedOnModality.outliner.renameIconVisibility &&
+                                <div className="tooltip" data-tip="Rename">
+                                    <BiRename className="w-[17px] pr-1 text-black" onClick={() => { setOutlinerItemVisibility(false) }} />
+                                </div>
+                            }
                         </div>
                         :
                         <div key={keyComponent + "_input"} className="text-left">

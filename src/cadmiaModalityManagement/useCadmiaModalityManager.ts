@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { cadmiaModalitySelector } from "./cadmiaModalitySlice";
 import { Material, componentseSelector, removeComponent, removeComponentMaterial, selectComponent, selectedComponentSelector, setComponentMaterial, setComponentsOpacity } from "cad-library";
-import { toggleEntitySelectionForBinaryOp } from "../components/binaryOperationsToolbar/binaryOperationsToolbarSlice";
+import { binaryOpEntitiesKeysSelector, toggleEntitySelectionForBinaryOp } from "../components/binaryOperationsToolbar/binaryOperationsToolbarSlice";
 import { multipleSelectionEntitiesKeysSelector, toggleEntitySelectionForMultipleSelection } from "../components/miscToolbar/miscToolbarSlice";
 import { useEffect } from "react";
 
@@ -10,6 +10,7 @@ export const useCadmiaModalityManager = () => {
     const dispatch = useDispatch()
     const selectedComponent = useSelector(selectedComponentSelector)
     const multipleSelectionEntityKeys = useSelector(multipleSelectionEntitiesKeysSelector)
+    const binaryOpsEntityKeys = useSelector(binaryOpEntitiesKeysSelector)
 
     const componentOpsBasedOnModality = {
         onClickAction: (keyComponent: number) => {
@@ -37,6 +38,30 @@ export const useCadmiaModalityManager = () => {
             transformations: modality !== 'MultipleSelection' ? true : false,
             geometryParams: modality !== 'MultipleSelection' ? true : false,
             borders: modality !== 'MultipleSelection' ? true : false
+        },
+        outliner: {
+            onClickItemAction: (keyComponent: number) => {
+                if (modality === 'NormalSelection') {
+                    return () => {selectedComponent.keyComponent !== keyComponent &&
+                        dispatch(selectComponent(keyComponent))};
+                } else if (modality === 'BinaryOperation') {
+                    return () => {dispatch(toggleEntitySelectionForBinaryOp(keyComponent))};
+                }
+                else if (modality === 'MultipleSelection') {
+                    return () => {dispatch(toggleEntitySelectionForMultipleSelection(keyComponent))}
+                }
+            },
+            isItemSelected: (keyComponent: number) => {
+                if (modality === 'NormalSelection') {
+                    return selectedComponent.keyComponent === keyComponent
+                } else if (modality === 'BinaryOperation') {
+                    return binaryOpsEntityKeys.filter(key => key === keyComponent).length > 0
+                }
+                else if (modality === 'MultipleSelection') {
+                    return multipleSelectionEntityKeys.filter(key => key === keyComponent).length > 0
+                }
+            },
+            renameIconVisibility: modality === 'NormalSelection' ? true : false
         },
         deleteButton: {
             messages: modality !== 'MultipleSelection'
