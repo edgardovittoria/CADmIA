@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { cadmiaModalitySelector } from "./cadmiaModalitySlice";
+import { cadmiaModalitySelector, setModality } from "./cadmiaModalitySlice";
 import { Material, componentseSelector, removeComponent, removeComponentMaterial, selectComponent, selectedComponentSelector, setComponentMaterial, setComponentsOpacity } from "cad-library";
 import { binaryOpEntitiesKeysSelector, toggleEntitySelectionForBinaryOp } from "../components/binaryOperationsToolbar/binaryOperationsToolbarSlice";
 import { multipleSelectionEntitiesKeysSelector, toggleEntitySelectionForMultipleSelection } from "../components/miscToolbar/miscToolbarSlice";
@@ -15,7 +15,7 @@ export const useCadmiaModalityManager = () => {
     const componentOpsBasedOnModality = {
         onClickAction: (keyComponent: number) => {
             if (modality === 'NormalSelection') {
-                selectedComponent.keyComponent !== keyComponent &&
+                (!selectedComponent || selectedComponent.keyComponent !== keyComponent) &&
                     dispatch(selectComponent(keyComponent));
             } else if (modality === 'BinaryOperation') {
                 dispatch(toggleEntitySelectionForBinaryOp(keyComponent));
@@ -42,18 +42,20 @@ export const useCadmiaModalityManager = () => {
         outliner: {
             onClickItemAction: (keyComponent: number) => {
                 if (modality === 'NormalSelection') {
-                    return () => {selectedComponent.keyComponent !== keyComponent &&
-                        dispatch(selectComponent(keyComponent))};
+                    return () => {
+                        (!selectedComponent || selectedComponent.keyComponent !== keyComponent) &&
+                            dispatch(selectComponent(keyComponent))
+                    };
                 } else if (modality === 'BinaryOperation') {
-                    return () => {dispatch(toggleEntitySelectionForBinaryOp(keyComponent))};
+                    return () => { dispatch(toggleEntitySelectionForBinaryOp(keyComponent)) };
                 }
                 else if (modality === 'MultipleSelection') {
-                    return () => {dispatch(toggleEntitySelectionForMultipleSelection(keyComponent))}
+                    return () => { dispatch(toggleEntitySelectionForMultipleSelection(keyComponent)) }
                 }
             },
             isItemSelected: (keyComponent: number) => {
                 if (modality === 'NormalSelection') {
-                    return selectedComponent.keyComponent === keyComponent
+                    return selectedComponent ? selectedComponent.keyComponent === keyComponent : false
                 } else if (modality === 'BinaryOperation') {
                     return binaryOpsEntityKeys.filter(key => key === keyComponent).length > 0
                 }
@@ -73,6 +75,7 @@ export const useCadmiaModalityManager = () => {
                 } else {
                     multipleSelectionEntityKeys.forEach(key => dispatch(removeComponent(key)))
                 }
+                dispatch(setModality('NormalSelection'))
             }
         },
         material: {
@@ -91,7 +94,7 @@ export const useCadmiaModalityManager = () => {
                     multipleSelectionEntityKeys.forEach(key => dispatch(removeComponentMaterial({ keyComponent: key })))
         }
     }
-    
+
     const useBaseOpactityBasedOnModality = () => {
         const modality = useSelector(cadmiaModalitySelector)
         const components = useSelector(componentseSelector)
