@@ -65,7 +65,7 @@ export const useCadmiaModalityManager = () => {
         },
         deleteButton: {
             messages: modality !== 'MultipleSelection'
-                ? { popup: `Sei sicuro di voler eliminare il componente ${selectedComponent.name} ?`, buttonLabel: `Delete ${selectedComponent.name}` }
+                ? { popup: `Sei sicuro di voler eliminare il componente ${(selectedComponent) ? selectedComponent.name : ''} ?`, buttonLabel: `Delete ${(selectedComponent) ? selectedComponent.name : ''}` }
                 : { popup: `Sei sicuro di voler eliminare i componenti selezionati?`, buttonLabel: 'Delete components' },
             onClickAction: () => {
                 if (modality !== 'MultipleSelection') {
