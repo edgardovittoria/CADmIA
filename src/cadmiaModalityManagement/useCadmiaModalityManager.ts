@@ -71,7 +71,7 @@ export const useCadmiaModalityManager = () => {
                 : { popup: `Sei sicuro di voler eliminare i componenti selezionati?`, buttonLabel: 'Delete components' },
             onClickAction: () => {
                 if (modality !== 'MultipleSelection') {
-                    dispatch(removeComponent(selectedComponent.keyComponent))
+                    (selectedComponent) && dispatch(removeComponent(selectedComponent.keyComponent))
                 } else {
                     multipleSelectionEntityKeys.forEach(key => dispatch(removeComponent(key)))
                 }
