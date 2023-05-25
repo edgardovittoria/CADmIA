@@ -1,8 +1,10 @@
 import { Material, useFaunaQuery } from "cad-library";
 import {useEffect, useState} from "react";
 import faunadb from 'faunadb'
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const useMaterials = () => {
+    const {user} = useAuth0()
     const [availableMaterials, setAvailableMaterials] = useState<Material[]>([]);
     const {execQuery} = useFaunaQuery()
     async function getMaterials(faunaClient: faunadb.Client, faunaQuery: typeof faunadb.query) {
@@ -24,7 +26,7 @@ export const useMaterials = () => {
     }
 
     useEffect(() => {
-        execQuery(getMaterials)?.then(res => setAvailableMaterials(res as Material[]))
+        (user) && execQuery(getMaterials)?.then(res => setAvailableMaterials(res as Material[]))
     }, []);
 
     return {availableMaterials}
