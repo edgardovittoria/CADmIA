@@ -5,7 +5,7 @@ import toast from "react-hot-toast"
 import { ChromePicker } from "react-color"
 import faunadb from "faunadb"
 
-export const AddNewMaterialModal: FC<{ showModal: Function }> = ({ showModal }) => {
+export const AddNewMaterialModal: FC<{ showModal: Function, updateMaterials: Function }> = ({ showModal, updateMaterials }) => {
     const { execQuery } = useFaunaQuery()
     const [name, setName] = useState("")
     const [color, setColor] = useState("#333")
@@ -88,6 +88,10 @@ export const AddNewMaterialModal: FC<{ showModal: Function }> = ({ showModal }) 
         }
     }
 
+    const adjustNumberFormatForThis = (stringValue: string) => {
+       return !Number.isNaN(parseFloat(stringValue)) ? parseFloat(stringValue) : undefined
+    }
+
     useEffect(() => {
         if(valueErrorMessage){
             toast.error(valueErrorMessage)
@@ -111,7 +115,7 @@ export const AddNewMaterialModal: FC<{ showModal: Function }> = ({ showModal }) 
                 conductivity: conductivity,
                 tangent_delta_conductivity: tangentDeltaConductivity,
                 custom_conductivity: customConductivity[0] ? customConductivity : undefined
-            } as FaunaMaterial)
+            } as FaunaMaterial).then(() => updateMaterials())
         }
     }, [saveMaterialFlag])
 
@@ -179,7 +183,7 @@ export const AddNewMaterialModal: FC<{ showModal: Function }> = ({ showModal }) 
                                             step={0.00001}
                                             value={permeability}
                                             required
-                                            onChange={(e) => { setPermeability(!Number.isNaN(parseFloat(e.target.value)) ? parseFloat(e.target.value) : undefined) }}
+                                            onChange={(e) => { setPermeability(adjustNumberFormatForThis(e.target.value)) }}
                                             className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
                                         />
                                     </div>
@@ -191,7 +195,7 @@ export const AddNewMaterialModal: FC<{ showModal: Function }> = ({ showModal }) 
                                             type="number"
                                             step={0.00001}
                                             value={tangentDeltaPermeability}
-                                            onChange={(e) => { setTangentDeltaPermeability(!Number.isNaN(parseFloat(e.target.value)) ? parseFloat(e.target.value) : undefined) }}
+                                            onChange={(e) => { setTangentDeltaPermeability(adjustNumberFormatForThis(e.target.value)) }}
                                             className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
                                         />
                                     </div>
@@ -203,14 +207,14 @@ export const AddNewMaterialModal: FC<{ showModal: Function }> = ({ showModal }) 
                                             type="number"
                                             step={0.00001}
                                             value={customPermeability[0]}
-                                            onChange={(e) => { setCustomPermeability([!Number.isNaN(parseFloat(e.target.value)) ? parseFloat(e.target.value) : undefined, customPermeability[1]]) }}
+                                            onChange={(e) => { setCustomPermeability([adjustNumberFormatForThis(e.target.value), customPermeability[1]]) }}
                                             className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
                                         />
                                         <input
                                             type="number"
                                             step={0.00001}
                                             value={customPermeability[1]}
-                                            onChange={(e) => { setCustomPermeability([customPermeability[0], !Number.isNaN(parseFloat(e.target.value)) ? parseFloat(e.target.value) : undefined]) }}
+                                            onChange={(e) => { setCustomPermeability([customPermeability[0], adjustNumberFormatForThis(e.target.value)]) }}
                                             className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
                                         />
                                     </div>
@@ -223,7 +227,7 @@ export const AddNewMaterialModal: FC<{ showModal: Function }> = ({ showModal }) 
                                             step={0.00001}
                                             value={permittivity}
                                             required
-                                            onChange={(e) => { setPermittivity(!Number.isNaN(parseFloat(e.target.value)) ? parseFloat(e.target.value) : undefined) }}
+                                            onChange={(e) => { setPermittivity(adjustNumberFormatForThis(e.target.value)) }}
                                             className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
                                         />
                                     </div>
@@ -235,7 +239,7 @@ export const AddNewMaterialModal: FC<{ showModal: Function }> = ({ showModal }) 
                                             type="number"
                                             step={0.00001}
                                             value={tangentDeltaPermittivity}
-                                            onChange={(e) => { setTangentDeltaPermittivity(!Number.isNaN(parseFloat(e.target.value)) ? parseFloat(e.target.value) : undefined) }}
+                                            onChange={(e) => { setTangentDeltaPermittivity(adjustNumberFormatForThis(e.target.value)) }}
                                             className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
                                         />
                                     </div>
@@ -247,14 +251,14 @@ export const AddNewMaterialModal: FC<{ showModal: Function }> = ({ showModal }) 
                                             type="number"
                                             step={0.00001}
                                             value={customPermittivity[0]}
-                                            onChange={(e) => { setCustomPermittivity([!Number.isNaN(parseFloat(e.target.value)) ? parseFloat(e.target.value) : undefined, customPermittivity[1]]) }}
+                                            onChange={(e) => { setCustomPermittivity([adjustNumberFormatForThis(e.target.value), customPermittivity[1]]) }}
                                             className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
                                         />
                                         <input
                                             type="number"
                                             step={0.00001}
                                             value={customPermittivity[1]}
-                                            onChange={(e) => { setCustomPermittivity([customPermittivity[0], !Number.isNaN(parseFloat(e.target.value)) ? parseFloat(e.target.value) : undefined]) }}
+                                            onChange={(e) => { setCustomPermittivity([customPermittivity[0], adjustNumberFormatForThis(e.target.value)]) }}
                                             className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
                                         />
                                     </div>
@@ -267,7 +271,7 @@ export const AddNewMaterialModal: FC<{ showModal: Function }> = ({ showModal }) 
                                             step={0.00001}
                                             value={conductivity}
                                             required
-                                            onChange={(e) => { setConductivity(!Number.isNaN(parseFloat(e.target.value)) ? parseFloat(e.target.value) : undefined) }}
+                                            onChange={(e) => { setConductivity(adjustNumberFormatForThis(e.target.value)) }}
                                             className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
                                         />
                                     </div>
@@ -279,7 +283,7 @@ export const AddNewMaterialModal: FC<{ showModal: Function }> = ({ showModal }) 
                                             type="number"
                                             step={0.00001}
                                             value={tangentDeltaConductivity}
-                                            onChange={(e) => { setTangentDeltaConductivity(!Number.isNaN(parseFloat(e.target.value)) ? parseFloat(e.target.value) : undefined) }}
+                                            onChange={(e) => { setTangentDeltaConductivity(adjustNumberFormatForThis(e.target.value)) }}
                                             className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
                                         />
                                     </div>
@@ -291,14 +295,14 @@ export const AddNewMaterialModal: FC<{ showModal: Function }> = ({ showModal }) 
                                             type="number"
                                             step={0.00001}
                                             value={customConductivity[0]}
-                                            onChange={(e) => { setCustomConductivity([!Number.isNaN(parseFloat(e.target.value)) ? parseFloat(e.target.value) : undefined, customConductivity[1]]) }}
+                                            onChange={(e) => { setCustomConductivity([adjustNumberFormatForThis(e.target.value), customConductivity[1]]) }}
                                             className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
                                         />
                                         <input
                                             type="number"
                                             step={0.00001}
                                             value={customConductivity[1]}
-                                            onChange={(e) => { setCustomConductivity([customConductivity[0], !Number.isNaN(parseFloat(e.target.value)) ? parseFloat(e.target.value) : undefined]) }}
+                                            onChange={(e) => { setCustomConductivity([customConductivity[0], adjustNumberFormatForThis(e.target.value)]) }}
                                             className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
                                         />
                                     </div>

@@ -13,7 +13,7 @@ interface MaterialSelectionProps {
 }
 
 export const MaterialSelection: FC<MaterialSelectionProps> = ({ defaultMaterial, setMaterial, unsetMaterial }) => {
-    const { availableMaterials } = useMaterials()
+    const { availableMaterials, updateMaterials } = useMaterials()
     const [showNewMaterialModal, setShowNewMaterialModal] = useState(false)
     const { user } = useAuth0()
     return (
@@ -76,7 +76,7 @@ export const MaterialSelection: FC<MaterialSelectionProps> = ({ defaultMaterial,
                 New Material
             </button>
             }
-            {showNewMaterialModal && <AddNewMaterialModal showModal={setShowNewMaterialModal} />}
+            {showNewMaterialModal && <AddNewMaterialModal showModal={setShowNewMaterialModal} updateMaterials={updateMaterials} />}
         </div>
     )
 }

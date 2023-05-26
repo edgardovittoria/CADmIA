@@ -25,9 +25,13 @@ export const useMaterials = () => {
         return response as Material[]
     }
 
+    const updateMaterials = () => {
+        execQuery(getMaterials)?.then(res => setAvailableMaterials(res as Material[]))
+    }
+
     useEffect(() => {
         (user) && execQuery(getMaterials)?.then(res => setAvailableMaterials(res as Material[]))
     }, []);
 
-    return {availableMaterials}
+    return {availableMaterials, updateMaterials}
 }
