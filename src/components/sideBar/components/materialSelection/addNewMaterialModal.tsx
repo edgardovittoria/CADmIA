@@ -9,13 +9,13 @@ export const AddNewMaterialModal: FC<{ showModal: Function, updateMaterials: Fun
     const { execQuery } = useFaunaQuery()
     const [name, setName] = useState("")
     const [color, setColor] = useState("#333")
-    const [permeability, setPermeability] = useState<number|undefined>(undefined)
+    const [permeability, setPermeability] = useState<number | undefined>(undefined)
     const [tangentDeltaPermeability, setTangentDeltaPermeability] = useState<number | undefined>(undefined)
     const [customPermeability, setCustomPermeability] = useState<[number | undefined, number | undefined]>([undefined, undefined])
-    const [permittivity, setPermittivity] = useState<number|undefined>(undefined)
+    const [permittivity, setPermittivity] = useState<number | undefined>(undefined)
     const [tangentDeltaPermittivity, setTangentDeltaPermittivity] = useState<number | undefined>(undefined)
     const [customPermittivity, setCustomPermittivity] = useState<[number | undefined, number | undefined]>([undefined, undefined])
-    const [conductivity, setConductivity] = useState<number|undefined>(undefined)
+    const [conductivity, setConductivity] = useState<number | undefined>(undefined)
     const [tangentDeltaConductivity, setTangentDeltaConductivity] = useState<number | undefined>(undefined)
     const [customConductivity, setCustomConductivity] = useState<[number | undefined, number | undefined]>([undefined, undefined])
     const [valueErrorMessage, setValueErrorMessage] = useState<string | undefined>(undefined)
@@ -77,30 +77,30 @@ export const AddNewMaterialModal: FC<{ showModal: Function, updateMaterials: Fun
         else if ((customConductivity[0] && !customConductivity[1]) || (!customConductivity[0] && customConductivity[1])) {
             error = "You must insert valid custom conductivity values."
         }
-        
-        if(error !== undefined){
+
+        if (error !== undefined) {
             setValueErrorMessage(error)
             setSaveMaterialFlag(false)
         }
-        else{
+        else {
             setValueErrorMessage(error)
             setSaveMaterialFlag(true)
         }
     }
 
     const adjustNumberFormatForThis = (stringValue: string) => {
-       return !Number.isNaN(parseFloat(stringValue)) ? parseFloat(stringValue) : undefined
+        return !Number.isNaN(parseFloat(stringValue)) ? parseFloat(stringValue) : undefined
     }
 
     useEffect(() => {
-        if(valueErrorMessage){
+        if (valueErrorMessage) {
             toast.error(valueErrorMessage)
             setValueErrorMessage(undefined)
         }
     }, [valueErrorMessage])
 
     useEffect(() => {
-        if(saveMaterialFlag){
+        if (saveMaterialFlag) {
             setSaveMaterialFlag(false)
             showModal(false)
             execQuery(saveNewMaterial, {
@@ -153,161 +153,127 @@ export const AddNewMaterialModal: FC<{ showModal: Function, updateMaterials: Fun
                                 >
                                     Add new material to database
                                 </Dialog.Title>
-                                <div className="mt-4">
-                                    <div className="flex items-center justify-between">
-                                        <label className="ml-2">Name:</label>
-                                        <input
-                                            type="text"
-                                            value={name}
-                                            required
-                                            onChange={(e) => { setName(e.target.value) }}
-                                            className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="mt-4">
-                                    <div className="flex items-center justify-between">
-                                        <label className="ml-2">Color:</label>
-                                        <ChromePicker
-                                            color={color}
-                                            onChangeComplete={(color) => setColor(color.hex)}
-                                            disableAlpha={true}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="mt-4">
-                                    <div className="flex items-center justify-between">
-                                        <label className="ml-2">Permeability:</label>
-                                        <input
-                                            type="number"
-                                            step={0.00001}
-                                            value={permeability}
-                                            required
-                                            onChange={(e) => { setPermeability(adjustNumberFormatForThis(e.target.value)) }}
-                                            className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="mt-4">
-                                    <div className="flex items-center justify-between">
-                                        <label className="ml-2">Tangent Delta Permeability:</label>
-                                        <input
-                                            type="number"
-                                            step={0.00001}
-                                            value={tangentDeltaPermeability}
-                                            onChange={(e) => { setTangentDeltaPermeability(adjustNumberFormatForThis(e.target.value)) }}
-                                            className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="mt-4">
-                                    <div className="flex items-center justify-between">
-                                        <label className="ml-2">Custom Permeability:</label>
-                                        <input
-                                            type="number"
-                                            step={0.00001}
-                                            value={customPermeability[0]}
-                                            onChange={(e) => { setCustomPermeability([adjustNumberFormatForThis(e.target.value), customPermeability[1]]) }}
-                                            className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
-                                        />
-                                        <input
-                                            type="number"
-                                            step={0.00001}
-                                            value={customPermeability[1]}
-                                            onChange={(e) => { setCustomPermeability([customPermeability[0], adjustNumberFormatForThis(e.target.value)]) }}
-                                            className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="mt-4">
-                                    <div className="flex items-center justify-between">
-                                        <label className="ml-2">Permittivity:</label>
-                                        <input
-                                            type="number"
-                                            step={0.00001}
-                                            value={permittivity}
-                                            required
-                                            onChange={(e) => { setPermittivity(adjustNumberFormatForThis(e.target.value)) }}
-                                            className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="mt-4">
-                                    <div className="flex items-center justify-between">
-                                        <label className="ml-2">Tangent Delta Permittivity:</label>
-                                        <input
-                                            type="number"
-                                            step={0.00001}
-                                            value={tangentDeltaPermittivity}
-                                            onChange={(e) => { setTangentDeltaPermittivity(adjustNumberFormatForThis(e.target.value)) }}
-                                            className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="mt-4">
-                                    <div className="flex items-center justify-between">
-                                        <label className="ml-2">Custom Permittivity:</label>
-                                        <input
-                                            type="number"
-                                            step={0.00001}
-                                            value={customPermittivity[0]}
-                                            onChange={(e) => { setCustomPermittivity([adjustNumberFormatForThis(e.target.value), customPermittivity[1]]) }}
-                                            className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
-                                        />
-                                        <input
-                                            type="number"
-                                            step={0.00001}
-                                            value={customPermittivity[1]}
-                                            onChange={(e) => { setCustomPermittivity([customPermittivity[0], adjustNumberFormatForThis(e.target.value)]) }}
-                                            className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="mt-4">
-                                    <div className="flex items-center justify-between">
-                                        <label className="ml-2">Conductivity:</label>
-                                        <input
-                                            type="number"
-                                            step={0.00001}
-                                            value={conductivity}
-                                            required
-                                            onChange={(e) => { setConductivity(adjustNumberFormatForThis(e.target.value)) }}
-                                            className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="mt-4">
-                                    <div className="flex items-center justify-between">
-                                        <label className="ml-2">Tangent Delta Conductivity:</label>
-                                        <input
-                                            type="number"
-                                            step={0.00001}
-                                            value={tangentDeltaConductivity}
-                                            onChange={(e) => { setTangentDeltaConductivity(adjustNumberFormatForThis(e.target.value)) }}
-                                            className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="mt-4">
-                                    <div className="flex items-center justify-between">
-                                        <label className="ml-2">Custom Conductivity:</label>
-                                        <input
-                                            type="number"
-                                            step={0.00001}
-                                            value={customConductivity[0]}
-                                            onChange={(e) => { setCustomConductivity([adjustNumberFormatForThis(e.target.value), customConductivity[1]]) }}
-                                            className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
-                                        />
-                                        <input
-                                            type="number"
-                                            step={0.00001}
-                                            value={customConductivity[1]}
-                                            onChange={(e) => { setCustomConductivity([customConductivity[0], adjustNumberFormatForThis(e.target.value)]) }}
-                                            className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
-                                        />
-                                    </div>
-                                </div>
-
+                                <MaterialOptionMainStyle label="Name">
+                                    <input
+                                        type="text"
+                                        value={name}
+                                        required
+                                        onChange={(e) => { setName(e.target.value) }}
+                                        className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
+                                    />
+                                </MaterialOptionMainStyle>
+                                <MaterialOptionMainStyle label="Color">
+                                    <ChromePicker
+                                        color={color}
+                                        onChangeComplete={(color) => setColor(color.hex)}
+                                        disableAlpha={true}
+                                    />
+                                </MaterialOptionMainStyle>
+                                <MaterialOptionMainStyle label="Permeability">
+                                    <input
+                                        type="number"
+                                        step={0.00001}
+                                        value={permeability}
+                                        required
+                                        onChange={(e) => { setPermeability(adjustNumberFormatForThis(e.target.value)) }}
+                                        className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
+                                    />
+                                </MaterialOptionMainStyle>
+                                <MaterialOptionMainStyle label="Tangent Delta Permeability">
+                                    <input
+                                        type="number"
+                                        step={0.00001}
+                                        value={tangentDeltaPermeability}
+                                        onChange={(e) => { setTangentDeltaPermeability(adjustNumberFormatForThis(e.target.value)) }}
+                                        className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
+                                    />
+                                </MaterialOptionMainStyle>
+                                <MaterialOptionMainStyle label="Custom Permeability">
+                                    <input
+                                        type="number"
+                                        step={0.00001}
+                                        value={customPermeability[0]}
+                                        onChange={(e) => { setCustomPermeability([adjustNumberFormatForThis(e.target.value), customPermeability[1]]) }}
+                                        className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
+                                    />
+                                    <input
+                                        type="number"
+                                        step={0.00001}
+                                        value={customPermeability[1]}
+                                        onChange={(e) => { setCustomPermeability([customPermeability[0], adjustNumberFormatForThis(e.target.value)]) }}
+                                        className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
+                                    />
+                                </MaterialOptionMainStyle>
+                                <MaterialOptionMainStyle label="Permittivity">
+                                    <input
+                                        type="number"
+                                        step={0.00001}
+                                        value={permittivity}
+                                        required
+                                        onChange={(e) => { setPermittivity(adjustNumberFormatForThis(e.target.value)) }}
+                                        className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
+                                    />
+                                </MaterialOptionMainStyle>
+                                <MaterialOptionMainStyle label="Tangent Delta Permittivity">
+                                    <input
+                                        type="number"
+                                        step={0.00001}
+                                        value={tangentDeltaPermittivity}
+                                        onChange={(e) => { setTangentDeltaPermittivity(adjustNumberFormatForThis(e.target.value)) }}
+                                        className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
+                                    />
+                                </MaterialOptionMainStyle>
+                                <MaterialOptionMainStyle label="Custom Permittivity">
+                                    <input
+                                        type="number"
+                                        step={0.00001}
+                                        value={customPermittivity[0]}
+                                        onChange={(e) => { setCustomPermittivity([adjustNumberFormatForThis(e.target.value), customPermittivity[1]]) }}
+                                        className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
+                                    />
+                                    <input
+                                        type="number"
+                                        step={0.00001}
+                                        value={customPermittivity[1]}
+                                        onChange={(e) => { setCustomPermittivity([customPermittivity[0], adjustNumberFormatForThis(e.target.value)]) }}
+                                        className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
+                                    />
+                                </MaterialOptionMainStyle>
+                                <MaterialOptionMainStyle label="Conductivity">
+                                    <input
+                                        type="number"
+                                        step={0.00001}
+                                        value={conductivity}
+                                        required
+                                        onChange={(e) => { setConductivity(adjustNumberFormatForThis(e.target.value)) }}
+                                        className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
+                                    />
+                                </MaterialOptionMainStyle>
+                                <MaterialOptionMainStyle label="Tangent Delta Conductivity">
+                                    <input
+                                        type="number"
+                                        step={0.00001}
+                                        value={tangentDeltaConductivity}
+                                        onChange={(e) => { setTangentDeltaConductivity(adjustNumberFormatForThis(e.target.value)) }}
+                                        className="border border-black rounded shadow p-1 w-[80%] text-black text-left"
+                                    />
+                                </MaterialOptionMainStyle>
+                                <MaterialOptionMainStyle label="Custom Conductivity">
+                                    <input
+                                        type="number"
+                                        step={0.00001}
+                                        value={customConductivity[0]}
+                                        onChange={(e) => { setCustomConductivity([adjustNumberFormatForThis(e.target.value), customConductivity[1]]) }}
+                                        className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
+                                    />
+                                    <input
+                                        type="number"
+                                        step={0.00001}
+                                        value={customConductivity[1]}
+                                        onChange={(e) => { setCustomConductivity([customConductivity[0], adjustNumberFormatForThis(e.target.value)]) }}
+                                        className="border border-black rounded shadow p-1 w-[50%] text-black text-left"
+                                    />
+                                </MaterialOptionMainStyle>
                                 <div className="mt-4 flex justify-between">
                                     <button
                                         type="button"
@@ -330,5 +296,16 @@ export const AddNewMaterialModal: FC<{ showModal: Function, updateMaterials: Fun
                 </div>
             </Dialog>
         </Transition>
+    )
+}
+
+const MaterialOptionMainStyle: FC<{ label: string }> = ({ label, children }) => {
+    return (
+        <div className="mt-4">
+            <div className="flex items-center justify-between">
+                <label className="ml-2">{label}:</label>
+                {children}
+            </div>
+        </div>
     )
 }
