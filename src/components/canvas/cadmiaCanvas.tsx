@@ -7,7 +7,7 @@ import {
   FactoryShapes,
   keySelectedComponenteSelector,
 } from "cad-library";
-import { Component } from "./components/component";
+import { CanvasObject } from "./components/canvasObject";
 import { Controls } from "./components/controls";
 import { meshesWithBordersVisibleSelector } from "../sideBar/sidebarSlice";
 import { Bounds, useBounds } from "@react-three/drei";
@@ -52,7 +52,7 @@ export const CadmiaCanvas: React.FC<CadmiaCanvasProps> = () => {
                   <CommonObjectsActions>
                     {components.map((component) => {
                       return (
-                        <Component
+                        <CanvasObject
                           setMeshRef={setMeshSelected}
                           key={component.keyComponent}
                           keyComponent={component.keyComponent}
@@ -62,7 +62,7 @@ export const CadmiaCanvas: React.FC<CadmiaCanvasProps> = () => {
                           borderVisible={bordersVisible.filter(mb => mb === component.keyComponent).length > 0}
                         >
                           <FactoryShapes entity={component} color={component.material ? component.material.color : "#63cbf7"} />
-                        </Component>
+                        </CanvasObject>
                       );
                     })}
                   </CommonObjectsActions>
@@ -89,7 +89,12 @@ const CommonObjectsActions: FC = ({ children }) => {
   const bounds = useBounds()
   return (
     <group 
-    onPointerMissed={(e) => e.button === 0 && bounds.refresh().fit()}
+    onPointerMissed={(e) => {
+      if(e.button === 0) {
+        if(window.confirm("Confirm reset camera focus to origin?")){
+        bounds.refresh().fit()}
+      }
+    }}
     >
       {children}
     </group>

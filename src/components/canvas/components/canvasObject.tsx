@@ -18,7 +18,7 @@ export interface ComponentProps {
   setMeshRef: Function;
 }
 
-export const Component: React.FC<ComponentProps> = ({
+export const CanvasObject: React.FC<ComponentProps> = ({
   children,
   transformationParams,
   keyComponent,
