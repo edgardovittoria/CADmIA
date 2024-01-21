@@ -20,10 +20,6 @@ export const BinaryOperationsToolbarSlice = createSlice({
         setBinaryOp(state: BinaryOperationsToolbarState, action: PayloadAction<BinaryOperationType>) {
             state.binaryOp = action.payload
         },
-        unsetBinaryOp(state: BinaryOperationsToolbarState) {
-            state.binaryOp = undefined
-            state.entities = []
-        },
         toggleEntitySelectionForBinaryOp(state: BinaryOperationsToolbarState, action: PayloadAction<number>) {
             if (state.entities.filter(entity => entity === action.payload).length > 0) {
                 let entities = state.entities.filter(entity => entity !== action.payload)
@@ -38,9 +34,6 @@ export const BinaryOperationsToolbarSlice = createSlice({
         },
         closeBinaryOperationsToolbar(state: BinaryOperationsToolbarState){
             state.visible = false
-        },
-        toggleBinaryOperationsToolbar(state: BinaryOperationsToolbarState){
-            state.visible = !state.visible
         }
     },
     extraReducers(builder) {
@@ -55,7 +48,7 @@ export const BinaryOperationsToolbarSlice = createSlice({
 
 export const {
     //qui vanno inserite tutte le azioni che vogliamo esporatare
-    setBinaryOp, unsetBinaryOp, toggleEntitySelectionForBinaryOp, closeBinaryOperationsToolbar, openBinaryOperationsToolbar, toggleBinaryOperationsToolbar
+    setBinaryOp, toggleEntitySelectionForBinaryOp, closeBinaryOperationsToolbar, openBinaryOperationsToolbar
 } = BinaryOperationsToolbarSlice.actions
 
 export const binaryOpSelector = (state: {binaryOperationsToolbar: BinaryOperationsToolbarState}) => state.binaryOperationsToolbar.binaryOp
