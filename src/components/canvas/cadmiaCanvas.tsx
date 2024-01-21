@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Provider, ReactReduxContext, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
@@ -11,6 +11,7 @@ import { CanvasObject } from "./components/canvasObject";
 import { Controls } from "./components/controls";
 import { meshesWithBordersVisibleSelector } from "../sideBar/sidebarSlice";
 import { Bounds, useBounds } from "@react-three/drei";
+import { focusToOriginSelector } from "../navBar/viewIitem/viewItemSlice";
 
 interface CadmiaCanvasProps {
 }
@@ -87,15 +88,13 @@ export const CadmiaCanvas: React.FC<CadmiaCanvasProps> = () => {
 
 const CommonObjectsActions: FC = ({ children }) => {
   const bounds = useBounds()
+  const focusToOrigin = useSelector(focusToOriginSelector)
+  useEffect(() => {
+    focusToOrigin && bounds.refresh().fit()
+  }, [focusToOrigin])
+  
   return (
-    <group 
-    onPointerMissed={(e) => {
-      if(e.button === 0) {
-        if(window.confirm("Confirm reset camera focus to origin?")){
-        bounds.refresh().fit()}
-      }
-    }}
-    >
+    <group>
       {children}
     </group>
   )

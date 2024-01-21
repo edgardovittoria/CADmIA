@@ -10,6 +10,7 @@ import {
 import { Edges, useBounds } from "@react-three/drei";
 import * as THREE from "three";
 import { useCadmiaModalityManager } from "../../../cadmiaModalityManagement/useCadmiaModalityManager";
+import { setFocusNotToOrigin } from "../../navBar/viewIitem/viewItemSlice";
 
 export interface ComponentProps {
   transformationParams: TransformationParams;
@@ -50,7 +51,9 @@ export const CanvasObject: React.FC<ComponentProps> = ({
       scale={transformationParams.scale}
       onDoubleClick={(e) => {
         e.stopPropagation() 
-        bounds.refresh(e.object).fit().clip()}}
+        bounds.refresh(e.object).fit().clip()
+        dispatch(setFocusNotToOrigin())}
+      }
       onContextMenu={(e) => {
         e.stopPropagation();
         dispatch(setNextTransformationActive())

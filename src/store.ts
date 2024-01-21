@@ -16,6 +16,7 @@ import { SidebarSlice } from './components/sideBar/sidebarSlice';
 import {StatusBarSlice} from "./components/statusBar/statusBarSlice";
 import { MiscToolbarSlice } from './components/miscToolbar/miscToolbarSlice';
 import { ShapesToolbarSlice } from './components/navBar/components/componentsItems/shapesToolbarSlice';
+import { ViewItemSlice } from './components/navBar/viewIitem/viewItemSlice';
 
 const persistConfig = {
     key: 'root',
@@ -34,7 +35,8 @@ const rootReducer = combineReducers({
     user: UsersSlice.reducer,
     statusBarSlice: StatusBarSlice.reducer, 
     miscToolbar: MiscToolbarSlice.reducer,
-    shapesToolbar: ShapesToolbarSlice.reducer
+    shapesToolbar: ShapesToolbarSlice.reducer,
+    viewItemState: ViewItemSlice.reducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
