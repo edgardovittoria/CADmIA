@@ -11,7 +11,7 @@ import { CanvasObject } from "./components/canvasObject";
 import { Controls } from "./components/controls";
 import { meshesWithBordersVisibleSelector } from "../sideBar/sidebarSlice";
 import { Bounds, useBounds } from "@react-three/drei";
-import { focusToOriginSelector } from "../navBar/viewIitem/viewItemSlice";
+import { focusToSceneSelector } from "../navBar/menuItems/view/viewItemSlice";
 
 interface CadmiaCanvasProps {
 }
@@ -88,10 +88,10 @@ export const CadmiaCanvas: React.FC<CadmiaCanvasProps> = () => {
 
 const CommonObjectsActions: FC = ({ children }) => {
   const bounds = useBounds()
-  const focusToOrigin = useSelector(focusToOriginSelector)
+  const focusToScene = useSelector(focusToSceneSelector)
   useEffect(() => {
-    focusToOrigin && bounds.refresh().fit()
-  }, [focusToOrigin])
+    focusToScene && bounds.refresh().clip().fit()
+  }, [focusToScene])
   
   return (
     <group>

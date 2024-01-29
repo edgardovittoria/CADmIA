@@ -7,7 +7,7 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export const ComponentsItem: FC = () => {
+export const Shapes: FC = () => {
     const { addToTheSceneANew, iconForA } = useAddToTheSceneANewShape()
     return (
         <Popover className="relative">
@@ -17,7 +17,7 @@ export const ComponentsItem: FC = () => {
                         className={classNames(open ? 'text-gray-900' : 'text-gray-500', 'group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900'
                         )}
                     >
-                        <span>Components</span>
+                        <span>Shapes</span>
                         <ChevronDownIcon
                             className={classNames(open ? 'text-gray-600' : 'text-gray-400', 'ml-2 h-5 w-5 group-hover:text-gray-500')}
                             aria-hidden="true"

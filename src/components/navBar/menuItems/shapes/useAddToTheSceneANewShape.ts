@@ -5,6 +5,7 @@ import torusIcon from "./style/torus.png"
 import cylinderIcon from "./style/cylinder.png"
 import sphereIcon from "./style/sphere.png"
 import coneIcon from "./style/cone.png"
+import { setFocusNotToScene } from "../view/viewItemSlice";
 
 export const useAddToTheSceneANewShape = () => {
     const dispatch = useDispatch()
@@ -29,6 +30,7 @@ export const useAddToTheSceneANewShape = () => {
             default:
                 break;
         }
+        dispatch(setFocusNotToScene())
     }
 
     const defaultNamedNew = (entity: ComponentEntity) => {

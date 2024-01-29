@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
     binaryOpEntitiesKeysSelector,
     binaryOpSelector,
+    binaryOpToolbarVisibilitySelector,
     setBinaryOp,
 } from "./binaryOperationsToolbarSlice";
-import {CadmiaModality} from "../../cadmiaModalityManagement/cadmiaModalityType";
+import { CadmiaModality } from "../cadmiaModality/cadmiaModalityType";
 import unionIcon from "./style/unionIcon.png";
 import intersectionIcon from "./style/intersectionIcon.png";
 import subtractionIcon from "./style/subtractionIcon.png";
@@ -22,9 +23,9 @@ import {
     getNewKeys,
     setComponentsOpacity,
 } from "cad-library";
-import {Dispatch} from "@reduxjs/toolkit";
-import {CheckIcon, XCircleIcon} from "@heroicons/react/20/solid";
-import { setModality } from "../../cadmiaModalityManagement/cadmiaModalitySlice";
+import { Dispatch } from "@reduxjs/toolkit";
+import { CheckIcon, XCircleIcon } from "@heroicons/react/20/solid";
+import { setModality } from "../cadmiaModality/cadmiaModalitySlice";
 
 interface BinaryOpsToolbarProps {
 }
@@ -32,6 +33,7 @@ interface BinaryOpsToolbarProps {
 export const BinaryOpsToolbar: React.FC<BinaryOpsToolbarProps> = () => {
     const dispatch = useDispatch();
     const binaryOp = useSelector(binaryOpSelector);
+    const binaryOperationsToolbarVisible = useSelector(binaryOpToolbarVisibilitySelector)
     const entityKeysForBinaryOperations = useSelector(
         binaryOpEntitiesKeysSelector
     );
@@ -87,8 +89,8 @@ export const BinaryOpsToolbar: React.FC<BinaryOpsToolbarProps> = () => {
         let compositeEntity: CompositeEntity = {
             ...elementA,
             baseElements: {
-                elementA: {...elementA},
-                elementB: {...elementB},
+                elementA: { ...elementA },
+                elementB: { ...elementB },
             },
             type: type,
             keyComponent: newKey,
@@ -104,12 +106,12 @@ export const BinaryOpsToolbar: React.FC<BinaryOpsToolbarProps> = () => {
             let elements = temporaryEntitiesForBinaryOp.filter(
                 (el) => !entityKeysForBinaryOperations.includes(el)
             );
-            dispatch(setComponentsOpacity({keys: elements, opacity: 0.3}));
+            dispatch(setComponentsOpacity({ keys: elements, opacity: 0.3 }));
         } else {
             let elements = entityKeysForBinaryOperations.filter(
                 (el) => !temporaryEntitiesForBinaryOp.includes(el)
             );
-            dispatch(setComponentsOpacity({keys: elements, opacity: 1}));
+            dispatch(setComponentsOpacity({ keys: elements, opacity: 1 }));
         }
         setTemporaryEntitiesForBinaryOp(entityKeysForBinaryOperations);
     }, [entityKeysForBinaryOperations]);
@@ -117,81 +119,84 @@ export const BinaryOpsToolbar: React.FC<BinaryOpsToolbarProps> = () => {
 
     return (
         <>
-            <div className="absolute left-[180px] top-[10px] w-[250px] text-center shadow grid grid-cols-5">
-                <div className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group bg-white hover:bg-gray-300
+            {binaryOperationsToolbarVisible &&
+                <div className="absolute left-[180px] top-[10px] w-[250px] text-center shadow grid grid-cols-5">
+                    <div className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group bg-white hover:bg-gray-300
              ${binaryOp === "UNION" ? 'bg-gray-400' : 'bg-white'}
             `}
-                     onClick={() => {
-                         dispatch(setModality('BinaryOperation' as CadmiaModality));
-                         dispatch(setBinaryOp("UNION"));
-                     }}
-                >
-                    <img src={unionIcon} alt="Union operation"/>
-                    <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
-                        <span className="relative z-10 p-2 leading-none text-white whitespace-no-wrap bg-gray-600 shadow-lg rounded-md">UNION</span>
+                        onClick={() => {
+                            dispatch(setModality('BinaryOperation' as CadmiaModality));
+                            dispatch(setBinaryOp("UNION"));
+                        }}
+                    >
+                        <img src={unionIcon} alt="Union operation" />
+                        <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
+                            <span className="relative z-10 p-2 leading-none text-white whitespace-no-wrap bg-gray-600 shadow-lg rounded-md">UNION</span>
+                        </div>
                     </div>
-                </div>
-                <div className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group bg-white hover:bg-gray-300
+                    <div className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group bg-white hover:bg-gray-300
              ${binaryOp === "INTERSECTION" ? 'bg-gray-300' : 'bg-white'}
             `}
-                     onClick={() => {
-                         dispatch(setModality('BinaryOperation' as CadmiaModality));
-                         dispatch(setBinaryOp("INTERSECTION"));
-                     }}
-                >
-                    <img src={intersectionIcon} alt="Intersection operation"/>
-                    <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
-                        <span className="relative z-10 p-2 leading-none text-white whitespace-no-wrap bg-gray-600 shadow-lg rounded-md">INTERSECTION</span>
+                        onClick={() => {
+                            dispatch(setModality('BinaryOperation' as CadmiaModality));
+                            dispatch(setBinaryOp("INTERSECTION"));
+                        }}
+                    >
+                        <img src={intersectionIcon} alt="Intersection operation" />
+                        <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
+                            <span className="relative z-10 p-2 leading-none text-white whitespace-no-wrap bg-gray-600 shadow-lg rounded-md">INTERSECTION</span>
+                        </div>
                     </div>
-                </div>
-                <div className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group bg-white hover:bg-gray-300
+                    <div className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group bg-white hover:bg-gray-300
              ${binaryOp === "SUBTRACTION" ? 'bg-gray-300' : 'bg-white'}
             `}
-                     onClick={() => {
-                         dispatch(setModality('BinaryOperation' as CadmiaModality));
-                         dispatch(setBinaryOp("SUBTRACTION"));
-                     }}
-                >
-                    <img src={subtractionIcon} alt="Subtraction operation"/>
-                    <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
-                        <span className="relative z-10 p-2 leading-none text-white whitespace-no-wrap bg-gray-600 shadow-lg rounded-md">SUBTRACTION</span>
+                        onClick={() => {
+                            dispatch(setModality('BinaryOperation' as CadmiaModality));
+                            dispatch(setBinaryOp("SUBTRACTION"));
+                        }}
+                    >
+                        <img src={subtractionIcon} alt="Subtraction operation" />
+                        <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
+                            <span className="relative z-10 p-2 leading-none text-white whitespace-no-wrap bg-gray-600 shadow-lg rounded-md">SUBTRACTION</span>
+                        </div>
+                    </div>
+                    <div
+                        className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group bg-white hover:bg-gray-300`}>
+                        {binaryOp === undefined ? (
+                            <XCircleIcon className="text-gray-300 w-8 h-8" />
+                        ) : (
+                            <XCircleIcon className="text-red-600 w-8 h-8"
+                                onClick={() => dispatch(setModality('NormalSelection' as CadmiaModality))}
+                            />
+                        )}
+                        <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
+                            <span className="relative z-10 p-2 leading-none text-white whitespace-no-wrap bg-gray-600 shadow-lg rounded-md">EXIT</span>
+                        </div>
+                    </div>
+                    <div
+                        className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group bg-white hover:bg-gray-300`}>
+                        {entityKeysForBinaryOperations.length > 1 ? (
+                            <CheckIcon className="text-green-600 w-8 h-8"
+                                onClick={() => {
+                                    binaryOp &&
+                                        makeBinaryOperation(
+                                            binaryOp as BinaryOperationType,
+                                            entityKeysForBinaryOperations,
+                                            canvasState,
+                                            dispatch
+                                        );
+                                    dispatch(setModality('NormalSelection' as CadmiaModality))
+                                }}
+                            />
+                        ) : (
+                            <CheckIcon className="text-gray-300 w-8 h-8" />
+                        )}
+                        <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
+                            <span className="relative z-10 p-2 leading-none text-white whitespace-no-wrap bg-gray-600 shadow-lg rounded-md">EXECUTE OPERATION</span>
+                        </div>
                     </div>
                 </div>
-                <div
-                    className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group bg-white hover:bg-gray-300`}>
-                    {binaryOp === undefined ? (
-                        <XCircleIcon className="text-gray-300 w-8 h-8"/>
-                    ) : (
-                        <XCircleIcon className="text-red-600 w-8 h-8"
-                                     onClick={() => dispatch(setModality('NormalSelection' as CadmiaModality))}
-                        />
-                    )}
-                    <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
-                        <span className="relative z-10 p-2 leading-none text-white whitespace-no-wrap bg-gray-600 shadow-lg rounded-md">EXIT</span>
-                    </div>
-                </div>
-                <div
-                    className={`relative flex flex-col items-center justify-center h-[50px] w-[50px] p-1 group bg-white hover:bg-gray-300`}>
-                    {entityKeysForBinaryOperations.length > 1  ? (
-                        <CheckIcon className="text-green-600 w-8 h-8"
-                                   onClick={() => {
-                                       binaryOp &&
-                                       makeBinaryOperation(
-                                           binaryOp as BinaryOperationType,
-                                           entityKeysForBinaryOperations,
-                                           canvasState,
-                                           dispatch
-                                       );
-                                       dispatch(setModality('NormalSelection' as CadmiaModality))}}
-                        />
-                    ) : (
-                        <CheckIcon className="text-gray-300 w-8 h-8"/>
-                    )}
-                    <div className="absolute left-10 bottom-0 flex flex-col items-center hidden mb-10 group-hover:flex">
-                        <span className="relative z-10 p-2 leading-none text-white whitespace-no-wrap bg-gray-600 shadow-lg rounded-md">EXECUTE OPERATION</span>
-                    </div>
-                </div>
-            </div>
+            }
         </>
     );
 };

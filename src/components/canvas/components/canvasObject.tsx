@@ -9,8 +9,8 @@ import {
 } from "cad-library";
 import { Edges, useBounds } from "@react-three/drei";
 import * as THREE from "three";
-import { useCadmiaModalityManager } from "../../../cadmiaModalityManagement/useCadmiaModalityManager";
-import { setFocusNotToOrigin } from "../../navBar/viewIitem/viewItemSlice";
+import { useCadmiaModalityManager } from "../../cadmiaModality/useCadmiaModalityManager";
+import { setFocusNotToScene } from "../../navBar/menuItems/view/viewItemSlice";
 
 export interface ComponentProps {
   transformationParams: TransformationParams;
@@ -30,7 +30,7 @@ export const CanvasObject: React.FC<ComponentProps> = ({
   const selectedComponentKey = useSelector(keySelectedComponenteSelector);
   const mesh = useRef(null);
   const bounds = useBounds()
-  const {componentOpsBasedOnModality} = useCadmiaModalityManager()
+  const {canvasObjectOpsBasedOnModality} = useCadmiaModalityManager()
 
   useEffect(() => {
     keyComponent === selectedComponentKey &&
@@ -52,7 +52,7 @@ export const CanvasObject: React.FC<ComponentProps> = ({
       onDoubleClick={(e) => {
         e.stopPropagation() 
         bounds.refresh(e.object).fit().clip()
-        dispatch(setFocusNotToOrigin())}
+        dispatch(setFocusNotToScene())}
       }
       onContextMenu={(e) => {
         e.stopPropagation();
@@ -60,7 +60,7 @@ export const CanvasObject: React.FC<ComponentProps> = ({
       }}
       onClick={(e) => {
         e.stopPropagation();
-        componentOpsBasedOnModality.onClickAction(keyComponent)
+        canvasObjectOpsBasedOnModality.onClickAction(keyComponent)
       }}
     >
       {children}

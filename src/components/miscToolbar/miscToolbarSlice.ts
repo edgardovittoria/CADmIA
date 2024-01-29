@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { setModality } from '../../cadmiaModalityManagement/cadmiaModalitySlice';
+import { setModality } from '../cadmiaModality/cadmiaModalitySlice';
 
 export type MiscToolbarState = {
   visible: boolean

@@ -1,10 +1,10 @@
 import React from 'react';
 import {Popover} from "@headlessui/react";
-import {FileItem} from "./components/fileItem/FileItem";
-import {ViewItem} from "./viewIitem/ViewItem";
-import {EditItem} from "./components/editItem/EditItem";
-import {ComponentsItem} from "./components/componentsItems/ComponentsItem";
-import { LoginLogout } from './components/loginLogout';
+import {FileItem} from "./menuItems/file/FileItem";
+import {ViewItem} from "./menuItems/view/ViewItem";
+import {EditItem} from "./menuItems/edit/EditItem";
+import {Shapes} from "./menuItems/shapes/shapes";
+import { LoginLogout } from './menuItems/loginLogout';
 
 interface NavbarProps {
 }
@@ -29,7 +29,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
                         <FileItem/>
                         <ViewItem/>
                         <EditItem/>
-                        <ComponentsItem/>
+                        <Shapes/>
                     </Popover.Group>
                     <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
                         <LoginLogout />

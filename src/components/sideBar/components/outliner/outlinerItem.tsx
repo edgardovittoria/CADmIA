@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { CubeIcon } from "@heroicons/react/24/outline";
 import { BiRename } from "react-icons/bi";
-import { useCadmiaModalityManager } from "../../../../cadmiaModalityManagement/useCadmiaModalityManager";
+import { useCadmiaModalityManager } from "../../../cadmiaModality/useCadmiaModalityManager";
 
 interface OutlinerItemProps {
     keyComponent: number,
