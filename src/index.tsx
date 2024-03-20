@@ -14,8 +14,10 @@ ReactDOM.render(
     <Auth0Provider
       clientId={process.env.REACT_APP_AUTH0_ID as string}
       domain={process.env.REACT_APP_AUTH0_DOMAIN as string}
-      redirectUri={window.location.origin}
-      audience={process.env.REACT_APP_AUTH0_AUDIENCE as string}
+      authorizationParams={{
+          redirectUri: window.location.origin,
+          audience: process.env.REACT_APP_AUTH0_AUDIENCE as string
+      }}
     >
       <Provider store={store}>
             <PersistGate persistor={persistor}>

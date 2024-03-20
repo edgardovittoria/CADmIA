@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, {FC, ReactNode, useEffect, useState} from "react";
 import { Provider, ReactReduxContext, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
@@ -86,7 +86,7 @@ export const CadmiaCanvas: React.FC<CadmiaCanvasProps> = () => {
   );
 };
 
-const CommonObjectsActions: FC = ({ children }) => {
+const CommonObjectsActions: FC<{children: ReactNode}> = ({ children }) => {
   const bounds = useBounds()
   const focusToOrigin = useSelector(focusToOriginSelector)
   useEffect(() => {

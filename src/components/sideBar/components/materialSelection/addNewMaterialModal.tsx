@@ -1,6 +1,6 @@
 import {Dialog, Transition} from "@headlessui/react"
 import {useFaunaQuery} from "cad-library"
-import {FC, Fragment, useEffect, useState} from "react"
+import {FC, Fragment, ReactNode, useEffect, useState} from "react"
 import toast from "react-hot-toast"
 import {ChromePicker} from "react-color"
 import faunadb from "faunadb"
@@ -307,7 +307,7 @@ export const AddNewMaterialModal: FC<{ showModal: Function, updateMaterials: Fun
     )
 }
 
-const MaterialOptionMainStyle: FC<{ label: string }> = ({label, children}) => {
+const MaterialOptionMainStyle: FC<{ label: string, children:ReactNode }> = ({label, children}) => {
     return (
         <div className="mt-2">
             <div className="flex items-center justify-between">

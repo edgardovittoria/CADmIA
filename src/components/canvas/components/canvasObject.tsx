@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, {ReactNode, useEffect, useRef} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setNextTransformationActive,
@@ -13,6 +13,7 @@ import { useCadmiaModalityManager } from "../../../cadmiaModalityManagement/useC
 import { setFocusNotToOrigin } from "../../navBar/viewIitem/viewItemSlice";
 
 export interface ComponentProps {
+  children: ReactNode;
   transformationParams: TransformationParams;
   keyComponent: number;
   borderVisible: boolean;

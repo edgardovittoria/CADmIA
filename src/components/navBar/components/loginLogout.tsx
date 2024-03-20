@@ -48,7 +48,7 @@ export const LoginLogout: FC<LoginLogoutProps> = () => {
                                     <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                                         <div
                                             className="-m-3 flex items-center rounded-lg p-2 hover:bg-gray-50 hover:cursor-pointer"
-                                            onClick={() => logout({returnTo: window.location.origin})}
+                                            onClick={() => logout({logoutParams:{returnTo: window.location.origin}})}
                                         >
                                             <ArrowRightOnRectangleIcon className="text-gray-900 mr-5 h-5 w-5"/>
                                             <span className="text-gray-900 text-base font-medium">Log out</span>
