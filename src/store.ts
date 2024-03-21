@@ -9,12 +9,12 @@ import persistStore from "redux-persist/es/persistStore";
 import localforage from 'localforage';
 import { CanvasSlice, UsersSlice } from 'cad-library';
 import { BinaryOperationsToolbarSlice } from './components/binaryOperationsToolbar/binaryOperationsToolbarSlice';
-import { CadmiaModalitySlice } from './cadmiaModalityManagement/cadmiaModalitySlice';
+import { CadmiaModalitySlice } from './components/cadmiaModality/cadmiaModalitySlice';
 import { SidebarSlice } from './components/sideBar/sidebarSlice';
 import {StatusBarSlice} from "./components/statusBar/statusBarSlice";
 import { MiscToolbarSlice } from './components/miscToolbar/miscToolbarSlice';
-import { ShapesToolbarSlice } from './components/navBar/components/componentsItems/shapesToolbarSlice';
-import { ViewItemSlice } from './components/navBar/viewIitem/viewItemSlice';
+import { ShapesToolbarSlice } from './components/navBar/menuItems/shapes/shapesToolbarSlice';
+import { ViewItemSlice } from './components/navBar/menuItems/view/viewItemSlice';
 
 const persistConfig = {
     key: 'root',

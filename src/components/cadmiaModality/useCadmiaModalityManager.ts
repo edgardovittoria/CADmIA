@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { cadmiaModalitySelector, setModality } from "./cadmiaModalitySlice";
 import { Material, componentseSelector, removeComponent, removeComponentMaterial, selectComponent, selectedComponentSelector, setComponentMaterial, setComponentsOpacity } from "cad-library";
-import { binaryOpEntitiesKeysSelector, toggleEntitySelectionForBinaryOp } from "../components/binaryOperationsToolbar/binaryOperationsToolbarSlice";
-import { multipleSelectionEntitiesKeysSelector, toggleEntitySelectionForMultipleSelection } from "../components/miscToolbar/miscToolbarSlice";
+import { binaryOpEntitiesKeysSelector, toggleEntitySelectionForBinaryOp } from "../binaryOperationsToolbar/binaryOperationsToolbarSlice";
+import { multipleSelectionEntitiesKeysSelector, toggleEntitySelectionForMultipleSelection } from "../miscToolbar/miscToolbarSlice";
 import { useEffect } from "react";
 
 export const useCadmiaModalityManager = () => {
@@ -12,7 +12,7 @@ export const useCadmiaModalityManager = () => {
     const multipleSelectionEntityKeys = useSelector(multipleSelectionEntitiesKeysSelector)
     const binaryOpsEntityKeys = useSelector(binaryOpEntitiesKeysSelector)
 
-    const componentOpsBasedOnModality = {
+    const canvasObjectOpsBasedOnModality = {
         onClickAction: (keyComponent: number) => {
             if (modality === 'NormalSelection') {
                 (!selectedComponent || selectedComponent.keyComponent !== keyComponent) &&
@@ -115,7 +115,7 @@ export const useCadmiaModalityManager = () => {
     }
 
     return {
-        componentOpsBasedOnModality, miscToolbarOpsBasedOnModality,
+        canvasObjectOpsBasedOnModality, miscToolbarOpsBasedOnModality,
         sideBarOptsBasedOnModality, useBaseOpactityBasedOnModality
     }
 }

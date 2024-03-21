@@ -14,7 +14,7 @@ import { Outliner } from "./components/outliner/outliner";
 import { BordersMeshOption } from "./components/bordersMeshOption";
 import { closeSidebar, openSidebar, sidebarVisibilitySelector } from "./sidebarSlice";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { useCadmiaModalityManager } from "../../cadmiaModalityManagement/useCadmiaModalityManager";
+import { useCadmiaModalityManager } from "../cadmiaModality/useCadmiaModalityManager";
 
 interface SidebarProps {
 }

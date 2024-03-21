@@ -1,14 +1,14 @@
 import React, { Fragment } from 'react';
 import { Popover, Switch, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { classNames } from '../NavBar';
+import { classNames } from '../../NavBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeSidebar, openSidebar, sidebarVisibilitySelector } from '../../sideBar/sidebarSlice';
-import { binaryOpToolbarVisibilitySelector, closeBinaryOperationsToolbar, openBinaryOperationsToolbar } from '../../binaryOperationsToolbar/binaryOperationsToolbarSlice';
-import { closeTransformationsToolbar, openTransformationsToolbar, transformationsToolbarVisibilitySelector } from '../../transformationsToolbar/toolbarTransformationSlice';
-import { closeMiscToolbar, miscToolbarVisibilitySelector, openMiscToolbar } from '../../miscToolbar/miscToolbarSlice';
-import { closeShapesToolbar, openShapesToolbar, shapesToolbarVisibilitySelector } from '../components/componentsItems/shapesToolbarSlice';
-import { resetFocusToOrigin } from './viewItemSlice';
+import { closeSidebar, openSidebar, sidebarVisibilitySelector } from '../../../sideBar/sidebarSlice';
+import { binaryOpToolbarVisibilitySelector, closeBinaryOperationsToolbar, openBinaryOperationsToolbar } from '../../../binaryOperationsToolbar/binaryOperationsToolbarSlice';
+import { closeTransformationsToolbar, openTransformationsToolbar, transformationsToolbarVisibilitySelector } from '../../../transformationsToolbar/toolbarTransformationSlice';
+import { closeMiscToolbar, miscToolbarVisibilitySelector, openMiscToolbar } from '../../../miscToolbar/miscToolbarSlice';
+import { closeShapesToolbar, openShapesToolbar, shapesToolbarVisibilitySelector } from '../shapes/shapesToolbarSlice';
+import { resetFocusToScene } from './viewItemSlice';
 
 interface ViewItemProps {
 }
@@ -173,10 +173,10 @@ export const ViewItem: React.FC<ViewItemProps> = () => {
                                         <div id="viewDropdown">
                                             <div className="flex justify-between cursor-pointer"
                                                 onClick={() => {
-                                                    dispatch(resetFocusToOrigin());
+                                                    dispatch(resetFocusToScene());
                                                 }}
                                             >
-                                                <span className="text-gray-900 text-base font-medium">Reset Focus To Origin</span>
+                                                <span className="text-gray-900 text-base font-medium">Reset Focus To Whole Scene</span>
                                             </div>
                                         </div>
                                     </span>
