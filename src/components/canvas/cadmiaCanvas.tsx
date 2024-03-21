@@ -41,13 +41,13 @@ export const CadmiaCanvas: React.FC<CadmiaCanvasProps> = () => {
               }}
             >
               <Provider store={store}>
-                <pointLight position={[100, 100, 100]} intensity={0.8} />
-                <pointLight position={[-100, -100, 100]} intensity={0.8} />
+                <pointLight position={[100, 100, 100]} intensity={1.8} />
+                <pointLight position={[-100, -100, 100]} intensity={1.8} />
                 <hemisphereLight
                   color="#ffffff"
                   groundColor={new THREE.Color("#b9b9b9")}
                   position={[-7, 25, 13]}
-                  intensity={0.85}
+                  intensity={1.85}
                 />
                 <Bounds fit clip observe margin={1.2}>
                   <CommonObjectsActions>

@@ -25,8 +25,8 @@ export const Controls: FC<{
       }
     });
   
-    function onChangeHandler(event: THREE.Event) {
-      if (!event.target && transformation.current) {
+    function onChangeHandler(event: any) {
+      if (!event.value && transformation.current) {
         const controls: Object3DNode<any, any> = transformation.current;
         let transformationParmas: TransformationParams = {
           position: [
