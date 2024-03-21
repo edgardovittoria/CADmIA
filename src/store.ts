@@ -4,9 +4,9 @@ import {
 } from '@reduxjs/toolkit';
 import {TransformationsToolbarSlice} from "./components/transformationsToolbar/toolbarTransformationSlice";
 import undoable, {excludeAction} from 'redux-undo';
-/*import { persistReducer } from 'redux-persist'
+import { persistReducer } from 'redux-persist'
 import persistStore from "redux-persist/es/persistStore";
-import localforage from 'localforage';*/
+import localforage from 'localforage';
 import { CanvasSlice, UsersSlice } from 'cad-library';
 import { BinaryOperationsToolbarSlice } from './components/binaryOperationsToolbar/binaryOperationsToolbarSlice';
 import { CadmiaModalitySlice } from './cadmiaModalityManagement/cadmiaModalitySlice';
@@ -16,10 +16,10 @@ import { MiscToolbarSlice } from './components/miscToolbar/miscToolbarSlice';
 import { ShapesToolbarSlice } from './components/navBar/components/componentsItems/shapesToolbarSlice';
 import { ViewItemSlice } from './components/navBar/viewIitem/viewItemSlice';
 
-/*const persistConfig = {
+const persistConfig = {
     key: 'root',
     storage: localforage
-}*/
+}
 
 const rootReducer = combineReducers({
     canvas: undoable(CanvasSlice.reducer, {
@@ -37,11 +37,11 @@ const rootReducer = combineReducers({
     viewItemState: ViewItemSlice.reducer
 });
 
-//const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
-    //reducer: persistedReducer,
-    reducer: rootReducer,
+    reducer: persistedReducer,
+    //reducer: rootReducer,
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
             serializableCheck: false,
@@ -49,4 +49,4 @@ export const store = configureStore({
         }),
 });
 
-//export const persistor = persistStore(store)
+export const persistor = persistStore(store)

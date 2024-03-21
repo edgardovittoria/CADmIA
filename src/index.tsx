@@ -3,9 +3,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import { store } from "./store";
-//import { persistor, store } from "./store";
-//import { PersistGate } from "redux-persist/integration/react";
+//import { store } from "./store";
+import { persistor, store } from "./store";
+import { PersistGate } from "redux-persist/integration/react";
 import { Auth0Provider } from "@auth0/auth0-react";
 import React from "react";
 import { Toaster } from "react-hot-toast";
@@ -24,16 +24,12 @@ root.render(
       }}
     >
       <Provider store={store}>
-            {/*<PersistGate persistor={persistor}>
+            <PersistGate persistor={persistor}>
               <div>
                 <Toaster position="top-center" />
               </div>
               <App />
-            </PersistGate>*/}
-          <div>
-              <Toaster position="top-center" />
-          </div>
-          <App />
+            </PersistGate>
       </Provider>
     </Auth0Provider>
   </React.StrictMode>
